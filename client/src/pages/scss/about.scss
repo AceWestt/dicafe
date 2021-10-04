@@ -1,0 +1,96 @@
+.about-section {
+  display: none;
+  &.active {
+    display: flex;
+  }
+  .points-wrp {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    height: auto;
+
+    .point {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 16.667vw;
+      .img-wrp {
+        width: 100%;
+        padding-top: 100%;
+        margin: 0 0 3.385vw 0;
+        .img {
+          width: 100%;
+          height: 100%;
+          padding: 1.563vw;
+          position: absolute;
+          top: 0;
+          left: 0;
+          img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+          }
+        }
+      }
+      h3 {
+        font-size: 1.667vw;
+        color: $black;
+        margin: 0 0 1.823vw 0;
+      }
+      P {
+        font-size: 1.042vw;
+        line-height: 1.146vw;
+        margin: 0;
+        text-align: center;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $mobileBreakPoint) {
+  .about-section {
+    height: auto;
+    min-height: 100vh;
+    position: relative;
+    .about-wrapper {
+      padding-right: 5.333vw;
+      .points-wrp {
+        display: flex;
+        align-items: center;
+        height: auto;
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 13.333vw;
+        margin-top: 40vw;
+        .point {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 69.067vw;
+          margin-bottom: 10vw;
+
+          .img-wrp {
+            width: 50.933vw;
+            padding-top: 50.933vw;
+            margin: 0 0 2.667vw 0;
+            .img {
+              padding: 0;
+            }
+          }
+          h3 {
+            font-size: 5.867vw;
+            max-width: 34.667vw;
+            text-align: center;
+            margin: 0 0 4.267vw 0;
+          }
+          P {
+            font-size: 4.267vw;
+            line-height: 4.533vw;
+          }
+        }
+      }
+    }
+  }
+}

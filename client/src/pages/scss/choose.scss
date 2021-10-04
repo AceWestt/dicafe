@@ -1,0 +1,251 @@
+.choose-section {
+  display: none;
+  &.active {
+    display: flex;
+  }
+  .choose-wrapper {
+    .content {
+      .for-content {
+        overflow-x: scroll;
+        &::-webkit-scrollbar {
+          display: none;
+        }
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    }
+    .coffee-menu {
+      width: 110%;
+      display: flex;
+      flex-direction: column-reverse;
+      margin-left: -10%;
+      .plajka {
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: -45.833vw;
+      }
+      .slider-control {
+        margin-left: 41.667vw;
+        img {
+          width: 1.042vw;
+          margin-right: 1.823vw;
+          cursor: pointer;
+        }
+      }
+      .categories {
+        width: 100%;
+        padding-left: 10%;
+        > div {
+          font-size: 1.146vw;
+          line-height: 1.25vw;
+          margin-right: 7.292vw;
+          cursor: pointer;
+          &:hover,
+          &.active {
+            text-decoration: underline;
+          }
+        }
+      }
+      .products {
+        width: 100%;
+        margin: 1.927vw 0 0 0;
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: scroll;
+        @include scrollbars(0, rgba(0, 0, 0, 0.3));
+        padding-bottom: 1.563vw;
+
+        .product {
+          width: 16.25vw;
+          margin-right: 2.604vw;
+          flex-shrink: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          img {
+            width: 100%;
+            margin: 0 0 1.042vw 0;
+          }
+          h5 {
+            font-size: 1.354vw;
+            line-height: 1.458vw;
+            margin: 0 0 0.625vw 0;
+            font-weight: 400;
+          }
+          h6 {
+            font-size: 0.833vw;
+            line-height: 0.885vw;
+            margin: 0 0 1.25vw 0;
+            font-weight: 400;
+          }
+          p {
+            font-size: 1.354vw;
+            line-height: 1.458vw;
+            margin: 0 0 0.625vw 0;
+          }
+          button {
+            cursor: pointer;
+            span {
+              font-size: 0.938vw;
+              line-height: 1.042vw;
+              text-decoration: underline;
+              font-weight: 700;
+            }
+            img {
+              width: 1.25vw;
+              margin-left: 0.521vw;
+              margin-top: 0.26vw;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $mobileBreakPoint) {
+  .choose-section {
+    height: auto;
+    min-height: 100vh;
+    padding-bottom: 26.667vw;
+    position: relative;
+    .choose-wrapper {
+      .content {
+        .for-content {
+          margin-bottom: 10.667vw;
+        }
+      }
+      .coffee-menu {
+        width: 100%;
+        .categories {
+          &-mobile {
+            width: 100%;
+            margin-bottom: 12.533vw;
+            padding-right: 5.333vw;
+            .list-wrp {
+              width: 100%;
+              position: absolute;
+              left: 0;
+              top: 5.333vw;
+              padding-right: 5.333vw;
+              max-height: 0;
+              overflow: hidden;
+              transition: all 0.3s linear;
+              &.active {
+                max-height: 213.333vw;
+              }
+              .list {
+                width: 100%;
+                img {
+                  width: 100%;
+                }
+                &-menu {
+                  width: 100%;
+                  height: 100%;
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  padding: 10.667vw 6.667vw 2.667vw 6.667vw;
+                  > div {
+                    width: 100%;
+                    text-align: center;
+                    padding: 2.667vw 0;
+                    font-size: 5.867vw;
+                    color: #fff;
+                    border-bottom: 0.533vw solid #fff;
+                    &:last-child {
+                      border-bottom: transparent;
+                    }
+                  }
+                }
+              }
+            }
+            .active-category {
+              width: 100%;
+              height: 16vw;
+              display: flex;
+              align-items: center;
+              img {
+                width: 100%;
+              }
+              .text {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                span {
+                  color: #fff;
+                  font-size: 5.867vw;
+                  margin-left: auto;
+                  margin-right: -11.467vw;
+                }
+                img {
+                  width: 3.467vw;
+                  margin-left: auto;
+                  margin-right: 8vw;
+                  transition: transform 0.2s linear;
+                  &.rotated {
+                    transform: rotate(90deg);
+                  }
+                }
+              }
+            }
+          }
+        }
+        .products {
+          width: 100%;
+          margin: 0 0 0 0;
+          display: flex;
+          flex-wrap: nowrap;
+          overflow-x: scroll;
+          flex-direction: column;
+          align-items: center;
+          @include scrollbars(0, rgba(0, 0, 0, 0));
+          padding-bottom: 0;
+          .product {
+            width: 48vw;
+            margin-right: 8vw;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 5.333vw;
+            img {
+              width: 100%;
+              margin: 0 0 4.267vw 0;
+            }
+            h5 {
+              font-size: 5.333vw;
+              line-height: 5.867vw;
+              margin: 0 0 3.2vw 0;
+            }
+            h6 {
+              display: none;
+            }
+            p {
+              font-size: 5.867vw;
+              line-height: 6.4vw;
+              margin: 0 0 1.6vw 0;
+            }
+            button {
+              span {
+                font-size: 3.733vw;
+                line-height: 4.267vw;
+              }
+              img {
+                width: 6.4vw;
+                margin-left: 2.133vw;
+                margin-top: 0.8vw;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

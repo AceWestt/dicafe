@@ -1,0 +1,291 @@
+@mixin doodlesUploadBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+  justify-content: flex-end;
+
+  > img {
+    width: 1.042vw;
+    margin-bottom: 0;
+    margin-right: 0.521vw;
+  }
+  button {
+    cursor: pointer;
+    span {
+      font-size: 0.938vw;
+      line-height: 1.042vw;
+      text-decoration: underline;
+      font-weight: 700;
+    }
+    img {
+      width: 1.25vw;
+      margin-left: 0.521vw;
+      margin-top: 0.26vw;
+    }
+  }
+}
+
+@mixin doodlesUploadBtnMobile {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10.667vw;
+  > img {
+    width: 10.667vw;
+    margin-bottom: 5.333vw;
+    margin-right: 0;
+  }
+  button {
+    cursor: pointer;
+    span {
+      font-size: 3.733vw;
+      line-height: 4.267vw;
+      text-decoration: underline;
+      font-weight: 700;
+    }
+    img {
+      width: 6.4vw;
+      margin-left: 2.133vw;
+      margin-top: 0.8vw;
+    }
+  }
+}
+
+.doodles-section {
+  display: none;
+  &.active {
+    display: flex;
+  }
+  .doodles-wrapper {
+    .content {
+      .for-content {
+        .doodles-upload-wrp {
+          @include doodlesUploadBtn();
+        }
+      }
+    }
+  }
+  .upload-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(22, 22, 22, 0.2);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .modal-container {
+      width: 63.281vw;
+      .modal-gen-bg {
+        width: 100%;
+      }
+      .modal-close {
+        width: 1.042vw;
+        position: absolute;
+        top: 2.813vw;
+        right: 5.729vw;
+        cursor: pointer;
+      }
+      .modal-content {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 3.125vw 0;
+        .title {
+          font-size: 1.146vw;
+          margin-bottom: 2.083vw;
+          color: #000;
+          font-weight: bold;
+        }
+        .instructions {
+          .item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            img {
+              margin-bottom: 0.781vw;
+            }
+            .text {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              span {
+                font-size: 0.833vw;
+                text-align: center;
+              }
+            }
+            &.stepone {
+              img {
+                width: 5.208vw;
+              }
+              .text {
+                span {
+                  max-width: 4.688vw;
+                }
+              }
+            }
+            &.steptwo {
+              img {
+                width: 4.271vw;
+              }
+            }
+            &.stepthree {
+              img {
+                width: 11.198vw;
+              }
+              .text {
+                span {
+                  max-width: 8.854vw;
+                }
+              }
+            }
+          }
+          .middle {
+            width: 9.375vw;
+            padding-top: 3.646vw;
+            margin: 0 0.521vw;
+            img {
+              width: 100%;
+            }
+          }
+        }
+        .middle-text {
+          margin-top: 2.604vw;
+          font-size: 1.146vw;
+        }
+        p.text-danger {
+          font-size: 0.833vw;
+          margin: 0;
+          margin-top: 0.521vw;
+          color: red;
+        }
+        .btn-holder {
+          margin-top: 2.281vw;
+          .doodles-upload-wrp {
+            @include doodlesUploadBtn();
+          }
+          input {
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $mobileBreakPoint) {
+  .doodles-section {
+    height: auto;
+    min-height: 100vh;
+    position: relative;
+    .doodles-wrapper {
+      .content {
+        align-items: center;
+        margin-top: 5.333vw;
+        .for-content {
+          padding-right: 5.333vw;
+          .doodles-upload-wrp {
+            @include doodlesUploadBtnMobile();
+          }
+        }
+      }
+    }
+    .upload-modal {
+      padding: 0 4vw;
+      height: 100%;
+      .modal-container {
+        width: 100%;
+        .modal-close {
+          width: 5.333vw;
+          top: 13.867vw;
+          right: 12.533vw;
+        }
+        .modal-content {
+          padding: 24vw 0;
+          .title {
+            font-size: 4.8vw;
+            max-width: 44vw;
+            text-align: center;
+            margin-bottom: 8vw;
+          }
+          .instructions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .item {
+              img {
+                margin-bottom: 4vw;
+              }
+              .text {
+                span {
+                  font-size: 3.733vw;
+                }
+              }
+              &.stepone {
+                img {
+                  width: 32vw;
+                }
+                .text {
+                  span {
+                    max-width: 21.333vw;
+                  }
+                }
+              }
+              &.steptwo {
+                img {
+                  width: 21.867vw;
+                }
+              }
+              &.stepthree {
+                img {
+                  width: 57.333vw;
+                }
+                .text {
+                  span {
+                    max-width: 39.467vw;
+                  }
+                }
+              }
+            }
+            .middle {
+              width: 0.533vw;
+              padding-top: 0;
+              margin: 3.2vw 0;
+            }
+          }
+          .middle-text {
+            margin-top: 13.333vw;
+            font-size: 4.8vw;
+            text-align: center;
+            max-width: 70.667vw;
+          }
+          p.text-danger {
+            font-size: 4.267vw;
+            margin-top: 2.667vw;
+          }
+          .btn-holder {
+            margin-top: 6.4vw;
+            .doodles-upload-wrp {
+              @include doodlesUploadBtnMobile();
+            }
+          }
+        }
+      }
+    }
+  }
+}

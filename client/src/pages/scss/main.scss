@@ -1,0 +1,197 @@
+.main {
+  &-section {
+    justify-content: center;
+    overflow-x: hidden;
+  }
+  &-content {
+    .labels {
+      position: absolute;
+      top: 5.208vw;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      &.left {
+        right: 100%;
+        align-items: flex-end;
+        .label {
+          align-items: flex-end;
+        }
+      }
+      &.right {
+        left: 100%;
+        align-items: flex-start;
+        .label {
+          align-items: flex-start;
+          img {
+            transform: scaleX(-1);
+          }
+        }
+      }
+      .label {
+        display: flex;
+        flex-direction: column;
+        span {
+          font-size: 1.563vw;
+          cursor: pointer;
+          @media screen and (max-width: $mobileBreakPoint) {
+            font-size: 5.333vw;
+          }
+        }
+        img {
+          margin-top: 1.042vw;
+        }
+        &.doodles {
+          margin-right: 3.802vw;
+          margin-top: 2.083vw;
+          span {
+            width: 7.188vw;
+          }
+          img {
+            width: 8.698vw;
+            margin-left: auto;
+            margin-right: -2.76vw;
+          }
+        }
+        &.about {
+          margin-top: 1.042vw;
+          margin-right: 1.563vw;
+          span {
+            width: 18.646vw;
+          }
+          img {
+            width: 8.698vw;
+            margin-right: -2.604vw;
+            margin-top: 1.042vw;
+          }
+        }
+        &.order {
+          span {
+            width: 15.365vw;
+            margin-left: 5.208vw;
+          }
+          img {
+            width: 7.656vw;
+          }
+        }
+        &.contact {
+          margin-top: 2.604vw;
+          span {
+            margin-left: 3.49vw;
+          }
+          img {
+            width: 7.656vw;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $mobileBreakPoint) {
+  .main {
+    &-section {
+      justify-content: center;
+      overflow-x: hidden;
+      height: auto;
+      min-height: 100vh;
+    }
+    &-content {
+      margin-top: 13.333vw;
+      .labels {
+        position: absolute;
+        top: -8vw;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        width: auto;
+        &.left {
+          right: 100%;
+          align-items: flex-end;
+          .label {
+            align-items: flex-end;
+          }
+        }
+        &.right {
+          left: 100%;
+          align-items: flex-start;
+          .label {
+            align-items: flex-start;
+            img {
+              transform: scaleX(1);
+            }
+          }
+        }
+        .label {
+          display: flex;
+          flex-direction: column;
+          span {
+            font-size: 5.333vw;
+          }
+          img {
+            margin-top: 1.042vw;
+          }
+          &.doodles {
+            margin-right: -13.333vw;
+            span {
+              width: 53.333vw;
+              text-align: right;
+              transform: rotate(-10deg);
+            }
+            img {
+              width: 8vw;
+              margin-right: 16vw;
+            }
+          }
+          &.about {
+            margin-top: auto;
+            margin-bottom: -21.333vw;
+            margin-right: -29.333vw;
+            span {
+              width: 41.333vw;
+              transform: rotate(10deg);
+            }
+            img {
+              position: absolute;
+              width: 8.8vw;
+              top: 0;
+              right: 21.333vw;
+              top: -21.333vw;
+              margin-right: 0;
+              margin-top: 0;
+            }
+          }
+          &.order {
+            span {
+              width: auto;
+              margin-left: -14.667vw;
+              width: 32vw;
+              margin-top: -2.667vw;
+              transform: rotate(15deg);
+            }
+            img {
+              width: 9.333vw;
+              margin-top: 5.333vw;
+            }
+          }
+          &.contact {
+            margin-top: auto;
+            margin-bottom: -26.667vw;
+            margin-left: -26.667vw;
+            span {
+              width: 26.667vw;
+              margin-left: 8vw;
+              text-align: right;
+              transform: rotate(-15deg);
+            }
+            img {
+              width: 8.533vw;
+              position: absolute;
+              top: -26.667vw;
+              left: 18.667vw;
+            }
+          }
+        }
+      }
+    }
+  }
+}
