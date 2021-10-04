@@ -10,7 +10,33 @@ node_modules/
 /coverage
 
 # production
-/build
+client/build
+client/public/uploads/doodles
+client/public/uploads/products
+!client/public/uploads/pages/
+client/public/uploads/pages/*
+!client/public/uploads/pages/about
+client/public/uploads/pages/about/*
+!client/public/uploads/pages/about/default
+!client/public/uploads/pages/contact
+client/public/uploads/pages/contact/*
+!client/public/uploads/pages/contact/default
+!client/public/uploads/pages/doodles
+client/public/uploads/pages/doodles/*
+!client/public/uploads/pages/doodles/default
+!client/public/uploads/pages/general
+client/public/uploads/pages/general/*
+!client/public/uploads/pages/general/default
+!client/public/uploads/pages/main
+client/public/uploads/pages/main/*
+!client/public/uploads/pages/main/default
+!client/public/uploads/pages/order
+client/public/uploads/pages/order/*
+!client/public/uploads/pages/order/default
+
+
+
+
 
 # misc
 config.env
