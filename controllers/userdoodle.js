@@ -21,7 +21,7 @@ exports.create = async (req, res, next) => {
         return next(new ErrorResponse(err, 500));
       }
     });
-    const img_name = `${uploadFolder}${file_name}`;
+    const img_name = `${__uploadRoot}${uploadFolder}${file_name}`;
 
     const doodle = await new UserDoodle({ img: img_name });
 

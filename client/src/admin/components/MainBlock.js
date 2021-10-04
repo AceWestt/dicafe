@@ -22,12 +22,14 @@ export default MainBlock;
 
 const Header = ({ main, isMenuSmall, setIsMenuSmall }) => {
   const { screenTitle } = useAdminContext();
+
   if (main) {
     return (
       <div className="header">
         <span>Админ панель DiCafe</span>
         <span>{" > "}</span>
         <span>{screenTitle}</span>
+        <div className="right-control"></div>
       </div>
     );
   }

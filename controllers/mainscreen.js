@@ -161,7 +161,7 @@ const fileUpload = async (
     }
   });
 
-  return `${movePath}${file_name}`;
+  return `${__uploadRoot}${movePath}${file_name}`;
 };
 
 const ifFileExists = async (path) => {

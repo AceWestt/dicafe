@@ -232,6 +232,13 @@
               font-size: 18px;
             }
           }
+          .right-control {
+            margin-right: 0;
+            margin-left: auto;
+            .icon {
+              font-size: 30px;
+            }
+          }
         }
         .content {
           padding: 60px 40px 30px 40px;
