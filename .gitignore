@@ -10,6 +10,8 @@ node_modules/
 /coverage
 
 # production
+/build
+build/
 client/build
 client/public/uploads/doodles
 client/public/uploads/products
