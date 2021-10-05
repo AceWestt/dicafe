@@ -4,7 +4,8 @@ const ErrorResponse = require("../utils/errorResponse");
 exports.initsuperadmin = async (req, res, next) => {
   try {
     const userForChek = await User.findOne({
-      username: process.env.SUPER_ADMIN_USERNAME,
+      // username: process.env.SUPER_ADMIN_USERNAME,
+      username: "superadmin",
     });
     if (userForChek) {
       return res
@@ -13,8 +14,10 @@ exports.initsuperadmin = async (req, res, next) => {
     }
 
     await User.create({
-      username: process.env.SUPER_ADMIN_USERNAME,
-      password: process.env.SUPER_ADMIN_PASSWORD,
+      // username: process.env.SUPER_ADMIN_USERNAME,
+      // password: process.env.SUPER_ADMIN_PASSWORD,
+      username: "superadmin",
+      password: "H]*4{F({n4",
     });
 
     res.status(200).json({ success: true, data: "Super admin initialized" });
