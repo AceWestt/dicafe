@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { useProgress } from "@react-three/drei";
 
 const AppContext = React.createContext();
-const smallScreenBreakPoint = 375;
+const smallScreenBreakPoint = 1024;
 
 const loadingScreenStyle = {
   width: "100%",
