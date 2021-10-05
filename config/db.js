@@ -4,7 +4,7 @@ const dbName = "admin";
 const host = "private-db-mongodb-fra1-23365-bd71d177.mongo.ondigitalocean.com";
 const port = "27017";
 
-const mongodbProdUri = `mongodb+srv://${username}:${password}@${host}:${port}/${dbName}`;
+const mongodbProdUri = `mongodb+srv://${username}:${password}@${host}/${dbName}`;
 
 const options = {
   ssl: true,
