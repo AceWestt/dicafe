@@ -18,7 +18,7 @@ const loadingScreenStyle = {
 const AppProvider = ({ children }) => {
   const [smallScreen, setSmallScreen] = useState(false);
   const [lang, setLang] = useState("ru");
-  const [isMusicOn, setIsMusicOn] = useState(true);
+  const [isMusicOn, setIsMusicOn] = useState(false);
   const [rendered, setRendered] = useState(false);
 
   const threeLoadingManager = useProgress();

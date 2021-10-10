@@ -36,8 +36,10 @@ client/public/uploads/pages/main/*
 client/public/uploads/pages/order/*
 !client/public/uploads/pages/order/default
 
+config/db.js
+
 #config
-db.js
+db.jsgit 
 
 # misc
 config.env

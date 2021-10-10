@@ -9,7 +9,6 @@ import { useSceneChangeContext } from "../sceneChangeContext";
 import { getCoords } from "../utils/utils";
 
 const Cup = ({
-  controls,
   handleCloseMain,
   rotateHintRef,
   labelsActionsRef,
@@ -80,7 +79,13 @@ const Cup = ({
         onMouseDown={() => {
           isCupRotatable.current = true;
         }}
+        onTouchStart={() => {
+          isCupRotatable.current = true;
+        }}
         onMouseUp={() => {
+          isCupRotatable.current = false;
+        }}
+        onTouchEnd={() => {
           isCupRotatable.current = false;
         }}
         onMouseLeave={() => {
@@ -89,7 +94,7 @@ const Cup = ({
       >
         <Canvas
           className="cup-canvas"
-          pixelRatio={window.devicePixelRatio}
+          dpr={2}
           camera={{
             fov: 20,
             position: [0, 0.08, 0.45],

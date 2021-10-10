@@ -11,15 +11,13 @@ import { useAppContext } from "../context";
 
 const About = () => {
   const { data } = useAxiosGet("/api/aboutscreen");
-  const { lang } = useAppContext();
+  const { lang, smallScreen } = useAppContext();
 
   const {
     cupTargetWrp,
     handleMainScene,
     handleAboutScene,
     handleCupPosChangeRef,
-    setIsCartOn,
-    cartRef,
   } = useSceneChangeContext();
   const sceneRef = useRef(null);
   const aboutContentElements = useRef([]);
@@ -32,65 +30,46 @@ const About = () => {
     ...handleAboutScene.current,
     open: () => {
       sceneRef.current.classList.add("active");
-      setIsCartOn(true);
-      aboutContentElements.current = [...new Set(aboutContentElements.current)];
-      aboutContentElements.current = aboutContentElements.current.filter(
-        (a) => a != null
-      );
       const tl = gsap.timeline();
 
       tl.fromTo(
         aboutContentElements.current,
-        { scale: 0 },
+        { scale: 0, opacity: 0 },
         {
           scale: 1,
+          opacity: 1,
           duration: 0.3,
           stagger: {
             each: 0.1,
             from: "random",
-            onComplete: function () {
-              gsap.fromTo(
-                this.targets()[0],
-                { scale: 1.25 },
-                { scale: 1, duration: 0.1, repeat: 2, yoyo: true }
-              );
-            },
           },
         }
       );
       tl.fromTo(
         backBtnRef.current,
-        { x: "-15vw" },
+        { x: "-15vw", opacity: 0 },
         {
           x: "0",
+          opacity: 1,
           duration: 0.2,
           ease: Linear.easeNone,
         }
       );
-      tl.fromTo(
-        pageTitleRef.current,
-        { y: "-20vw" },
-        {
-          y: "0",
-          duration: 0.2,
-          ease: Linear.easeNone,
-        },
-        "<"
-      );
-      tl.fromTo(
-        cartRef.current?.children,
-        { x: "20vw" },
-        {
-          x: "0",
-          duration: 0.2,
-          stagger: { each: 0.1 },
-          ease: Linear.easeNone,
-        },
-        "<"
-      );
+      if (!smallScreen) {
+        tl.fromTo(
+          pageTitleRef.current,
+          { y: "-20vw" },
+          {
+            y: "0",
+            duration: 0.2,
+            ease: Linear.easeNone,
+          },
+          "<"
+        );
+      }
       tl.fromTo(
         bgBigOwlRef.current,
-        { x: "-30vw", y: "-12vw", rotate: 720 },
+        { x: smallScreen ? "-50vw" : "-30vw", y: "-12vw", rotate: 720 },
         {
           x: "0",
           y: "0",
@@ -101,10 +80,11 @@ const About = () => {
       );
       tl.fromTo(
         bgSmallOwlRef.current,
-        { x: "30vw", y: "-12vw" },
+        { x: smallScreen ? "50vw" : "30vw", y: "-12vw", rotate: -720 },
         {
           x: "0",
           y: "0",
+          rotate: 0,
           duration: 2,
           ease: Linear.easeNone,
         },
@@ -120,6 +100,7 @@ const About = () => {
         sceneRef.current.classList.remove("active");
       },
     });
+
     tl.to(bgSmallOwlRef.current, {
       x: "30vw",
       y: "-12vw",
@@ -137,42 +118,37 @@ const About = () => {
       },
       "<"
     );
+
     tl.to(
       backBtnRef.current,
       {
         x: "-15vw",
+        opacity: 0,
         duration: 0.2,
         ease: Linear.easeNone,
       },
       "<"
     );
-    tl.to(
-      pageTitleRef.current,
-      {
-        y: "-20vw",
-        duration: 0.2,
-        ease: Linear.easeNone,
-      },
-      "<"
-    );
-    tl.to(
-      cartRef.current?.children,
-      {
-        x: "20vw",
-        duration: 0.2,
-        stagger: { each: 0.1 },
-        ease: Linear.easeNone,
-      },
-      "<"
-    );
+    if (!smallScreen) {
+      tl.to(
+        pageTitleRef.current,
+        {
+          y: "-20vw",
+          duration: 0.2,
+          ease: Linear.easeNone,
+        },
+        "<"
+      );
+    }
     tl.to(
       aboutContentElements.current,
       {
         scale: 0,
-        duration: 0.3,
+        opacity: 0,
+        duration: 0.2,
         stagger: {
-          each: 0.1,
-          from: "random",
+          each: 0.05,
+          from: "end",
         },
       },
       "<"
@@ -226,18 +202,21 @@ const About = () => {
             title={data?.point_one.title[lang]}
             text={data?.point_one.text[lang]}
             aboutContentElementsRef={aboutContentElements}
+            n={0}
           />
           <Point
             img={data?.point_two.img}
             title={data?.point_two.title[lang]}
             text={data?.point_two.text[lang]}
             aboutContentElementsRef={aboutContentElements}
+            n={3}
           />
           <Point
             img={data?.point_three.img}
             title={data?.point_three.title[lang]}
             text={data?.point_three.text[lang]}
             aboutContentElementsRef={aboutContentElements}
+            n={6}
           />
         </div>
       </PageWrapper>
@@ -245,7 +224,7 @@ const About = () => {
   );
 };
 
-const Point = ({ className, img, title, text, aboutContentElementsRef }) => {
+const Point = ({ className, img, title, text, aboutContentElementsRef, n }) => {
   return (
     <div className={className ? `point ${className}` : "point"}>
       <div className="img-wrp">
@@ -253,13 +232,27 @@ const Point = ({ className, img, title, text, aboutContentElementsRef }) => {
           <img
             src={img}
             alt="point-img"
-            ref={(e) => aboutContentElementsRef.current.push(e)}
+            ref={(e) => {
+              if (e) aboutContentElementsRef.current[n] = e;
+            }}
           />
         </div>
       </div>
 
-      <h3 ref={(e) => aboutContentElementsRef.current.push(e)}>{title}</h3>
-      <p ref={(e) => aboutContentElementsRef.current.push(e)}>{text}</p>
+      <h3
+        ref={(e) => {
+          if (e) aboutContentElementsRef.current[n + 1] = e;
+        }}
+      >
+        {title}
+      </h3>
+      <p
+        ref={(e) => {
+          if (e) aboutContentElementsRef.current[n + 2] = e;
+        }}
+      >
+        {text}
+      </p>
     </div>
   );
 };

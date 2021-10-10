@@ -33,34 +33,37 @@
 
 @media screen and (max-width: $mobileBreakPoint) {
   .contact-section {
+    height: auto;
+    min-height: 100vh;
+    position: relative;
     .contact-wrapper {
       padding-right: 0;
       .content {
         .for-content {
-          padding-right: 20px;
+          padding-right: 5.333vw;
           margin-top: 0;
           flex-direction: column-reverse;
-          margin-bottom: 40px;
+          margin-bottom: 40.667vw;
           .address {
             display: flex;
             align-items: center;
             flex-direction: column;
             width: 100%;
-            margin-top: 12px;
+            margin-top: 3.2vw;
             img {
               width: 20px;
               margin-right: 0;
-              margin-bottom: 20px;
+              margin-bottom: 5.333vw;
               &:last-of-type {
-                margin-top: 20px;
-                width: 27px;
+                margin-top: 5.333vw;
+                width: 7.2vw;
               }
             }
             span {
-              font-size: 18px;
-              line-height: 19px;
+              font-size: 4.8vw;
+              line-height: 5.067vw;
               color: $black;
-              max-width: 220px;
+              max-width: 58.667vw;
               text-align: center;
             }
           }

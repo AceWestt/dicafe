@@ -10,7 +10,7 @@ const NavTop = () => {
   const { data } = useAxiosGet("/api/general");
 
   const { smallScreen, isMusicOn, setIsMusicOn, lang } = useAppContext();
-  const { isCartOn, cartRef } = useSceneChangeContext();
+  const { cartRef } = useSceneChangeContext();
   if (smallScreen) {
     return (
       <div className="nav top only-mobile">
@@ -30,14 +30,12 @@ const NavTop = () => {
   }
   return (
     <div className="nav top">
-      {isCartOn && (
-        <NavButton
-          className="checkout"
-          icn={data?.checkout_icn}
-          text={data?.checkout_text[lang]}
-          navButtonRef={cartRef}
-        />
-      )}
+      <NavButton
+        className="checkout"
+        icn={data?.checkout_icn}
+        text={data?.checkout_text[lang]}
+        navButtonRef={cartRef}
+      />
     </div>
   );
 };

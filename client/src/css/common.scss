@@ -100,7 +100,7 @@ button {
       }
     }
     .nav-button {
-      cursor: pointer;
+      cursor: $cupCursor, pointer;
       display: flex;
       align-items: center;
       .icn {
@@ -307,17 +307,16 @@ button {
     bottom: 2.146vw;
     @media screen and (max-width: $mobileBreakPoint) {
       width: 50.333vw;
-      bottom: auto;
+      bottom: 2vw;
       left: auto;
-      top: 150.467vw;
-      right: 0;
+      right: 22.667vw;
     }
   }
   #cat-mobile-bg {
     position: absolute;
-    width: 40vw;
-    left: 34.667vw;
-    bottom: 10vw;
+    width: 32vw;
+    left: 37.667vw;
+    top: 153vw;
   }
 }
 
@@ -329,7 +328,7 @@ button {
     height: 31.25vw;
     position: fixed;
     transition: all 0.5s linear;
-    cursor: move;
+    cursor: $cupCursor, move;
     @media screen and (max-width: $mobileBreakPoint) {
       width: 67.467vw;
       height: 113.333vw;
@@ -353,7 +352,8 @@ button {
 
   @media screen and (max-width: $mobileBreakPoint) {
     width: 67.467vw;
-    height: 113.333vw;
+    height: 110.333vw;
+    margin-top: -10vw;
   }
   .cup-img {
     width: 100%;
@@ -381,7 +381,7 @@ button {
     align-items: flex-end;
     .back-btn {
       font-size: 1.352vw;
-      cursor: pointer;
+      cursor: $cupCursor, pointer;
       @media screen and (max-width: $mobileBreakPoint) {
         font-size: 6.933vw;
       }

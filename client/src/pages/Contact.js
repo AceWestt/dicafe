@@ -23,9 +23,7 @@ const Contact = () => {
     cupTargetWrp,
     handleMainScene,
     handleCupPosChangeRef,
-    setIsCartOn,
     setIsCopyOn,
-    cartRef,
     handleContactScene,
   } = useSceneChangeContext();
 
@@ -33,7 +31,6 @@ const Contact = () => {
     ...handleContactScene.current,
     open: () => {
       sectionRef.current.classList.add("active");
-      setIsCartOn(true);
       setIsCopyOn(true);
 
       const tl = gsap.timeline();
@@ -55,17 +52,6 @@ const Contact = () => {
         {
           y: "0",
           duration: 0.2,
-          ease: Linear.easeNone,
-        },
-        "<"
-      );
-      tl.fromTo(
-        cartRef.current?.children,
-        { x: "20vw" },
-        {
-          x: "0",
-          duration: 0.2,
-          stagger: { each: 0.1 },
           ease: Linear.easeNone,
         },
         "<"
@@ -115,16 +101,6 @@ const Contact = () => {
       {
         y: "-20vw",
         duration: 0.5,
-        ease: Linear.easeNone,
-      },
-      "<"
-    );
-    tl.to(
-      cartRef.current?.children,
-      {
-        x: "20vw",
-        duration: 0.5,
-        stagger: { each: 0.1 },
         ease: Linear.easeNone,
       },
       "<"

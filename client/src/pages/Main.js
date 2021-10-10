@@ -11,13 +11,14 @@ import { useAppContext } from "../context";
 import { gsap, Linear } from "gsap";
 import { useSceneChangeContext } from "../sceneChangeContext";
 import { useAxiosGet } from "../hooks/useAxiosGet";
+import music from "./audio/music.mp3";
 
 const labelTl = gsap.timeline({ repeat: -1 });
 
 const Main = () => {
   const { data } = useAxiosGet("/api/mainscreen");
 
-  const { smallScreen, rendered } = useAppContext();
+  const { smallScreen, rendered, isMusicOn } = useAppContext();
   const { handleMainScene } = useSceneChangeContext();
 
   const cloudsRef = useRef([]);
@@ -26,6 +27,7 @@ const Main = () => {
   const bgElementsRef = useRef([]);
   const rotateHintRef = useRef(null);
   const targetRotation = useRef(null);
+  const musicRef = useRef(null);
 
   const labelsActionsRef = useRef({
     about: {},
@@ -53,9 +55,7 @@ const Main = () => {
           labelsParentsRef.current[0].style.display = "flex";
           labelsParentsRef.current[1].style.display = "flex";
           rotateHintRef.current.style.display = "block";
-          if (smallScreen) {
-            handleMainScene.current.cupRef.style.opacity = 1;
-          }
+
           labelTl.resume();
         },
       }
@@ -69,16 +69,16 @@ const Main = () => {
       duration: 0.1,
       stagger: {
         each: 0.2,
-        onComplete: function () {
-          gsap.fromTo(
-            this.targets()[0],
-            { rotateY: 360 },
-            { rotateY: 0, duration: 0.1, repeat: 4 }
-          );
-        },
+        // onComplete: function () {
+        //   gsap.fromTo(
+        //     this.targets()[0],
+        //     { rotateY: 360 },
+        //     { rotateY: 0, duration: 0.1, repeat: 4 }
+        //   );
+        // },
       },
     });
-  }, [handleMainScene, smallScreen]);
+  }, []);
 
   const handleSceneClose = () => {
     return new Promise((resolve) => {
@@ -99,16 +99,12 @@ const Main = () => {
       );
       gbTl.fromTo(
         labelsRef.current,
-        { rotateY: 0 },
+        { opacity: 1 },
         {
-          rotateY: 360,
+          opacity: 0,
           duration: 0.1,
           stagger: {
             each: 0.2,
-            repeat: 4,
-            onComplete: function () {
-              gsap.to(this.targets()[0], { opacity: 0, duration: 0.1 });
-            },
           },
           onComplete: () => {
             gsap.to(labelsParentsRef.current, {
@@ -119,9 +115,6 @@ const Main = () => {
                 labelsParentsRef.current[1].style.display = "none";
                 rotateHintRef.current.style.display = "none";
                 labelTl.pause();
-                if (smallScreen) {
-                  handleMainScene.current.cupRef.style.opacity = 0;
-                }
               },
             });
           },
@@ -152,10 +145,10 @@ const Main = () => {
       { rotate: -10 },
       {
         rotate: 10,
-        duration: 0.3,
+        duration: 0.5,
         stagger: {
           each: 3,
-          repeat: 4,
+          repeat: 2,
           yoyo: true,
           onComplete: function () {
             gsap.to(this.targets()[0], {
@@ -188,22 +181,53 @@ const Main = () => {
       handleSceneOpen();
     }
   }, [rendered, handleSceneOpen]);
+
+  useEffect(() => {
+    if (isMusicOn) {
+      musicRef.current.play();
+    } else {
+      musicRef.current.pause();
+    }
+  }, [isMusicOn]);
   return (
     <Section className="main-section">
       <BgWithElements bgRef={bgElementsRef}>
-        <img
-          src={data?.sattelite}
-          id="satellite-bg"
-          className="satellite only-desktop"
-          alt="satellite"
-        />
+        {!smallScreen && (
+          <>
+            <img
+              src={data?.sattelite}
+              id="satellite-bg"
+              className="satellite only-desktop"
+              alt="satellite"
+            />
+
+            <img
+              src={data?.flower}
+              id="flower-bg"
+              className="flower only-desktop"
+              alt="flower"
+            />
+            <img
+              src={data?.seamonster}
+              id="seamonster-bg"
+              className="seamonster"
+              alt="seamonster"
+            />
+            <img
+              src={data?.snicker}
+              id="snicker-bg"
+              className="snicker only-desktop"
+              alt="snicker"
+            />
+            <img
+              src={data?.houses}
+              id="houses-bg"
+              className="houses"
+              alt="houses"
+            />
+          </>
+        )}
         <img src={data?.lamp} id="lamp-bg" className="lamp" alt="lamp" />
-        <img
-          src={data?.flower}
-          id="flower-bg"
-          className="flower only-desktop"
-          alt="flower"
-        />
         <img
           src={data?.cloud_big}
           id="cloud_big-bg"
@@ -217,24 +241,6 @@ const Main = () => {
           className="cloud_small"
           alt="cloud_small"
           ref={(e) => cloudsRef.current.push(e)}
-        />
-        <img
-          src={data?.seamonster}
-          id="seamonster-bg"
-          className="seamonster"
-          alt="seamonster"
-        />
-        <img
-          src={data?.snicker}
-          id="snicker-bg"
-          className="snicker only-desktop"
-          alt="snicker"
-        />
-        <img
-          src={data?.houses}
-          id="houses-bg"
-          className="houses"
-          alt="houses"
         />
       </BgWithElements>
       <div className="main-content">
@@ -336,6 +342,9 @@ const Main = () => {
           />
         </div>
       </div>
+      <audio autoPlay loop src={music} ref={musicRef}>
+        Your browser does not support the audio element.
+      </audio>
     </Section>
   );
 };

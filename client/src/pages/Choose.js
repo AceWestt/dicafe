@@ -21,6 +21,7 @@ const Choose = () => {
   const [activeCategory, setActiveCategory] = useState(null);
   const { data: products } = useAxiosGet(`/api/products/products`);
   const currentProductSlide = useRef(0);
+  const sliderControl = useRef(null);
 
   useEffect(() => {
     if (categories) {
@@ -32,8 +33,6 @@ const Choose = () => {
     cupTargetWrp,
     handleMainScene,
     handleCupPosChangeRef,
-    setIsCartOn,
-    cartRef,
     handleOrderScene,
   } = useSceneChangeContext();
   const sceneRef = useRef(null);
@@ -45,57 +44,41 @@ const Choose = () => {
   const productImgsRef = useRef([]);
   const textContentRef = useRef([]);
   const productsScrollLeft = useRef([]);
+  const plajkaRef = useRef(null);
 
   handleOrderScene.current = {
     ...handleOrderScene.current,
     open: () => {
       sceneRef.current.classList.add("active");
-      setIsCartOn(true);
-      categoriesRef.current = [...new Set(categoriesRef.current)];
-      categoriesRef.current = categoriesRef.current.filter((a) => a != null);
-      productImgsRef.current = [...new Set(productImgsRef.current)];
-      productImgsRef.current = productImgsRef.current.filter((a) => a != null);
-      textContentRef.current = [...new Set(textContentRef.current)];
-      textContentRef.current = textContentRef.current.filter((a) => a != null);
-
       const tl = gsap.timeline();
-
       tl.fromTo(
         backBtnRef.current,
-        { x: "-15vw" },
+        { x: "-15vw", opacity: 0 },
         {
           x: "0",
+          opacity: 1,
           duration: 0.2,
           ease: Linear.easeNone,
         }
       );
+      if (!smallScreen) {
+        tl.fromTo(
+          pageTitleRef.current,
+          {
+            y: "-20vw",
+          },
+          {
+            y: "0",
+            duration: 0.2,
+            ease: Linear.easeNone,
+          },
+          "<"
+        );
+      }
       tl.fromTo(
-        pageTitleRef.current,
-        {
-          y: "-20vw",
-        },
-        {
-          y: "0",
-          duration: 0.2,
-          ease: Linear.easeNone,
-        },
-        "<"
-      );
-      tl.fromTo(
-        cartRef.current?.children,
-        { x: "20vw" },
-        {
-          x: "0",
-          duration: 0.2,
-          stagger: { each: 0.1 },
-          ease: Linear.easeNone,
-        },
-        "<"
-      );
-      tl.from(
         coronaRef.current,
         {
-          y: "-10vw",
+          y: "-20vw",
           rotate: 180,
         },
         {
@@ -105,46 +88,65 @@ const Choose = () => {
           ease: Linear.easeNone,
         }
       );
-      tl.fromTo(
-        skaterRef.current,
-        { y: "20vw", rotate: 180 },
-        {
-          y: "0",
-          rotate: 0,
-          duration: 0.5,
-          ease: Linear.easeNone,
-        },
-        "<"
-      );
-      tl.fromTo(
-        skaterRef.current,
-        { x: "0" },
-        {
-          x: "110vw",
-          duration: 3,
-          ease: Linear.easeNone,
-        },
-        "<"
-      );
-      tl.fromTo(
-        categoriesRef.current,
-        { scale: 0 },
-        {
-          scale: 1,
-          duration: 0.2,
-          stagger: {
-            each: 0.2,
-            onComplete: function () {
-              gsap.fromTo(
-                this.targets()[0],
-                { scale: 1.25 },
-                { scale: 1, duration: 0.1, repeat: 2, yoyo: true }
-              );
+      if (!smallScreen) {
+        tl.fromTo(
+          skaterRef.current,
+          { y: "20vw", rotate: 180 },
+          {
+            y: "0",
+            rotate: 0,
+            duration: 0.5,
+            ease: Linear.easeNone,
+          },
+          "<"
+        );
+        tl.fromTo(
+          skaterRef.current,
+          { x: "0" },
+          {
+            x: "110vw",
+            duration: 3,
+            ease: Linear.easeNone,
+          },
+          "<"
+        );
+        tl.fromTo(
+          categoriesRef.current,
+          { scale: 0 },
+          {
+            scale: 1,
+            duration: 0.2,
+            stagger: {
+              each: 0.2,
+              onComplete: function () {
+                gsap.fromTo(
+                  this.targets()[0],
+                  { scale: 1.25 },
+                  { scale: 1, duration: 0.1, repeat: 2, yoyo: true }
+                );
+              },
             },
           },
-        },
-        "<"
-      );
+          "<"
+        );
+        tl.fromTo(
+          plajkaRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.005, ease: Linear.easeNone },
+          "<"
+        );
+        tl.fromTo(
+          sliderControl.current,
+          { opacity: 0 },
+          {
+            opacity: 1,
+            duration: 0.5,
+            ease: Linear.easeNone,
+          },
+          "<"
+        );
+      }
+
       tl.fromTo(
         productImgsRef.current,
         { scale: 0 },
@@ -164,23 +166,18 @@ const Choose = () => {
         },
         "<"
       );
+
       tl.fromTo(
         textContentRef.current,
         { scale: 0 },
         {
           scale: 1,
-          duration: 0.2,
+          duration: 0.4,
           stagger: {
-            each: 0.03,
-            onComplete: function () {
-              gsap.fromTo(
-                this.targets()[0],
-                { scale: 1.25 },
-                { scale: 1, duration: 0.1, repeat: 2, yoyo: true }
-              );
-            },
+            each: 0.12,
           },
-        }
+        },
+        "<"
       );
     },
   };
@@ -193,67 +190,77 @@ const Choose = () => {
       },
     });
     tl.to(backBtnRef.current, {
-      x: "-15vw",
+      x: "-30vw",
       duration: 0.5,
       ease: Linear.easeNone,
     });
-    tl.to(
-      pageTitleRef.current,
-      {
-        y: "-20vw",
-        duration: 0.5,
-        ease: Linear.easeNone,
-      },
-      "<"
-    );
-    tl.to(
-      cartRef.current?.children,
-      {
-        x: "20vw",
-        duration: 0.5,
-        stagger: { each: 0.1 },
-        ease: Linear.easeNone,
-      },
-      "<"
-    );
+    if (!smallScreen) {
+      tl.to(
+        pageTitleRef.current,
+        {
+          y: "-20vw",
+          duration: 0.5,
+          ease: Linear.easeNone,
+        },
+        "<"
+      );
+    }
+
     tl.to(
       coronaRef.current,
       {
-        y: "-10vw",
+        y: "-20vw",
         rotate: 180,
         duration: 0.5,
         ease: Linear.easeNone,
       },
       "<"
     );
-    tl.to(
-      skaterRef.current,
-      {
-        y: "20vw",
-        rotate: 180,
-        duration: 0.5,
-        ease: Linear.easeNone,
-      },
-      "<"
-    );
-    tl.to(
-      categoriesRef.current,
-      {
-        scale: 0,
-        duration: 0.5,
-        stagger: {
-          each: 0.2,
+
+    if (!smallScreen) {
+      tl.to(
+        skaterRef.current,
+        {
+          y: "20vw",
+          rotate: 180,
+          duration: 0.5,
+          ease: Linear.easeNone,
         },
-      },
-      "<"
-    );
+        "<"
+      );
+      tl.to(
+        categoriesRef.current,
+        {
+          scale: 0,
+          duration: 0.5,
+          stagger: {
+            each: 0.2,
+          },
+        },
+        "<"
+      );
+      tl.to(
+        plajkaRef.current,
+        { opacity: 0, duration: 0.005, ease: Linear.easeNone },
+        "<"
+      );
+      tl.to(
+        sliderControl.current,
+        {
+          opacity: 0,
+          duration: 0.05,
+          ease: Linear.easeNone,
+        },
+        "<"
+      );
+    }
     tl.to(
       productImgsRef.current,
       {
         scale: 0,
-        duration: 0.5,
+        duration: 0.35,
         stagger: {
-          each: 0.2,
+          each: 0.05,
         },
       },
       "<"
@@ -262,9 +269,9 @@ const Choose = () => {
       textContentRef.current,
       {
         scale: 0,
-        duration: 0.5,
+        duration: 0.35,
         stagger: {
-          each: 0.03,
+          each: 0.05,
         },
       },
       "<"
@@ -272,6 +279,8 @@ const Choose = () => {
     cupTargetWrp.current = handleMainScene.current?.cupRef;
     handleCupPosChangeRef.current();
   };
+
+  let productTextIndex = 0;
 
   return (
     <Section className="choose-section" sectionRef={sceneRef}>
@@ -303,8 +312,11 @@ const Choose = () => {
       >
         <div className="coffee-menu">
           <div className="products">
-            {products?.map((p) => {
+            {products?.map((p, i) => {
               if (p.category_id === activeCategory?._id) {
+                if (i > 0) {
+                  productTextIndex += 4;
+                }
                 return (
                   <Product
                     product={p}
@@ -313,15 +325,19 @@ const Choose = () => {
                     productImgsRef={productImgsRef}
                     textContentRef={textContentRef}
                     lang={lang}
+                    index={i}
+                    textIndex={productTextIndex}
                   />
                 );
               }
               return "";
             })}
           </div>
-          {!smallScreen && <img src={plajka} className="plajka" alt="plajka" />}
           {!smallScreen && (
-            <div className="slider-control">
+            <img src={plajka} className="plajka" alt="plajka" ref={plajkaRef} />
+          )}
+          {!smallScreen && (
+            <div className="slider-control" ref={sliderControl}>
               <img
                 src={prevSlideImg}
                 alt="prevSlide"
@@ -369,24 +385,52 @@ const Product = ({
   textContentRef,
   lang,
   scrollRef,
+  index,
+  textIndex,
 }) => {
   const { _id, img, title, subtitle, price } = product;
+
   return (
-    <div className="product" ref={(e) => scrollRef.current.push(e)}>
+    <div
+      className="product"
+      ref={(e) => {
+        if (e) scrollRef.current[index] = e;
+      }}
+    >
       <img
         src={img}
         alt={`product-${_id}`}
         ref={(e) => {
-          productImgsRef.current.push(e);
+          if (e) {
+          }
+          productImgsRef.current[index] = e;
         }}
       />
-      <h5 ref={(e) => textContentRef.current.push(e)}>{title[lang]}</h5>
-      <h6 ref={(e) => textContentRef.current.push(e)}>{subtitle[lang]}</h6>
-      <p ref={(e) => textContentRef.current.push(e)}>
+      <h5
+        ref={(e) => {
+          if (e) textContentRef.current[textIndex] = e;
+        }}
+      >
+        {title[lang]}
+      </h5>
+      <h6
+        ref={(e) => {
+          if (e) textContentRef.current[textIndex + 1] = e;
+        }}
+      >
+        {subtitle[lang]}
+      </h6>
+      <p
+        ref={(e) => {
+          if (e) textContentRef.current[textIndex + 2] = e;
+        }}
+      >
         {price} {lang === "ru" ? "сум" : "so'm"}
       </p>
       <button
-        ref={(e) => textContentRef.current.push(e)}
+        ref={(e) => {
+          if (e) textContentRef.current[textIndex + 3] = e;
+        }}
         onClick={() => {
           console.log(_id);
         }}
@@ -455,7 +499,7 @@ const Categories = ({
   }
   return (
     <div className="categories">
-      {categories?.map((c) => {
+      {categories?.map((c, i) => {
         return (
           <div
             key={`category-${c._id}`}
@@ -463,7 +507,9 @@ const Categories = ({
             onClick={() => {
               setActiveCategory(c);
             }}
-            ref={(e) => categoriesRef.current.push(e)}
+            ref={(e) => {
+              if (e) categoriesRef.current[i] = e;
+            }}
           >
             {c.title[lang]}
           </div>

@@ -2,6 +2,8 @@ $black: #000;
 
 $mobileBreakPoint: 1024px;
 
+$cupCursor: url("./cupCursor.svg");
+
 @mixin scrollbars(
   $size,
   $foreground-color,

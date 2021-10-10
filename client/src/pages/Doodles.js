@@ -34,8 +34,6 @@ const Doodles = () => {
     cupTargetWrp,
     handleMainScene,
     handleCupPosChangeRef,
-    setIsCartOn,
-    cartRef,
     handleDoodleScene,
   } = useSceneChangeContext();
 
@@ -43,8 +41,6 @@ const Doodles = () => {
     ...handleDoodleScene.current,
     open: () => {
       sectionRef.current.classList.add("active");
-      setIsCartOn(true);
-
       const tl = gsap.timeline();
 
       tl.fromTo(
@@ -64,17 +60,6 @@ const Doodles = () => {
         {
           y: "0",
           duration: 0.2,
-          ease: Linear.easeNone,
-        },
-        "<"
-      );
-      tl.fromTo(
-        cartRef.current?.children,
-        { x: "20vw" },
-        {
-          x: "0",
-          duration: 0.2,
-          stagger: { each: 0.1 },
           ease: Linear.easeNone,
         },
         "<"
@@ -105,16 +90,6 @@ const Doodles = () => {
       {
         y: "-20vw",
         duration: 0.5,
-        ease: Linear.easeNone,
-      },
-      "<"
-    );
-    tl.to(
-      cartRef.current?.children,
-      {
-        x: "20vw",
-        duration: 0.5,
-        stagger: { each: 0.1 },
         ease: Linear.easeNone,
       },
       "<"
