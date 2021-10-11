@@ -51,18 +51,14 @@ const Cup = ({
   }, [cupTargetWrp, smallScreen]);
 
   useEffect(() => {
-    window.addEventListener("resize", handleCupPosChange);
-    handleCupPosChange();
-    return () => {
-      window.removeEventListener("resize", handleCupPosChange);
-    };
-  }, [handleCupPosChange]);
-
-  useEffect(() => {
     handleCupPosChangeRef.current = () => {
       handleCupPosChange();
     };
   }, [handleCupPosChange, handleCupPosChangeRef]);
+
+  useEffect(() => {
+    handleCupPosChange();
+  }, [handleCupPosChange]);
 
   return (
     <div
