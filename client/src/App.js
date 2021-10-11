@@ -5,6 +5,7 @@ import Choose from "./pages/Choose";
 import Doodles from "./pages/Doodles";
 import Contact from "./pages/Contact";
 import Section from "./components/Section";
+import Cart from "./pages/Cart";
 import { AppProvider } from "./context";
 import { SceneChangeProvider } from "./sceneChangeContext";
 import { NavTop, NavBottom } from "./components/Navigation";
@@ -26,6 +27,7 @@ function App() {
             <Contact />
             <NavTop />
             <NavBottom />
+            <Cart />
           </Section>
         </SceneChangeProvider>
       </AppProvider>

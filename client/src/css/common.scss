@@ -85,6 +85,15 @@ button {
               max-width: 15.2vw;
               max-height: 13.333vw;
             }
+            .alert {
+              width: 3.2vw;
+              height: 3.2vw;
+              background: #ddc4a8;
+              border-radius: 50%;
+              position: absolute;
+              top: 3.2vw;
+              left: 9.333vw;
+            }
           }
         }
         &.left {
@@ -116,6 +125,15 @@ button {
       &.checkout {
         margin-right: 0;
         margin-left: auto;
+        .alert {
+          width: 0.6vw;
+          height: 0.6vw;
+          background: #ddc4a8;
+          border-radius: 50%;
+          position: absolute;
+          top: 0;
+          left: 1.302vw;
+        }
       }
       &.sound {
         margin-left: 0;

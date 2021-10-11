@@ -13,6 +13,8 @@ import { useAxiosGet } from "../hooks/useAxiosGet";
 import plajka from "./imgs/choose/plajka.png";
 import prevSlideImg from "./imgs/choose/prevSlide.svg";
 import nextSlideImg from "./imgs/choose/nextslide.svg";
+import decrementBtn from "./imgs/choose/decrementButton.svg";
+import incrementBtn from "./imgs/choose/incrementButton.svg";
 
 const Choose = () => {
   const { lang, smallScreen } = useAppContext();
@@ -174,7 +176,7 @@ const Choose = () => {
           scale: 1,
           duration: 0.4,
           stagger: {
-            each: 0.12,
+            each: 0.1,
           },
         },
         "<"
@@ -271,7 +273,7 @@ const Choose = () => {
         scale: 0,
         duration: 0.35,
         stagger: {
-          each: 0.05,
+          each: 0.04,
         },
       },
       "<"
@@ -315,7 +317,7 @@ const Choose = () => {
             {products?.map((p, i) => {
               if (p.category_id === activeCategory?._id) {
                 if (i > 0) {
-                  productTextIndex += 4;
+                  productTextIndex += 5;
                 }
                 return (
                   <Product
@@ -390,6 +392,10 @@ const Product = ({
 }) => {
   const { _id, img, title, subtitle, price } = product;
 
+  const [amount, setAmount] = useState(0);
+
+  const { cartList, setCartList } = useAppContext();
+
   return (
     <div
       className="product"
@@ -420,19 +426,52 @@ const Product = ({
       >
         {subtitle[lang]}
       </h6>
-      <p
+      <div
+        className="amount-control"
         ref={(e) => {
           if (e) textContentRef.current[textIndex + 2] = e;
+        }}
+      >
+        <img
+          src={decrementBtn}
+          alt="decrement"
+          onClick={() => {
+            if (amount > 0) {
+              setAmount(amount - 1);
+            }
+          }}
+        />
+        <span>{amount === 0 ? "-" : amount}</span>
+        <img
+          src={incrementBtn}
+          alt="decrement"
+          onClick={() => setAmount(amount + 1)}
+        />
+      </div>
+      <p
+        ref={(e) => {
+          if (e) textContentRef.current[textIndex + 3] = e;
         }}
       >
         {price} {lang === "ru" ? "сум" : "so'm"}
       </p>
       <button
         ref={(e) => {
-          if (e) textContentRef.current[textIndex + 3] = e;
+          if (e) textContentRef.current[textIndex + 4] = e;
         }}
         onClick={() => {
-          console.log(_id);
+          if (amount > 0) {
+            const cartItem = {
+              id: _id,
+              title: title,
+              subtitle: subtitle,
+              img: img,
+              price: price,
+              amount: amount,
+            };
+            setCartList([...cartList, cartItem]);
+            setAmount(0);
+          }
         }}
       >
         <span>

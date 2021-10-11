@@ -9,7 +9,8 @@ import { useAxiosGet } from "../hooks/useAxiosGet";
 const NavTop = () => {
   const { data } = useAxiosGet("/api/general");
 
-  const { smallScreen, isMusicOn, setIsMusicOn, lang } = useAppContext();
+  const { smallScreen, isMusicOn, setIsMusicOn, lang, setIsCartOpen } =
+    useAppContext();
   const { cartRef } = useSceneChangeContext();
   if (smallScreen) {
     return (
@@ -23,7 +24,11 @@ const NavTop = () => {
           />
         </div>
         <div className="right">
-          <NavButton className="cart" icn={checkoutIcnMobile} />
+          <NavButton
+            className="cart"
+            icn={checkoutIcnMobile}
+            onClick={() => setIsCartOpen(true)}
+          />
         </div>
       </div>
     );
@@ -35,6 +40,7 @@ const NavTop = () => {
         icn={data?.checkout_icn}
         text={data?.checkout_text[lang]}
         navButtonRef={cartRef}
+        onClick={() => setIsCartOpen(true)}
       />
     </div>
   );
@@ -72,6 +78,7 @@ const NavBottom = () => {
 };
 
 const NavButton = ({ icn, text, className, onClick, navButtonRef }) => {
+  const { cartList } = useAppContext();
   return (
     <div
       className={className ? `nav-button ${className}` : "nav-button"}
@@ -80,6 +87,10 @@ const NavButton = ({ icn, text, className, onClick, navButtonRef }) => {
     >
       <img src={icn} className="icn" alt="icn" />
       {text && <span>{text} </span>}
+      {cartList.length > 0 && className === "checkout" && (
+        <div className="alert" />
+      )}
+      {cartList.length > 0 && className === "cart" && <div className="alert" />}
     </div>
   );
 };

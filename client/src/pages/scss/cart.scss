@@ -1,0 +1,249 @@
+.cart-modal {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: flex-end;
+  background: rgba($color: #000000, $alpha: 0.5);
+  &__container {
+    width: 26.406vw;
+    height: 100%;
+    background: #171717;
+    padding: 2.865vw 3.021vw 3.125vw;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    > div {
+      width: 100%;
+      height: 100%;
+      &.header,
+      &.footer {
+        height: auto;
+        flex-shrink: 0;
+      }
+      &.header {
+        > div {
+          width: 100%;
+          &.top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            span {
+              font-size: 1.354vw;
+            }
+            img {
+              width: 0.781vw;
+              cursor: $cupCursor, pointer;
+            }
+          }
+          &.bottom {
+            margin-top: 0.781vw;
+
+            img {
+              width: 100%;
+            }
+          }
+        }
+      }
+      &.body {
+        padding: 1.563vw 0.521vw;
+        overflow-y: scroll;
+        @include scrollbars(0.417vw, #333333);
+        .empty-msg {
+          text-align: center;
+          width: 100%;
+          font-size: 1.354vw;
+          margin: 0;
+        }
+        .item {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          margin-bottom: 0.521vw;
+          > div {
+            width: 100%;
+            &.img {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              padding: 0.781vw;
+              img {
+                max-width: 100%;
+              }
+            }
+            &.text {
+              > div {
+                width: 100%;
+                &.title {
+                  display: flex;
+                  justify-content: space-between;
+                  span {
+                    font-size: 1.354vw;
+                  }
+                }
+                &.subtitle {
+                  font-size: 0.833vw;
+                  margin-top: 0.625vw;
+                  text-align: center;
+                }
+                &.amount-control {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  margin-top: 0.833vw;
+                  img {
+                    width: 1.563vw;
+                    cursor: $cupCursor, pointer;
+                    &:first-child {
+                      margin-right: 0.521vw;
+                    }
+                  }
+                }
+                &.price {
+                  font-size: 1.354vw;
+                  text-align: center;
+                  margin-top: 1.042vw;
+                }
+              }
+            }
+          }
+        }
+      }
+      &.footer {
+        padding-top: 1.042vw;
+        > div {
+          width: 100%;
+          &.total {
+            text-align: center;
+            font-size: 1.354vw;
+            margin-bottom: 1.042vw;
+          }
+          &.line {
+            img {
+              width: 100%;
+            }
+          }
+          &.btn-holder {
+            display: flex;
+            justify-content: center;
+            .order-button {
+              width: 11.563vw;
+              cursor: $cupCursor, pointer;
+              margin-top: 1.563vw;
+              img {
+                width: 100%;
+              }
+              span {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                color: #171717;
+                font-size: 1.354vw;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $mobileBreakPoint) {
+  .cart-modal {
+    position: fixed;
+    &__container {
+      width: 100%;
+      background: #171717;
+      padding: 10.667vw;
+      > div {
+        &.header {
+          > div {
+            &.top {
+              span {
+                font-size: 6.933vw;
+              }
+              img {
+                width: 4vw;
+              }
+            }
+            &.bottom {
+              margin-top: 4vw;
+            }
+          }
+        }
+        &.body {
+          padding: 8vw 2.667vw;
+          overflow-y: scroll;
+          @include scrollbars(0.533vw, #333333);
+          .empty-msg {
+            font-size: 6.933vw;
+          }
+          .item {
+            margin-bottom: 2.667vw;
+            > div {
+              width: 100%;
+              &.img {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 2.133vw;
+              }
+              &.text {
+                > div {
+                  &.title {
+                    span {
+                      font-size: 6.933vw;
+                    }
+                  }
+                  &.subtitle {
+                    font-size: 4.267vw;
+                    margin-top: 3.2vw;
+                  }
+                  &.amount-control {
+                    margin-top: 4.267vw;
+                    img {
+                      width: 8vw;
+                      &:first-child {
+                        margin-right: 2.667vw;
+                      }
+                    }
+                  }
+                  &.price {
+                    font-size: 6.933vw;
+                    margin-top: 5.333vw;
+                  }
+                }
+              }
+            }
+          }
+        }
+        &.footer {
+          padding-top: 5.333vw;
+          > div {
+            &.total {
+              font-size: 6.933vw;
+              margin-bottom: 5.333vw;
+            }
+            &.btn-holder {
+              .order-button {
+                width: 59.2vw;
+                margin-top: 8vw;
+                span {
+                  font-size: 6.933vw;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

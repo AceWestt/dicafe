@@ -20,6 +20,8 @@ const AppProvider = ({ children }) => {
   const [lang, setLang] = useState("ru");
   const [isMusicOn, setIsMusicOn] = useState(false);
   const [rendered, setRendered] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [cartList, setCartList] = useState([]);
 
   const threeLoadingManager = useProgress();
 
@@ -64,6 +66,10 @@ const AppProvider = ({ children }) => {
         setIsMusicOn,
         rendered,
         setRendered,
+        isCartOpen,
+        setIsCartOpen,
+        cartList,
+        setCartList,
       }}
     >
       {!rendered && (

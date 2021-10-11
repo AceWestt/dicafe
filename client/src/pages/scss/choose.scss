@@ -80,6 +80,20 @@
             margin: 0 0 1.25vw 0;
             font-weight: 400;
           }
+          .amount-control {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.625vw;
+            img {
+              margin-bottom: 0;
+              cursor: $cupCursor, pointer;
+              width: 1.563vw;
+            }
+            span {
+              margin: 0 0.521vw;
+              font-size: 0.833vw;
+            }
+          }
           p {
             font-size: 1.354vw;
             line-height: 1.458vw;
@@ -229,6 +243,16 @@
             }
             h6 {
               display: none;
+            }
+            .amount-control {
+              margin-bottom: 3.2vw;
+              img {
+                width: 8vw;
+              }
+              span {
+                margin: 0 2.667vw;
+                font-size: 4.267vw;
+              }
             }
             p {
               font-size: 5.867vw;
