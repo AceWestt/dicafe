@@ -63,9 +63,12 @@ const Cart = () => {
       },
       lang: "ru",
     };
+    const encodedString = Buffer.from(
+      `m=${body.merchant};ac.order_id=${body.account.order_id};a=${body.amount};c=https://dicafe.uz/`
+    ).toString("base64");
     try {
       const res = await axios.get(
-        `https://test.paycom.uz/base64(m=${body.merchant};ac.order_id=${body.account.order_id};a=${body.amount};c=https://dicafe.uz/)`,
+        `https://test.paycom.uz/${encodedString}`,
         config
       );
       console.log(res);
