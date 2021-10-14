@@ -5,6 +5,7 @@ import line from "./imgs/cart/line.svg";
 import orderBtnBg from "./imgs/cart/orderButtonBg.svg";
 import incrementBtn from "./imgs/cart/incrementButton.svg";
 import decrementBtn from "./imgs/cart/decrementButton.svg";
+import axios from "axios";
 
 const Cart = () => {
   const { isCartOpen, setIsCartOpen, lang, cartList, setCartList } =
@@ -44,12 +45,34 @@ const Cart = () => {
     setCartList(newCartList);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const order = {
       list: cartList,
       totalPrice: totalPrice,
     };
-    console.log(order);
+    const config = {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+    const body = {
+      merchant: "60efb0e44be7164be6d93176",
+      amount: totalPrice,
+      account: {
+        order_id: 1,
+      },
+      lang: "ru",
+    };
+    try {
+      const res = await axios.get(
+        `https://test.paycom.uz/base64(m=${body.merchant};ac.order_id=${body.account.order_id};a=${body.amount};c=https://dicafe.uz/)`,
+        config
+      );
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+      console.log(error.response);
+    }
   };
 
   if (isCartOpen) {
