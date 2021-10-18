@@ -18,7 +18,7 @@ app.get(/^\/(?!api).*$/, function (req, res) {
 });
 
 app.use(express.json());
-// app.use(jsonrpc());
+app.use(jsonrpc());
 app.use(fileUpload());
 
 app.use('/api/auth', require('./routes/auth'));
@@ -31,7 +31,7 @@ app.use('/api/general', require('./routes/generallayout'));
 app.use('/api/userdoodles', require('./routes/userdoodle'));
 app.use('/api/products', require('./routes/product'));
 app.use('/api/public', express.static('client/public'));
-// app.use('/api/payme/', require('./payme/routes/payme'));
+app.use('/api/payme/', require('./payme/routes/payme'));
 
 app.use(errorHandler);
 
