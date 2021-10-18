@@ -19,7 +19,7 @@ exports.payme = (req, res, next) => {
 			// 		res.json({ allow: true });
 			// 		break;
 			// }
-			res.json(jsonRPcResponse);
+			res.status(-32504).json(jsonRPcResponse);
 		} else {
 			res.sendStatus(204);
 		}
