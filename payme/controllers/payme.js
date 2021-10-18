@@ -14,7 +14,7 @@ exports.payme = (req, res, next) => {
 
 	res.rpc('CheckPerformTransaction', (params, respond) => {
 		if (!isauthorized) {
-			return respond({
+			respond({
 				error: {
 					code: -32504,
 					message: 'Insufficient privilege to perform this method.',
@@ -22,6 +22,5 @@ exports.payme = (req, res, next) => {
 				},
 			});
 		}
-		respond({ result: params });
 	});
 };
