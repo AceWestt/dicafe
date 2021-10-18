@@ -68,7 +68,7 @@ const Cart = () => {
     ).toString("base64");
     try {
       const res = await axios.get(
-        `https://test.paycom.uz/${encodedString}`,
+        `https://checkout.paycom.uz/${encodedString}`,
         config
       );
       console.log(res);
