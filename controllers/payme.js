@@ -14,12 +14,12 @@ exports.payme = (req, res, next) => {
 
 	rpcServer.receive(jsonRPCRequest).then((jsonRPcResponse) => {
 		if (jsonRPcResponse) {
-			switch (jsonRPCRequest.method) {
-				case 'CheckPerformTransaction':
-					res.json({ allow: true });
-					break;
-			}
-			res.status(200).json(jsonRPcResponse);
+			// switch (jsonRPCRequest.method) {
+			// 	case 'CheckPerformTransaction':
+			// 		res.json({ allow: true });
+			// 		break;
+			// }
+			res.json(jsonRPcResponse);
 		} else {
 			res.sendStatus(204);
 		}
