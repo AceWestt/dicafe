@@ -17,6 +17,7 @@ app.get(/^\/(?!api).*$/, function (req, res) {
 });
 
 app.use(express.json());
+app.use(express.jsonrpc());
 app.use(fileUpload());
 
 app.use('/api/auth', require('./routes/auth'));

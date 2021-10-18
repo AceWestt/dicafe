@@ -1,27 +1,12 @@
 const ErrorResponse = require('../utils/errorResponse');
 const PaycomError = require('../utils/paycomError');
-const { JSONRPCServer } = require('json-rpc-2.0');
-
-const rpcServer = new JSONRPCServer();
-
-rpcServer.addMethod('CheckPerformTransaction', (params) => {
-	return { reqs: params };
-});
+const jsonrpc = require('node-express-json-rpc2');
 
 exports.payme = (req, res, next) => {
-	const jsonRPCRequest = req.body;
 	// const userID = getUserID(req);
+	res.rpc('notification_method', (params) => {});
 
-	rpcServer.receive(jsonRPCRequest).then((jsonRPcResponse) => {
-		if (jsonRPcResponse) {
-			// switch (jsonRPCRequest.method) {
-			// 	case 'CheckPerformTransaction':
-			// 		res.json({ allow: true });
-			// 		break;
-			// }
-			res.status(200).json(jsonRPcResponse);
-		} else {
-			res.sendStatus(204);
-		}
+	res.rpc('CheckPerformTransaction', (params, respond) => {
+		respond({ result: params });
 	});
 };
