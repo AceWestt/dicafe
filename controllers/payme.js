@@ -12,7 +12,7 @@ exports.payme = (req, res, next) => {
 		if (jsonRPcResponse) {
 			switch (jsonRPCRequest.method) {
 				case 'CheckPerformTransaction':
-					res.status(200).json({ msg: 'checkperformtransaction' });
+					res.json(jsonRPcResponse);
 					break;
 			}
 			// res.status(200).json(jsonRPcResponse);
