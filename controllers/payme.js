@@ -4,6 +4,10 @@ const { JSONRPCServer } = require('json-rpc-2.0');
 
 const rpcServer = new JSONRPCServer();
 
+rpcServer.addMethod('CheckPerformTransaction', ({ params }) => {
+	return params;
+});
+
 exports.payme = (req, res, next) => {
 	const jsonRPCRequest = req.body;
 	// const userID = getUserID(req);
