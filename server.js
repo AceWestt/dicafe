@@ -31,7 +31,7 @@ app.use('/api/general', require('./routes/generallayout'));
 app.use('/api/userdoodles', require('./routes/userdoodle'));
 app.use('/api/products', require('./routes/product'));
 app.use('/api/public', express.static('client/public'));
-app.use('/api/payme/', require('./payme/routes/payme'));
+// app.use('/api/payme/', require('./payme/routes/payme'));
 
 app.use(errorHandler);
 
