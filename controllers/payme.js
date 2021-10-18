@@ -6,7 +6,7 @@ const rpcServer = new JSONRPCServer();
 
 exports.payme = (req, res, next) => {
 	const jsonRPCRequest = req.body;
-	const userID = getUserID(req);
+	// const userID = getUserID(req);
 
 	rpcServer.receive(jsonRPCRequest, { userID }).then((jsonRPcResponse) => {
 		if (jsonRPcResponse) {
