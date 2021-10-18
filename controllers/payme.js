@@ -4,8 +4,8 @@ const { JSONRPCServer } = require('json-rpc-2.0');
 
 const rpcServer = new JSONRPCServer();
 
-rpcServer.addMethod('CheckPerformTransaction', (res) => {
-	return res;
+rpcServer.addMethod('CheckPerformTransaction', (req, res, next) => {
+	return { req, res, next };
 });
 
 exports.payme = (req, res, next) => {
