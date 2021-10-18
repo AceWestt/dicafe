@@ -8,7 +8,7 @@ exports.payme = (req, res, next) => {
 	const jsonRPCRequest = req.body;
 	// const userID = getUserID(req);
 
-	rpcServer.receive(jsonRPCRequest, { userID }).then((jsonRPcResponse) => {
+	rpcServer.receive(jsonRPCRequest).then((jsonRPcResponse) => {
 		if (jsonRPcResponse) {
 			switch (jsonRPCRequest.method) {
 				case 'CheckPerformTransaction':
