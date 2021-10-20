@@ -121,7 +121,17 @@ exports.paymeAnother = (req, res, next) => {
 	console.log(headers);
 	const merchant = new Merchant(config);
 
-	// const isauthorized = merchant.authorize(req.headers);
+	const isauthorized = merchant.authorize(req.headers);
+	if (!isauthorized) {
+		res.json({
+			jsonrpc: '2.0',
+			id: reqId,
+			error: {
+				code: ERROR_INSUFFICIENT_PRIVILEGE,
+				message: 'Insufficient privilege to perform this method.',
+			},
+		});
+	}
 	res.json({
 		jsonrpc: '2.0',
 		id: reqId,
