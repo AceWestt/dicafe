@@ -72,7 +72,7 @@ const Cart = () => {
 				const encodedString = Buffer.from(
 					`m=${merchant};ac.order_id=${createdOrder._id};ac.phone=${
 						createdOrder.phone
-					}a=${500 * 100};c=https://dicafe.uz/`
+					};a=${500 * 100};c=https://dicafe.uz/`
 				).toString('base64');
 				window.location.replace(`https://test.paycom.uz/${encodedString}`);
 				// try {
