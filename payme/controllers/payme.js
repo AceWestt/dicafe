@@ -117,31 +117,14 @@ exports.payme = (req, res, next) => {
 };
 
 exports.paymeAnother = (req, res, next) => {
+	const params = req.body;
+	console.log(params);
 	res.json({
 		error: {
 			code: -31001,
 			message: 'hello',
 		},
 	});
-	// server.addMethodAdvanced('CheckPerformTransaction', (jsonRPCRequest) => {
-	// 	if (isValid(jsonRPCRequest.params)) {
-	// 		return {
-	// 			jsonrpc: JSONRPC,
-	// 			id: jsonRPCRequest.id,
-	// 			result: 'Params are valid',
-	// 		};
-	// 	} else {
-	// 		return {
-	// 			jsonrpc: JSONRPC,
-	// 			id: jsonRPCRequest.id,
-	// 			error: {
-	// 				code: -100,
-	// 				message: 'Params are invalid',
-	// 				data: jsonRPCRequest.params,
-	// 			},
-	// 		};
-	// 	}
-	// });
 };
 
 const errorResponse = (errcode, message, data) => {
