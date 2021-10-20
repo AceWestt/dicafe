@@ -1,4 +1,5 @@
 const Merchant = require('../models/Merchant');
+const Order = require('../models/Order');
 const config = require('../config/config');
 const validate = require('../utils/validate');
 
@@ -91,6 +92,18 @@ const CheckPerformTransaction = (res, reqid, params) => {
 				},
 			});
 		}
+	}
+	const order = Order.findOne(params.account.order_id);
+	if (!order) {
+		res.json({
+			jsonrpc: JSON_RPC_VERSION,
+			id: reqid,
+			error: {
+				code: ERROR_INVALID_ACCOUNT,
+				message: errorInvalidAccountMsgLocale,
+				data: 'order_id',
+			},
+		});
 	}
 };
 
