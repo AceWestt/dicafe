@@ -1,6 +1,7 @@
 const Merchant = require('../models/Merchant');
 const config = require('../config/config');
 const validate = require('../utils/validate');
+const jsonrpc = require('node-express-json-rpc2/lib/jsonrpc');
 
 const ERROR_INSUFFICIENT_PRIVILEGE = '-32504';
 const ERROR_INVALID_AMOUNT = '-31001';
@@ -30,7 +31,7 @@ exports.payme = (req, res, next) => {
 			if ((valid.msg = 'Incorrect amount!')) {
 				respond({
 					error: {
-						code: -31001,
+						code: jsonrpc.PARSE_ERROR,
 						message: 'Incorrect amount',
 						data: null,
 					},
