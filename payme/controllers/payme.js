@@ -32,7 +32,7 @@ exports.payme = (req, res, next) => {
 			}
 		}
 
-		respond({ result: { data: 'default' } });
+		// respond({ result: { data: 'default' } });
 	});
 	res.rpc('CreateTransaction', (params, respond) => {
 		if (!isauthorized) {
