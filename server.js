@@ -1,6 +1,5 @@
 require('dotenv').config({ path: './config.env' });
 const express = require('express');
-const jsonrpc = require('node-express-json-rpc2');
 const path = require('path');
 const fileUpload = require('express-fileupload');
 const connectDB = require('./config/db');
