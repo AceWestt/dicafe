@@ -83,14 +83,10 @@ const CheckPerformTransaction = (res, reqid, params) => {
 		if (valid.msg === ERROR_INVALID_ACCOUNT_MSG) {
 			res.json({
 				jsonrpc: JSON_RPC_VERSION,
-				id: reqId,
+				id: reqid,
 				error: {
 					code: ERROR_INVALID_ACCOUNT,
-					message: {
-						ru: errorInvalidAccountMsgLocale.ru,
-						uz: errorInvalidAccountMsgLocale.uz,
-						en: errorInvalidAccountMsgLocale.en,
-					},
+					message: errorInvalidAccountMsgLocale,
 					data: 'order_id',
 				},
 			});
