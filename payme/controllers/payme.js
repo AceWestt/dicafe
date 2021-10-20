@@ -6,6 +6,8 @@ exports.payme = (req, res, next) => {
 
 	const merchant = new Merchant(config);
 
+	console.log(req.headers);
+
 	const isauthorized = merchant.authorize(req.headers);
 
 	console.log(merchant, isauthorized);
