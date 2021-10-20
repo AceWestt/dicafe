@@ -96,17 +96,17 @@ const CheckPerformTransaction = async (res, reqid, params) => {
 	const order_id = params.account.order_id || params.account.DiCafe;
 	const order = await Order.findById(order_id);
 	console.log(order_id, order);
-	if (!order) {
-		res.json({
-			jsonrpc: JSON_RPC_VERSION,
-			id: reqid,
-			error: {
-				code: ERROR_INVALID_ACCOUNT,
-				message: errorInvalidAccountMsgLocale,
-				data: 'order_id',
-			},
-		});
-	}
+	// if (!order) {
+	// 	res.json({
+	// 		jsonrpc: JSON_RPC_VERSION,
+	// 		id: reqid,
+	// 		error: {
+	// 			code: ERROR_INVALID_ACCOUNT,
+	// 			message: errorInvalidAccountMsgLocale,
+	// 			data: 'order_id',
+	// 		},
+	// 	});
+	// }
 	res.json({
 		jsonrpc: JSON_RPC_VERSION,
 		id: reqid,
