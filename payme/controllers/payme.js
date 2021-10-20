@@ -107,17 +107,17 @@ const CheckPerformTransaction = async (res, reqid, params) => {
 			},
 		});
 	}
-	if (order.state !== 1) {
-		res.json({
-			jsonrpc: JSON_RPC_VERSION,
-			id: reqid,
-			error: {
-				code: ERROR_INVALID_ACCOUNT,
-				message: errorInvalidAccountMsgLocale,
-				data: 'order_id',
-			},
-		});
-	}
+	// if (order.state !== 1) {
+	// 	res.json({
+	// 		jsonrpc: JSON_RPC_VERSION,
+	// 		id: reqid,
+	// 		error: {
+	// 			code: ERROR_INVALID_ACCOUNT,
+	// 			message: errorInvalidAccountMsgLocale,
+	// 			data: 'order_id',
+	// 		},
+	// 	});
+	// }
 	res.json({
 		jsonrpc: JSON_RPC_VERSION,
 		id: reqid,
