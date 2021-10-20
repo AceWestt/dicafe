@@ -134,7 +134,7 @@ const CreateTransaction = (res, reqId, params) => {
 	const valid = validate(params);
 	if (!valid.valid) {
 		if (valid.msg === ERROR_INVALID_AMOUNT_MSG) {
-			res.json({
+			return res.json({
 				jsonrpc: JSON_RPC_VERSION,
 				id: reqId,
 				error: {
@@ -144,7 +144,7 @@ const CreateTransaction = (res, reqId, params) => {
 			});
 		}
 		if (valid.msg === ERROR_INVALID_ACCOUNT_MSG) {
-			res.json({
+			return res.json({
 				jsonrpc: JSON_RPC_VERSION,
 				id: reqId,
 				error: {
@@ -155,6 +155,14 @@ const CreateTransaction = (res, reqId, params) => {
 			});
 		}
 	}
+	return res.json({
+		jsonrpc: JSON_RPC_VERSION,
+		id: reqId,
+		error: {
+			code: ERROR_METHOD_NOT_FOUND,
+			message: ERROR_METHOD_NOT_FOUND_MSG,
+		},
+	});
 };
 
 const response = (reqId, data) => {
