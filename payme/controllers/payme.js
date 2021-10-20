@@ -23,8 +23,8 @@ exports.payme = (req, res, next) => {
 					null
 				)
 			);
-		} else {
 		}
+		respond({ result: { data: 'default' } });
 	});
 	res.rpc('CreateTransaction', (params, respond) => {
 		if (!isauthorized) {
