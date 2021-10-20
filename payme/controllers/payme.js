@@ -68,7 +68,7 @@ exports.paymeAnother = (req, res, next) => {
 	});
 };
 
-const CheckPerformTransaction = (res, reqid, params) => {
+const CheckPerformTransaction = async (res, reqid, params) => {
 	const valid = validate(params);
 	if (!valid.valid) {
 		if (valid.msg === ERROR_INVALID_AMOUNT_MSG) {
@@ -94,7 +94,7 @@ const CheckPerformTransaction = (res, reqid, params) => {
 		}
 	}
 	const order_id = params.account.order_id || params.account.DiCafe;
-	const order = Order.findById(order_id);
+	const order = await Order.findById(order_id);
 	console.log(order_id, order);
 	if (!order) {
 		res.json({
