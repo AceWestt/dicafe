@@ -117,25 +117,25 @@ exports.payme = (req, res, next) => {
 };
 
 exports.paymeAnother = (req, res, next) => {
-	server.addMethodAdvanced('CheckPerformTransaction', (jsonRPCRequest) => {
-		if (isValid(jsonRPCRequest.params)) {
-			return {
-				jsonrpc: JSONRPC,
-				id: jsonRPCRequest.id,
-				result: 'Params are valid',
-			};
-		} else {
-			return {
-				jsonrpc: JSONRPC,
-				id: jsonRPCRequest.id,
-				error: {
-					code: -100,
-					message: 'Params are invalid',
-					data: jsonRPCRequest.params,
-				},
-			};
-		}
-	});
+	// server.addMethodAdvanced('CheckPerformTransaction', (jsonRPCRequest) => {
+	// 	if (isValid(jsonRPCRequest.params)) {
+	// 		return {
+	// 			jsonrpc: JSONRPC,
+	// 			id: jsonRPCRequest.id,
+	// 			result: 'Params are valid',
+	// 		};
+	// 	} else {
+	// 		return {
+	// 			jsonrpc: JSONRPC,
+	// 			id: jsonRPCRequest.id,
+	// 			error: {
+	// 				code: -100,
+	// 				message: 'Params are invalid',
+	// 				data: jsonRPCRequest.params,
+	// 			},
+	// 		};
+	// 	}
+	// });
 };
 
 const errorResponse = (errcode, message, data) => {
