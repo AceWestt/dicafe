@@ -25,7 +25,7 @@ exports.payme = (req, res, next) => {
 		} else {
 			respond({
 				error: {
-					code: -31001,
+					code: -31002,
 					message: 'Incorrect amount',
 					data: null,
 				},
