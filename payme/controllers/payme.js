@@ -145,6 +145,9 @@ exports.paymeAnother = (req, res, next) => {
 		case 'CheckPerformTransaction':
 			CheckPerformTransaction(res, reqId, params);
 			break;
+		case 'CreateTransaction':
+			CreateTransaction(res, reqId, params);
+			break;
 		default:
 			res.json({
 				jsonrpc: JSON_RPC_VERSION,
@@ -166,6 +169,22 @@ exports.paymeAnother = (req, res, next) => {
 };
 
 const CheckPerformTransaction = (res, reqid, params) => {
+	const valid = validate(params);
+	if (!valid.valid) {
+		if (valid.msg === ERROR_INVALID_AMOUNT_MSG) {
+			res.json({
+				jsonrpc: JSON_RPC_VERSION,
+				id: reqid,
+				error: {
+					code: ERROR_INVALID_AMOUNT,
+					message: ERROR_INVALID_AMOUNT_MSG,
+				},
+			});
+		}
+	}
+};
+
+const CreateTransaction = (res, reqId, params) => {
 	const valid = validate(params);
 	if (!valid.valid) {
 		if (valid.msg === ERROR_INVALID_AMOUNT_MSG) {
