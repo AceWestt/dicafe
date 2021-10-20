@@ -190,7 +190,7 @@ const CreateTransaction = (res, reqId, params) => {
 		if (valid.msg === ERROR_INVALID_AMOUNT_MSG) {
 			res.json({
 				jsonrpc: JSON_RPC_VERSION,
-				id: reqid,
+				id: reqId,
 				error: {
 					code: ERROR_INVALID_AMOUNT,
 					message: ERROR_INVALID_AMOUNT_MSG,
