@@ -115,17 +115,24 @@ exports.payme = (req, res, next) => {
 
 exports.paymeAnother = (req, res, next) => {
 	const params = req.body;
+	const reqId = params.id;
+	const method = params.method;
 	const headers = req.headers;
 	console.log(headers, params);
 	const merchant = new Merchant(config);
 
 	const isauthorized = merchant.authorize(req.headers);
-	res.json({
-		error: {
-			code: -31001,
-			message: 'hello',
-		},
-	});
+	res.json(
+		response(reqId, errorResponse(ERROR_INVALID_AMOUNT, 'Incorrect amount!'))
+	);
+};
+
+const response = (reqId, data) => {
+	return {
+		jsonrpc: '2.0',
+		id: reqId,
+		data,
+	};
 };
 
 const errorResponse = (errcode, message, data) => {
