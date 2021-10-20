@@ -122,14 +122,7 @@ exports.paymeAnother = (req, res, next) => {
 	const merchant = new Merchant(config);
 
 	// const isauthorized = merchant.authorize(req.headers);
-	res.json({
-		jsonrpc: '2.0',
-		id: reqId,
-		error: {
-			code: -31001,
-			message: 'hello',
-		},
-	});
+	res.json(response(reqId, errorResponse(ERROR_INVALID_AMOUNT, 'hello', null)));
 };
 
 const response = (reqId, data) => {
