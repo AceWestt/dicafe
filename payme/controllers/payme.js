@@ -32,7 +32,7 @@ exports.paymeAnother = (req, res, next) => {
 
 	const isauthorized = merchant.authorize(headers);
 	if (!isauthorized) {
-		res.json({
+		return res.json({
 			jsonrpc: '2.0',
 			id: reqId,
 			error: {
@@ -49,7 +49,7 @@ exports.paymeAnother = (req, res, next) => {
 			CreateTransaction(res, reqId, params);
 			break;
 		default:
-			res.json({
+			return res.json({
 				jsonrpc: JSON_RPC_VERSION,
 				id: reqId,
 				error: {
@@ -58,7 +58,7 @@ exports.paymeAnother = (req, res, next) => {
 				},
 			});
 	}
-	res.json({
+	return res.json({
 		jsonrpc: JSON_RPC_VERSION,
 		id: reqId,
 		error: {
