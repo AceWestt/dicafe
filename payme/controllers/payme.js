@@ -21,52 +21,55 @@ const errorInvalidAccountMsgLocale = {
 	en: 'Incorrect order code.',
 };
 
-exports.paymeAnother = (req, res, next) => {
-	const rpcRequest = req.body;
-	const headers = req.headers;
-	const reqId = rpcRequest.id;
-	const method = rpcRequest.method;
-	const params = rpcRequest.params;
+exports.paymeAnother = async (req, res, next) => {
+	try {
+		const rpcRequest = req.body;
+		const headers = req.headers;
+		const reqId = rpcRequest.id;
+		const method = rpcRequest.method;
+		const params = rpcRequest.params;
 
-	const merchant = new Merchant(config);
+		const merchant = new Merchant(config);
 
-	const isauthorized = merchant.authorize(headers);
-	if (!isauthorized) {
+		const isauthorized = merchant.authorize(headers);
+		if (!isauthorized) {
+			return res.json({
+				jsonrpc: '2.0',
+				id: reqId,
+				error: {
+					code: ERROR_INSUFFICIENT_PRIVILEGE,
+					message: ERROR_INSUFFICIENT_PRIVILEGE_MSG,
+				},
+			});
+		}
+		switch (method) {
+			case 'CheckPerformTransaction':
+				CheckPerformTransaction(res, reqId, params);
+				console.log('ss');
+				break;
+			case 'CreateTransaction':
+				CreateTransaction(res, reqId, params);
+				break;
+			default:
+				return res.json({
+					jsonrpc: JSON_RPC_VERSION,
+					id: reqId,
+					error: {
+						code: ERROR_METHOD_NOT_FOUND,
+						message: ERROR_METHOD_NOT_FOUND_MSG,
+					},
+				});
+		}
+	} catch (error) {
 		return res.json({
-			jsonrpc: '2.0',
+			jsonrpc: JSON_RPC_VERSION,
 			id: reqId,
 			error: {
-				code: ERROR_INSUFFICIENT_PRIVILEGE,
-				message: ERROR_INSUFFICIENT_PRIVILEGE_MSG,
+				code: ERROR_METHOD_NOT_FOUND,
+				message: ERROR_METHOD_NOT_FOUND_MSG,
 			},
 		});
 	}
-	switch (method) {
-		case 'CheckPerformTransaction':
-			CheckPerformTransaction(res, reqId, params);
-			console.log('ss');
-			break;
-		case 'CreateTransaction':
-			CreateTransaction(res, reqId, params);
-			break;
-		default:
-			return res.json({
-				jsonrpc: JSON_RPC_VERSION,
-				id: reqId,
-				error: {
-					code: ERROR_METHOD_NOT_FOUND,
-					message: ERROR_METHOD_NOT_FOUND_MSG,
-				},
-			});
-	}
-	return res.json({
-		jsonrpc: JSON_RPC_VERSION,
-		id: reqId,
-		error: {
-			code: ERROR_METHOD_NOT_FOUND,
-			message: ERROR_METHOD_NOT_FOUND_MSG,
-		},
-	});
 };
 
 const CheckPerformTransaction = async (res, reqid, params) => {
@@ -96,18 +99,28 @@ const CheckPerformTransaction = async (res, reqid, params) => {
 	}
 	const order_id = params.account.order_id || params.account.DiCafe;
 	const order = await Order.findById(order_id);
-	console.log(order_id, order);
-	// if (!order) {
-	// 	res.json({
-	// 		jsonrpc: JSON_RPC_VERSION,
-	// 		id: reqid,
-	// 		error: {
-	// 			code: ERROR_INVALID_ACCOUNT,
-	// 			message: errorInvalidAccountMsgLocale,
-	// 			data: 'order_id',
-	// 		},
-	// 	});
-	// }
+	if (!order) {
+		return res.json({
+			jsonrpc: JSON_RPC_VERSION,
+			id: reqid,
+			error: {
+				code: ERROR_INVALID_ACCOUNT,
+				message: errorInvalidAccountMsgLocale,
+				data: 'order_id',
+			},
+		});
+	}
+	if (order.state !== 1) {
+		return res.json({
+			jsonrpc: JSON_RPC_VERSION,
+			id: reqid,
+			error: {
+				code: ERROR_INVALID_ACCOUNT,
+				message: errorInvalidAccountMsgLocale,
+				data: 'order_id',
+			},
+		});
+	}
 	return res.json({
 		jsonrpc: JSON_RPC_VERSION,
 		id: reqid,
@@ -115,17 +128,6 @@ const CheckPerformTransaction = async (res, reqid, params) => {
 			allow: true,
 		},
 	});
-	// if (order.state !== 1) {
-	// 	res.json({
-	// 		jsonrpc: JSON_RPC_VERSION,
-	// 		id: reqid,
-	// 		error: {
-	// 			code: ERROR_INVALID_ACCOUNT,
-	// 			message: errorInvalidAccountMsgLocale,
-	// 			data: 'order_id',
-	// 		},
-	// 	});
-	// }
 };
 
 const CreateTransaction = (res, reqId, params) => {
