@@ -59,14 +59,14 @@ exports.paymeAnother = (req, res, next) => {
 				},
 			});
 	}
-	res.json({
-		jsonrpc: JSON_RPC_VERSION,
-		id: reqId,
-		error: {
-			code: ERROR_METHOD_NOT_FOUND,
-			message: ERROR_METHOD_NOT_FOUND_MSG,
-		},
-	});
+	// res.json({
+	// 	jsonrpc: JSON_RPC_VERSION,
+	// 	id: reqId,
+	// 	error: {
+	// 		code: ERROR_METHOD_NOT_FOUND,
+	// 		message: ERROR_METHOD_NOT_FOUND_MSG,
+	// 	},
+	// });
 };
 
 const CheckPerformTransaction = async (res, reqid, params) => {
