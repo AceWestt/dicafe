@@ -1,8 +1,8 @@
 const Merchant = require('../models/Merchant');
 const config = require('../config/config');
 
-const ERROR_INSUFFICIENT_PRIVILEGE = '-32504';
-const ERROR_INVALID_AMOUNT = '-31001';
+const ERROR_INSUFFICIENT_PRIVILEGE = -32504;
+const ERROR_INVALID_AMOUNT = -31001;
 
 exports.payme = (req, res, next) => {
 	// const userID = getUserID(req);
