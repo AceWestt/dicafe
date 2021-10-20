@@ -123,8 +123,6 @@ exports.paymeAnother = (req, res, next) => {
 
 	const isauthorized = merchant.authorize(req.headers);
 	res.json({
-		jsonrpc: '2.0',
-		id: reqId,
 		error: {
 			code: -31001,
 			message: 'hello',
