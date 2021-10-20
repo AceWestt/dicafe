@@ -44,6 +44,7 @@ exports.paymeAnother = (req, res, next) => {
 	switch (method) {
 		case 'CheckPerformTransaction':
 			CheckPerformTransaction(res, reqId, params);
+			console.log('ss');
 			break;
 		case 'CreateTransaction':
 			CreateTransaction(res, reqId, params);
