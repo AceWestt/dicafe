@@ -21,6 +21,79 @@ exports.payme = (req, res, next) => {
 					null
 				)
 			);
+		} else {
+		}
+	});
+	res.rpc('CreateTransaction', (params, respond) => {
+		if (!isauthorized) {
+			respond(
+				errorResponse(
+					-32504,
+					'Insufficient privilege to perform this method.',
+					null
+				)
+			);
+		} else {
+		}
+	});
+	res.rpc('PerformTransaction', (params, respond) => {
+		if (!isauthorized) {
+			respond(
+				errorResponse(
+					-32504,
+					'Insufficient privilege to perform this method.',
+					null
+				)
+			);
+		} else {
+		}
+	});
+	res.rpc('CancelTransaction', (params, respond) => {
+		if (!isauthorized) {
+			respond(
+				errorResponse(
+					-32504,
+					'Insufficient privilege to perform this method.',
+					null
+				)
+			);
+		} else {
+		}
+	});
+	res.rpc('CheckTransaction', (params, respond) => {
+		if (!isauthorized) {
+			respond(
+				errorResponse(
+					-32504,
+					'Insufficient privilege to perform this method.',
+					null
+				)
+			);
+		} else {
+		}
+	});
+	res.rpc('GetStatement', (params, respond) => {
+		if (!isauthorized) {
+			respond(
+				errorResponse(
+					-32504,
+					'Insufficient privilege to perform this method.',
+					null
+				)
+			);
+		} else {
+		}
+	});
+	res.rpc('ChangePassword', (params, respond) => {
+		if (!isauthorized) {
+			respond(
+				errorResponse(
+					-32504,
+					'Insufficient privilege to perform this method.',
+					null
+				)
+			);
+		} else {
 		}
 	});
 };
