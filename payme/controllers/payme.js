@@ -107,6 +107,13 @@ const CheckPerformTransaction = async (res, reqid, params) => {
 			},
 		});
 	}
+	res.json({
+		jsonrpc: JSON_RPC_VERSION,
+		id: reqid,
+		result: {
+			allow: true,
+		},
+	});
 	// if (order.state !== 1) {
 	// 	res.json({
 	// 		jsonrpc: JSON_RPC_VERSION,
@@ -118,13 +125,6 @@ const CheckPerformTransaction = async (res, reqid, params) => {
 	// 		},
 	// 	});
 	// }
-	res.json({
-		jsonrpc: JSON_RPC_VERSION,
-		id: reqid,
-		result: {
-			allow: true,
-		},
-	});
 };
 
 const CreateTransaction = (res, reqId, params) => {
