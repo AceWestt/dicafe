@@ -95,6 +95,7 @@ const CheckPerformTransaction = (res, reqid, params) => {
 	}
 	const order_id = params.account.order_id || params.account.DiCafe;
 	const order = Order.findOne(order_id);
+	console.log(order_id);
 	if (!order) {
 		res.json({
 			jsonrpc: JSON_RPC_VERSION,
