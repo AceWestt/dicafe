@@ -1,6 +1,8 @@
 const Merchant = require('../models/Merchant');
 const config = require('../config/config');
 
+const ERROR_INSUFFICIENT_PRIVILEGE = -32504;
+
 exports.payme = (req, res, next) => {
 	// const userID = getUserID(req);
 
@@ -18,7 +20,7 @@ exports.payme = (req, res, next) => {
 		if (!isauthorized) {
 			respond(
 				errorResponse(
-					-32504,
+					ERROR_INSUFFICIENT_PRIVILEGE,
 					'Insufficient privilege to perform this method.',
 					null
 				)
@@ -30,7 +32,7 @@ exports.payme = (req, res, next) => {
 		if (!isauthorized) {
 			respond(
 				errorResponse(
-					-32504,
+					ERROR_INSUFFICIENT_PRIVILEGE,
 					'Insufficient privilege to perform this method.',
 					null
 				)
@@ -42,7 +44,7 @@ exports.payme = (req, res, next) => {
 		if (!isauthorized) {
 			respond(
 				errorResponse(
-					-32504,
+					ERROR_INSUFFICIENT_PRIVILEGE,
 					'Insufficient privilege to perform this method.',
 					null
 				)
@@ -54,7 +56,7 @@ exports.payme = (req, res, next) => {
 		if (!isauthorized) {
 			respond(
 				errorResponse(
-					-32504,
+					ERROR_INSUFFICIENT_PRIVILEGE,
 					'Insufficient privilege to perform this method.',
 					null
 				)
@@ -66,7 +68,7 @@ exports.payme = (req, res, next) => {
 		if (!isauthorized) {
 			respond(
 				errorResponse(
-					-32504,
+					ERROR_INSUFFICIENT_PRIVILEGE,
 					'Insufficient privilege to perform this method.',
 					null
 				)
@@ -78,7 +80,7 @@ exports.payme = (req, res, next) => {
 		if (!isauthorized) {
 			respond(
 				errorResponse(
-					-32504,
+					ERROR_INSUFFICIENT_PRIVILEGE,
 					'Insufficient privilege to perform this method.',
 					null
 				)
@@ -90,7 +92,7 @@ exports.payme = (req, res, next) => {
 		if (!isauthorized) {
 			respond(
 				errorResponse(
-					-32504,
+					ERROR_INSUFFICIENT_PRIVILEGE,
 					'Insufficient privilege to perform this method.',
 					null
 				)
