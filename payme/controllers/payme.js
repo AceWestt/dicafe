@@ -118,10 +118,10 @@ exports.paymeAnother = (req, res, next) => {
 	const headers = req.headers;
 	const reqId = rpcRequest.id;
 
-	console.log(headers, params);
+	console.log(headers);
 	const merchant = new Merchant(config);
 
-	const isauthorized = merchant.authorize(req.headers);
+	// const isauthorized = merchant.authorize(req.headers);
 	res.json({
 		error: {
 			code: -31001,
