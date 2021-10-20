@@ -28,7 +28,7 @@ exports.payme = (req, res, next) => {
 
 		if (!valid.valid) {
 			if ((valid.msg = 'Incorrect amount!')) {
-				respond(errorResponse(ERROR_INVALID_AMOUNT, 'Incorrect amount!', null));
+				respond(errorResponse(-31001, 'Incorrect amount!', null));
 			}
 		}
 
