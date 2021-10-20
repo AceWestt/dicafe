@@ -1,6 +1,6 @@
 const Merchant = require('../models/Merchant');
-const Order = require('../models/Order');
 const config = require('../config/config');
+const validate = require('../utils/validate');
 
 const ERROR_INSUFFICIENT_PRIVILEGE = -32504;
 const ERROR_INVALID_AMOUNT = -31001;
@@ -24,14 +24,14 @@ exports.payme = (req, res, next) => {
 				)
 			);
 		}
-		const order = new Order();
-		const validate = order.validate(params);
-		console.log(validate);
-		if (!validate.success) {
-			if (validate.message === 'invalid amount') {
-				respond(errorResponse(ERROR_INVALID_AMOUNT, 'Incorrect amount'));
+		const validate = validate(params);
+
+		if (!validate.valid) {
+			if ((validate.msg = 'Incorrect amount!')) {
+				respond(errorResponse(ERROR_INVALID_AMOUNT, 'Incorrect amount!', null));
 			}
 		}
+
 		respond({ result: { data: 'default' } });
 	});
 	res.rpc('CreateTransaction', (params, respond) => {
