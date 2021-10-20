@@ -4,7 +4,7 @@ const config = require('../config/config');
 const ERROR_INSUFFICIENT_PRIVILEGE = '-32504';
 const ERROR_INVALID_AMOUNT = '-31001';
 
-exports.payme = (req, res, next) => {
+exports.payme = async (req, res, next) => {
 	// const userID = getUserID(req);
 
 	const merchant = new Merchant(config);
@@ -24,15 +24,13 @@ exports.payme = (req, res, next) => {
 			);
 		}
 
-		respond({
+		await respond({
 			error: {
 				code: -31001,
 				message: 'Incorrect amount',
 				data: null,
 			},
 		});
-
-		// respond({ result: { data: 'default' } });
 	});
 	res.rpc('CreateTransaction', (params, respond) => {
 		if (!isauthorized) {
