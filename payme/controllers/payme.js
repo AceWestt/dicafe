@@ -72,7 +72,7 @@ const CheckPerformTransaction = async (res, reqid, params) => {
 	const valid = validate(params);
 	if (!valid.valid) {
 		if (valid.msg === ERROR_INVALID_AMOUNT_MSG) {
-			res.json({
+			return res.json({
 				jsonrpc: JSON_RPC_VERSION,
 				id: reqid,
 				error: {
@@ -82,7 +82,7 @@ const CheckPerformTransaction = async (res, reqid, params) => {
 			});
 		}
 		if (valid.msg === ERROR_INVALID_ACCOUNT_MSG) {
-			res.json({
+			return res.json({
 				jsonrpc: JSON_RPC_VERSION,
 				id: reqid,
 				error: {
@@ -107,7 +107,7 @@ const CheckPerformTransaction = async (res, reqid, params) => {
 	// 		},
 	// 	});
 	// }
-	res.json({
+	return res.json({
 		jsonrpc: JSON_RPC_VERSION,
 		id: reqid,
 		result: {

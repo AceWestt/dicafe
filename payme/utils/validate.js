@@ -12,7 +12,7 @@ const validate = (params) => {
 	if (!params.account) {
 		return respond(false, ERROR_INVALID_ACCOUNT);
 	} else {
-		if (!params.account.order_id) {
+		if (!params.account.order_id || !params.account.Dicafe) {
 			return respond(false, ERROR_INVALID_ACCOUNT);
 		}
 	}
