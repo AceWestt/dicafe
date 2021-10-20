@@ -31,7 +31,7 @@ exports.payme = (req, res, next) => {
 			if ((valid.msg = 'Incorrect amount!')) {
 				respond({
 					error: {
-						code: jsonrpc.PARSE_ERROR,
+						code: -31001,
 						message: 'Incorrect amount',
 						data: null,
 					},
