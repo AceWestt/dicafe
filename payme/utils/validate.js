@@ -1,4 +1,5 @@
 const ERROR_INVALID_AMOUNT = 'Incorrect amount!';
+const ERROR_INVALID_ACCOUNT = 'Invalid account!';
 
 const validate = (params) => {
 	if (isNaN(params.amount)) {
@@ -6,6 +7,13 @@ const validate = (params) => {
 	} else {
 		if (params.amount <= 300) {
 			return respond(false, ERROR_INVALID_AMOUNT);
+		}
+	}
+	if (!params.account) {
+		return respond(false, ERROR_INVALID_ACCOUNT);
+	} else {
+		if (!params.account.order_id) {
+			return respond(false, ERROR_INVALID_ACCOUNT);
 		}
 	}
 	return respond(true);
