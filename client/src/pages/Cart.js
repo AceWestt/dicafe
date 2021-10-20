@@ -61,7 +61,21 @@ const Cart = () => {
 		console.log(order);
 		try {
 			const res = await axios.post('/api/order', order);
-			console.log(res);
+			if (res.data.success) {
+				const createdOrder = res.data.data;
+				const formData = new FormData();
+				formData.append('merchant', '61681fff6e71f7f8df534653');
+				formData.append('amount', 500 * 100);
+				formData.append('account[phone]', createdOrder.phone);
+				formData.append('account[order_id]', createdOrder._id);
+				try {
+					const paymeRes = await axios.post('https://test.paycom.uz', formData);
+					console.log(paymeRes);
+				} catch (error) {
+					console.error(error);
+					console.log(error.response);
+				}
+			}
 		} catch (error) {
 			console.error(error);
 			console.log(error.response);
