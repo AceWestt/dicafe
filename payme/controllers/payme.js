@@ -117,6 +117,12 @@ exports.payme = (req, res, next) => {
 };
 
 exports.paymeAnother = (req, res, next) => {
+	res.json({
+		error: {
+			code: -31001,
+			message: 'hello',
+		},
+	});
 	// server.addMethodAdvanced('CheckPerformTransaction', (jsonRPCRequest) => {
 	// 	if (isValid(jsonRPCRequest.params)) {
 	// 		return {
