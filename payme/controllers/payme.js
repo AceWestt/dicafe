@@ -110,7 +110,7 @@ const CreateTransaction = (res, reqId, params) => {
 		if (valid.msg === ERROR_INVALID_ACCOUNT_MSG) {
 			res.json({
 				jsonrpc: JSON_RPC_VERSION,
-				id: reqid,
+				id: reqId,
 				error: {
 					code: ERROR_INVALID_ACCOUNT,
 					message: errorInvalidAccountMsgLocale,
