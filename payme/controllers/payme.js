@@ -24,10 +24,10 @@ exports.payme = (req, res, next) => {
 				)
 			);
 		}
-		const validate = validate(params);
+		const valid = validate(params);
 
-		if (!validate.valid) {
-			if ((validate.msg = 'Incorrect amount!')) {
+		if (!valid.valid) {
+			if ((valid.msg = 'Incorrect amount!')) {
 				respond(errorResponse(ERROR_INVALID_AMOUNT, 'Incorrect amount!', null));
 			}
 		}
