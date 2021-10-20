@@ -25,7 +25,7 @@ exports.payme = (req, res, next) => {
 		} else {
 			respond({
 				error: {
-					code: -31002,
+					code: -31001,
 					message: 'Incorrect amount',
 					data: null,
 				},
@@ -42,6 +42,13 @@ exports.payme = (req, res, next) => {
 				)
 			);
 		} else {
+			respond({
+				error: {
+					code: -31001,
+					message: 'Incorrect amount',
+					data: null,
+				},
+			});
 		}
 	});
 	res.rpc('PerformTransaction', (params, respond) => {
