@@ -1,5 +1,8 @@
 const Merchant = require('../models/Merchant');
 const config = require('../config/config');
+const { JSONRPC, JSONRPCResponse, JSONRPCServer } = require('json-rpc-2.0');
+
+const server = new JSONRPCServer();
 
 const ERROR_INSUFFICIENT_PRIVILEGE = '-32504';
 const ERROR_INVALID_AMOUNT = '-31001';
@@ -23,15 +26,13 @@ exports.payme = (req, res, next) => {
 				)
 			);
 		} else {
-			respond(
-				JSON.parse({
-					error: {
-						code: -31001,
-						message: 'Incorrect amount',
-						data: null,
-					},
-				})
-			);
+			respond({
+				error: {
+					code: -31001,
+					message: 'Incorrect amount',
+					data: null,
+				},
+			});
 		}
 	});
 	res.rpc('CreateTransaction', (params, respond) => {
@@ -111,6 +112,28 @@ exports.payme = (req, res, next) => {
 				)
 			);
 		} else {
+		}
+	});
+};
+
+exports.paymeAnother = (req, res, next) => {
+	server.addMethodAdvanced('CheckPerformTransaction', (jsonRPCRequest) => {
+		if (isValid(jsonRPCRequest.params)) {
+			return {
+				jsonrpc: JSONRPC,
+				id: jsonRPCRequest.id,
+				result: 'Params are valid',
+			};
+		} else {
+			return {
+				jsonrpc: JSONRPC,
+				id: jsonRPCRequest.id,
+				error: {
+					code: -100,
+					message: 'Params are invalid',
+					data: jsonRPCRequest.params,
+				},
+			};
 		}
 	});
 };
