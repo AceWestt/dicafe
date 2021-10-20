@@ -166,14 +166,19 @@ exports.paymeAnother = (req, res, next) => {
 };
 
 const CheckPerformTransaction = (res, reqid, params) => {
-	res.json({
-		jsonrpc: JSON_RPC_VERSION,
-		id: reqid,
-		error: {
-			code: ERROR_INVALID_AMOUNT,
-			message: ERROR_INVALID_AMOUNT_MSG,
-		},
-	});
+	const valid = validate(params);
+	if (!valid.valid) {
+		if (valid.msg === ERROR_INVALID_AMOUNT_MSG) {
+			res.json({
+				jsonrpc: JSON_RPC_VERSION,
+				id: reqid,
+				error: {
+					code: ERROR_INVALID_AMOUNT,
+					message: ERROR_INVALID_AMOUNT_MSG,
+				},
+			});
+		}
+	}
 };
 
 const response = (reqId, data) => {
