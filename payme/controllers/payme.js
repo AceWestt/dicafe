@@ -114,6 +114,16 @@ const CheckPerformTransaction = async (res, reqid, params) => {
 			},
 		});
 	}
+	if (100 * order.amount != params.amount) {
+		return res.json({
+			jsonrpc: JSON_RPC_VERSION,
+			id: reqid,
+			error: {
+				code: ERROR_INVALID_AMOUNT,
+				message: ERROR_INVALID_AMOUNT_MSG,
+			},
+		});
+	}
 	if (order.state !== 1) {
 		return res.json({
 			jsonrpc: JSON_RPC_VERSION,

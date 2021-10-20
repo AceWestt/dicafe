@@ -5,7 +5,7 @@ const validate = (params) => {
 	if (isNaN(params.amount)) {
 		return respond(false, ERROR_INVALID_AMOUNT);
 	} else {
-		if (params.amount <= 300) {
+		if (params.amount <= 500 * 100) {
 			return respond(false, ERROR_INVALID_AMOUNT);
 		}
 	}
