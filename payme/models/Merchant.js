@@ -8,7 +8,7 @@ class Merchant {
 			if (matches) {
 				const decoded = Buffer.from(matches[1], 'base64').toString('utf-8');
 				console.log(decoded);
-				if (decoded === `${this.config['login']}:${this.config['key']}`) {
+				if (decoded === `${this.config['login']}:${this.config['test_key']}`) {
 					return true;
 				}
 				return false;
