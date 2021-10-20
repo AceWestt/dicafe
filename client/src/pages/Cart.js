@@ -74,7 +74,7 @@ const Cart = () => {
 						createdOrder.phone
 					}a=${500 * 100};c=https://dicafe.uz/`
 				).toString('base64');
-				window.location.replace(`https://checkout.paycom.uz/${encodedString}`);
+				window.location.replace(`https://test.paycom.uz/${encodedString}`);
 				// try {
 				// 	const paymeRes = await axios.post('https://test.paycom.uz', formData);
 				// 	console.log(paymeRes);
