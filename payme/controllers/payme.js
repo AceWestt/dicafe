@@ -123,11 +123,11 @@ exports.paymeAnother = (req, res, next) => {
 
 	// const isauthorized = merchant.authorize(req.headers);
 	const data = errorResponse(ERROR_INVALID_AMOUNT, 'hello', null);
-	const response = response(reqId, data);
+	const response = getResponse(reqId, data);
 	res.json(response);
 };
 
-const response = (reqId, data) => {
+const getResponse = (reqId, data) => {
 	return {
 		jsonrpc: '2.0',
 		id: reqId,
