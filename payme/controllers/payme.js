@@ -32,7 +32,7 @@ exports.paymeAnother = (req, res, next) => {
 
 	const isauthorized = merchant.authorize(headers);
 	if (!isauthorized) {
-		return res.json({
+		res.json({
 			jsonrpc: '2.0',
 			id: reqId,
 			error: {
@@ -49,7 +49,7 @@ exports.paymeAnother = (req, res, next) => {
 			CreateTransaction(res, reqId, params);
 			break;
 		default:
-			return res.json({
+			res.json({
 				jsonrpc: JSON_RPC_VERSION,
 				id: reqId,
 				error: {
@@ -58,7 +58,7 @@ exports.paymeAnother = (req, res, next) => {
 				},
 			});
 	}
-	return res.json({
+	res.json({
 		jsonrpc: JSON_RPC_VERSION,
 		id: reqId,
 		error: {
@@ -72,7 +72,7 @@ const CheckPerformTransaction = async (res, reqid, params) => {
 	const valid = validate(params);
 	if (!valid.valid) {
 		if (valid.msg === ERROR_INVALID_AMOUNT_MSG) {
-			return res.json({
+			res.json({
 				jsonrpc: JSON_RPC_VERSION,
 				id: reqid,
 				error: {
@@ -82,7 +82,7 @@ const CheckPerformTransaction = async (res, reqid, params) => {
 			});
 		}
 		if (valid.msg === ERROR_INVALID_ACCOUNT_MSG) {
-			return res.json({
+			res.json({
 				jsonrpc: JSON_RPC_VERSION,
 				id: reqid,
 				error: {
@@ -107,7 +107,7 @@ const CheckPerformTransaction = async (res, reqid, params) => {
 	// 		},
 	// 	});
 	// }
-	return res.json({
+	res.json({
 		jsonrpc: JSON_RPC_VERSION,
 		id: reqid,
 		result: {
