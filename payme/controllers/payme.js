@@ -14,13 +14,23 @@ exports.payme = (req, res, next) => {
 
 	res.rpc('CheckPerformTransaction', (params, respond) => {
 		if (!isauthorized) {
-			respond({
-				error: {
-					code: -32504,
-					message: 'Insufficient privilege to perform this method.',
-					data: null,
-				},
-			});
+			respond(
+				errorResponse(
+					-32504,
+					'Insufficient privilege to perform this method.',
+					null
+				)
+			);
 		}
 	});
+};
+
+const errorResponse = (errcode, message, data) => {
+	return {
+		error: {
+			code: errcode,
+			message: message,
+			data: data,
+		},
+	};
 };
