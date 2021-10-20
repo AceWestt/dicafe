@@ -102,7 +102,7 @@ const CheckPerformTransaction = async (res, reqid, params) => {
 		}
 	}
 	const order_id = params.account.order_id || params.account.DiCafe;
-	const order = await Order.findOne(order_id);
+	const order = await Order.findById(order_id);
 	if (!order) {
 		return res.json({
 			jsonrpc: JSON_RPC_VERSION,
