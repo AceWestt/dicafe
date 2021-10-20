@@ -64,39 +64,25 @@ const Cart = () => {
 			if (res.data.success) {
 				const createdOrder = res.data.data;
 				const formData = new FormData();
-				formData.append('merchant', '61681fff6e71f7f8df534653');
+				const merchant = '61681fff6e71f7f8df534653';
+				formData.append('merchant', merchant);
 				formData.append('amount', 500 * 100);
 				formData.append('account[phone]', createdOrder.phone);
 				formData.append('account[order_id]', createdOrder._id);
-				try {
-					const paymeRes = await axios.post('https://test.paycom.uz', formData);
-					console.log(paymeRes);
-				} catch (error) {
-					console.error(error);
-					console.log(error.response);
-				}
+				const encodedString = Buffer.from(
+					`m=${merchant};ac.order_id=${createdOrder._id};ac.phone=${
+						createdOrder.phone
+					}a=${500 * 100};c=https://dicafe.uz/`
+				).toString('base64');
+				window.location.replace(`https://checkout.paycom.uz/${encodedString}`);
+				// try {
+				// 	const paymeRes = await axios.post('https://test.paycom.uz', formData);
+				// 	console.log(paymeRes);
+				// } catch (error) {
+				// 	console.error(error);
+				// 	console.log(error.response);
+				// }
 			}
-		} catch (error) {
-			console.error(error);
-			console.log(error.response);
-		}
-
-		const body = {
-			merchant: '60efb0e44be7164be6d93176',
-			amount: totalPrice,
-			account: {
-				order_id: 1,
-			},
-			lang: 'ru',
-		};
-		console.log(order);
-		return;
-		const encodedString = Buffer.from(
-			`m=${body.merchant};ac.order_id=${body.account.order_id};a=${body.amount};c=https://dicafe.uz/`
-		).toString('base64');
-		try {
-			const res = await axios.get(`https://checkout.paycom.uz/${encodedString}`);
-			console.log(res);
 		} catch (error) {
 			console.error(error);
 			console.log(error.response);
