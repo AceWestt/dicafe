@@ -86,7 +86,11 @@ const CheckPerformTransaction = (res, reqid, params) => {
 				id: reqId,
 				error: {
 					code: ERROR_INVALID_ACCOUNT,
-					message: errorInvalidAccountMsgLocale,
+					message: {
+						ru: errorInvalidAccountMsgLocale.ru,
+						uz: errorInvalidAccountMsgLocale.uz,
+						en: errorInvalidAccountMsgLocale.en,
+					},
 					data: 'order_id',
 				},
 			});
