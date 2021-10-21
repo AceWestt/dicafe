@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useAppContext } from '../context';
 import closuButtonImg from './imgs/cart/closeCart.svg';
 import line from './imgs/cart/line.svg';
@@ -11,6 +11,9 @@ const Cart = () => {
 	const { isCartOpen, setIsCartOpen, lang, cartList, setCartList } =
 		useAppContext();
 	const [totalPrice, setTotalPrice] = useState(0);
+
+	const [paymeData, setPaymeData] = useState({});
+	const paymeFormRef = useRef(null);
 
 	useEffect(() => {
 		let total = 0;
@@ -76,36 +79,19 @@ const Cart = () => {
 		try {
 			const res = await axios.post('/api/order', order);
 			if (res.data.success) {
-				const config = {
-					headers: {
-						'Content-Type': 'application/x-www-form-urlencoded',
-					},
-				};
 				const createdOrder = res.data.data;
-				const formData = new FormData();
-				const merchant = '61681fff6e71f7f8df534653';
-				formData.append('merchant', merchant);
-				formData.append('amount', createdOrder.amount * 100);
-				formData.append('account[order_id]', createdOrder._id);
-				formData.append('detail', encodedDetailBase64);
-				formData.append('callback', 'https://dicafe.uz/');
 				// const encodedString = Buffer.from(
 				// 	`m=${merchant};ac.order_id=${createdOrder._id};ac.phone=${
 				// 		createdOrder.phone
 				// 	};a=${500 * 100};c=https://dicafe.uz/`
 				// ).toString('base64');
 				// window.location.replace(`https://checkout.paycom.uz/${encodedString}`);
-				try {
-					const paymeRes = await axios.post(
-						'https://checkout.paycom.uz',
-						formData,
-						config
-					);
-					console.log(paymeRes);
-				} catch (error) {
-					console.error(error);
-					console.log(error.response);
-				}
+				setPaymeData({
+					order_id: createdOrder._id,
+					amount: createdOrder.amount * 100,
+					detail: encodedDetailBase64,
+				});
+				paymeFormRef.current.submit();
 			}
 		} catch (error) {
 			console.error(error);
@@ -185,6 +171,7 @@ const Cart = () => {
 						</div>
 					</div>
 				</div>
+				<PaymeForm ref={paymeFormRef} data={paymeData} />
 			</div>
 		);
 	}
@@ -192,3 +179,27 @@ const Cart = () => {
 };
 
 export default Cart;
+
+const PaymeForm = (ref, data) => {
+	return (
+		<form
+			action="https://checkout.paycom.uz"
+			method="POST"
+			id="payme_form"
+			ref={ref}
+		>
+			<input type="hidden" name="account[DiCafe]" value={data.order_id} />
+			<input type="hidden" name="amount" value={data.amount} />
+			<input type="hidden" name="merchant" value="61681fff6e71f7f8df534653" />
+			<input type="hidden" name="lang" value="ru" />
+			<input type="hidden" name="callback" value="https://dicafe.uz/" />
+			<input type="hidden" name="detail" value={data.detail} />
+			{/* <input
+				type="submit"
+				class="button alt"
+				id="submit_payme_form"
+				value="Оплатить"
+			/> */}
+		</form>
+	);
+};
