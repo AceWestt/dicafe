@@ -47,7 +47,6 @@ const Cart = () => {
 
 	const handleSubmit = async () => {
 		const product_ids = cartList.map((i) => i.id);
-		console.log(cartList);
 		const amount = totalPrice;
 		const state = 1;
 		const phone = '+998945677776';
