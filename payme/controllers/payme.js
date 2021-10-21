@@ -297,7 +297,7 @@ const CreateTransaction = async (res, reqid, params) => {
 						: Date.parse(transaction.perform_time),
 					cancel_time: !Date.parse(transaction.cancel_time)
 						? 0
-						: Date.parse(transaction.perform_time),
+						: Date.parse(transaction.cancel_time),
 					transaction: transaction._id,
 					state: transaction.state,
 					reason: transaction.reason,
@@ -392,7 +392,7 @@ const CheckTransaction = async (res, reqid, params) => {
 				: Date.parse(transaction.perform_time),
 			cancel_time: !Date.parse(transaction.cancel_time)
 				? 0
-				: Date.parse(transaction.perform_time),
+				: Date.parse(transaction.cancel_time),
 			transaction: transaction._id,
 			state: transaction.state,
 			reason: transaction.reason,
@@ -531,7 +531,7 @@ const CancelTransaction = async (res, reqid, params) => {
 						: Date.parse(transaction.perform_time),
 					cancel_time: !Date.parse(transaction.cancel_time)
 						? 0
-						: Date.parse(transaction.perform_time),
+						: Date.parse(transaction.cancel_time),
 					transaction: transaction._id,
 					state: transaction.state,
 					reason: transaction.reason,
@@ -580,7 +580,7 @@ const CancelTransaction = async (res, reqid, params) => {
 						: Date.parse(transaction.perform_time),
 					cancel_time: !Date.parse(transaction.cancel_time)
 						? 0
-						: Date.parse(transaction.perform_time),
+						: Date.parse(transaction.cancel_time),
 					transaction: transaction._id,
 					state: transaction.state,
 					reason: transaction.reason,
@@ -631,7 +631,7 @@ const CancelTransaction = async (res, reqid, params) => {
 							: Date.parse(transaction.perform_time),
 						cancel_time: !Date.parse(transaction.cancel_time)
 							? 0
-							: Date.parse(transaction.perform_time),
+							: Date.parse(transaction.cancel_time),
 						transaction: transaction._id,
 						state: transaction.state,
 						reason: transaction.reason,
