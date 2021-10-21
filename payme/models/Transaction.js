@@ -46,12 +46,12 @@ TransactionSchema.methods.isExpired = function () {
 };
 
 TransactionSchema.methods.cancel = async function (reason) {
-	this.cancel_time = Date.now();
 	if (this.state === 2) {
 		this.state = -2;
 	} else {
 		this.state = -1;
 	}
+	this.cancel_time = Date.now();
 	this.reason = reason;
 };
 

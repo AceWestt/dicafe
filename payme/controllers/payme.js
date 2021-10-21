@@ -628,21 +628,3 @@ const CancelTransaction = async (res, reqid, params) => {
 			break;
 	}
 };
-
-const response = (reqId, data) => {
-	return {
-		jsonrpc: '2.0',
-		id: reqId,
-		data,
-	};
-};
-
-const errorResponse = (errcode, message, data) => {
-	return {
-		error: {
-			code: errcode,
-			message: message,
-			data: data,
-		},
-	};
-};
