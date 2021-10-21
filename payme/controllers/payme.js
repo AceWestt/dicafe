@@ -288,7 +288,7 @@ const CreateTransaction = async (res, reqid, params) => {
 					perform_time: !Date.parse(transaction.perform_time)
 						? 0
 						: Date.parse(transaction.perform_time),
-					cancel_time: Date.parse(transaction.cancel_time)
+					cancel_time: !Date.parse(transaction.cancel_time)
 						? 0
 						: Date.parse(transaction.perform_time),
 					transaction: transaction._id,
@@ -383,7 +383,7 @@ const CheckTransaction = async (res, reqid, params) => {
 			perform_time: !Date.parse(transaction.perform_time)
 				? 0
 				: Date.parse(transaction.perform_time),
-			cancel_time: Date.parse(transaction.cancel_time)
+			cancel_time: !Date.parse(transaction.cancel_time)
 				? 0
 				: Date.parse(transaction.perform_time),
 			transaction: transaction._id,
