@@ -232,7 +232,7 @@ const CreateTransaction = async (res, reqid, params) => {
 	if (transaction) {
 		if (
 			(transaction.state === 1 || transaction.state === 2) &&
-			transaction.paycom_transaction_id !== reqid
+			transaction.paycom_transaction_id !== params.id
 		) {
 			return res.json({
 				jsonrpc: JSON_RPC_VERSION,
