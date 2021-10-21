@@ -378,7 +378,7 @@ const CheckTransaction = async (res, reqid, params) => {
 		jsonrpc: JSON_RPC_VERSION,
 		id: reqid,
 		result: {
-			creat_time: creat_time,
+			create_time: creat_time,
 			perform_time: perform_time,
 			cancel_time: cancel_time,
 			transaction: transaction._id,
