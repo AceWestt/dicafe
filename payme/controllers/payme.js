@@ -312,28 +312,40 @@ const CreateTransaction = async (res, reqid, params) => {
 			amount: params.amount,
 			order_id: order_id,
 		});
-		await newTransaction.save((err) => {
-			if (err) {
-				return res.json({
-					jsonrpc: JSON_RPC_VERSION,
-					id: reqid,
-					error: {
-						code: ERROR_INTERNAL_SERVER,
-						message: 'Could not cancel transaction due to expiration',
-					},
-				});
-			}
-		});
-		return res.json({
-			jsonrpc: JSON_RPC_VERSION,
-			id: reqid,
-			result: {
-				creat_time: params.time,
-				transaction: newTransaction._id,
-				state: newTransaction.state,
-				receivers: null,
-			},
-		});
+		try {
+			await newTransaction.save((err) => {
+				if (err) {
+					return res.json({
+						jsonrpc: JSON_RPC_VERSION,
+						id: reqid,
+						error: {
+							code: ERROR_INTERNAL_SERVER,
+							message: 'Could not cancel transaction due to expiration',
+						},
+					});
+				}
+			});
+			return res.json({
+				jsonrpc: JSON_RPC_VERSION,
+				id: reqid,
+				result: {
+					creat_time: params.time,
+					transaction: newTransaction._id,
+					state: newTransaction.state,
+					receivers: null,
+				},
+			});
+		} catch (error) {
+			console.error(error);
+			return res.json({
+				jsonrpc: JSON_RPC_VERSION,
+				id: reqid,
+				error: {
+					code: ERROR_INTERNAL_SERVER,
+					message: 'Could not cancel transaction due to expiration',
+				},
+			});
+		}
 	}
 };
 

@@ -3,7 +3,6 @@ const Order = require('../models/Order');
 
 exports.add = async (req, res, next) => {
 	const body = req.body;
-	console.log(body);
 	try {
 		const order = await new Order({
 			product_ids: body.products_ids,
@@ -15,8 +14,8 @@ exports.add = async (req, res, next) => {
 			if (err) {
 				return next(new ErrorResponse('Could not create order', 500));
 			}
-			res.status(200).json({ success: true, data: order });
 		});
+		res.status(200).json({ success: true, data: order });
 	} catch (error) {
 		next(error);
 	}
