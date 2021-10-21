@@ -22,7 +22,7 @@ const OrderSchema = new mongoose.Schema({
 	},
 });
 
-OrderSchema.methods.allowCancel = () => false;
+OrderSchema.methods.allowCancel = () => true;
 
 const Order = mongoose.model('Order', OrderSchema);
 
