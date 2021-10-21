@@ -45,7 +45,7 @@ TransactionSchema.methods.isExpired = function () {
 	return false;
 };
 
-Transaction.methods.cancel = async function (reason) {
+TransactionSchema.methods.cancel = async function (reason) {
 	this.cancel_time = Date.now();
 	if (this.state === 2) {
 		this.state = -2;
