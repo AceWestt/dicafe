@@ -91,7 +91,7 @@ const Cart = () => {
 					amount: createdOrder.amount * 100,
 					detail: encodedDetailBase64,
 				});
-				// paymeFormRef.current.submit();
+				paymeFormRef.current.submit();
 			}
 		} catch (error) {
 			console.error(error);
