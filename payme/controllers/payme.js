@@ -223,6 +223,7 @@ const CreateTransaction = async (res, reqid, params) => {
 	}
 	let transaction = await Transaction.findOne({
 		order_id: order_id,
+		state: 1 || 2,
 	});
 	if (transaction) {
 		if (
@@ -249,7 +250,7 @@ const CreateTransaction = async (res, reqid, params) => {
 				id: reqid,
 				error: {
 					code: ERROR_COULD_NOT_PERFORM_MSG,
-					message: 'Transactino found, but is not active',
+					message: 'Transaction found, but is not active',
 				},
 			});
 		} else if (transaction.isExpired()) {
@@ -315,7 +316,6 @@ const CreateTransaction = async (res, reqid, params) => {
 		try {
 			await newTransaction.save((err) => {
 				if (err) {
-					console.log(err);
 					return res.json({
 						jsonrpc: JSON_RPC_VERSION,
 						id: reqid,
@@ -330,7 +330,7 @@ const CreateTransaction = async (res, reqid, params) => {
 				jsonrpc: JSON_RPC_VERSION,
 				id: reqid,
 				result: {
-					creat_time: params.time,
+					creat_time: newTransaction.creat_time,
 					transaction: newTransaction._id,
 					state: newTransaction.state,
 					receivers: null,
