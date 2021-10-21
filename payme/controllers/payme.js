@@ -223,7 +223,7 @@ const CreateTransaction = async (res, reqid, params) => {
 	}
 	let transaction = await Transaction.findOne({
 		order_id: order_id,
-		state: 1,
+		state: 1 || 2,
 	});
 	if (transaction) {
 		if (
@@ -303,7 +303,7 @@ const CreateTransaction = async (res, reqid, params) => {
 				},
 			});
 		}
-		const creat_time = new Date().getTime();
+		const creat_time = Date.now();
 		const newTransaction = await new Transaction({
 			paycom_transaction_id: reqid,
 			paycom_time: params.time,
