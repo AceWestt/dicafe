@@ -47,10 +47,26 @@ const Cart = () => {
 
 	const handleSubmit = async () => {
 		const product_ids = cartList.map((i) => i.id);
+		console.log(cartList);
 		const amount = totalPrice;
 		const state = 1;
 		const phone = '+998945677776';
 
+		const items = cartList.map((i) => {
+			const item = {
+				title: i.title.ru,
+				price: i.price,
+				count: i.amount,
+			};
+			return item;
+		});
+
+		const detail = {
+			items: items,
+		};
+
+		const detailJson = JSON.stringify(detail);
+		const encodedDetailBase64 = Buffer.from(detailJson).toString('base64');
 		const order = {
 			product_ids,
 			amount,
@@ -58,7 +74,6 @@ const Cart = () => {
 			phone,
 		};
 
-		console.log(order);
 		try {
 			const res = await axios.post('/api/order', order);
 			if (res.data.success) {
@@ -66,22 +81,23 @@ const Cart = () => {
 				const formData = new FormData();
 				const merchant = '61681fff6e71f7f8df534653';
 				formData.append('merchant', merchant);
-				formData.append('amount', 500 * 100);
-				formData.append('account[phone]', createdOrder.phone);
+				formData.append('amount', createdOrder.amount * 100);
 				formData.append('account[order_id]', createdOrder._id);
-				const encodedString = Buffer.from(
-					`m=${merchant};ac.order_id=${createdOrder._id};ac.phone=${
-						createdOrder.phone
-					};a=${500 * 100};c=https://dicafe.uz/`
-				).toString('base64');
-				window.location.replace(`https://test.paycom.uz/${encodedString}`);
-				// try {
-				// 	const paymeRes = await axios.post('https://test.paycom.uz', formData);
-				// 	console.log(paymeRes);
-				// } catch (error) {
-				// 	console.error(error);
-				// 	console.log(error.response);
-				// }
+				formData.append('detail', encodedDetailBase64);
+				formData.append('callback', 'https://dicafe.uz/');
+				// const encodedString = Buffer.from(
+				// 	`m=${merchant};ac.order_id=${createdOrder._id};ac.phone=${
+				// 		createdOrder.phone
+				// 	};a=${500 * 100};c=https://dicafe.uz/`
+				// ).toString('base64');
+				// window.location.replace(`https://checkout.paycom.uz/${encodedString}`);
+				try {
+					const paymeRes = await axios.post('https://checkout.paycom.uz', formData);
+					console.log(paymeRes);
+				} catch (error) {
+					console.error(error);
+					console.log(error.response);
+				}
 			}
 		} catch (error) {
 			console.error(error);
