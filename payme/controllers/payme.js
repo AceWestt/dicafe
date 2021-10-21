@@ -143,7 +143,7 @@ const CheckPerformTransaction = async (res, reqid, params) => {
 	}
 
 	const transaction = await Transaction.findOne({
-		paycom_transaction_id: reqid,
+		paycom_transaction_id: params.id,
 	});
 
 	if (transaction && (transaction.state === 1 || transaction.state === 2)) {
@@ -245,7 +245,7 @@ const CreateTransaction = async (res, reqid, params) => {
 		}
 	}
 	transaction = await Transaction.findOne({
-		paycom_transaction_id: reqid,
+		paycom_transaction_id: params.id,
 	});
 	if (transaction) {
 		if (transaction.state !== 1) {
@@ -309,7 +309,7 @@ const CreateTransaction = async (res, reqid, params) => {
 		}
 		const creat_time = Date.now();
 		const newTransaction = await new Transaction({
-			paycom_transaction_id: reqid,
+			paycom_transaction_id: params.id,
 			paycom_time: params.time,
 			paycom_time_datetime: params.time,
 			creat_time: creat_time,
@@ -356,7 +356,7 @@ const CreateTransaction = async (res, reqid, params) => {
 
 const CheckTransaction = async (res, reqid, params) => {
 	const transaction = await Transaction.findOne({
-		paycom_transaction_id: reqid,
+		paycom_transaction_id: params.id,
 	});
 	if (!transaction) {
 		return res.json({
