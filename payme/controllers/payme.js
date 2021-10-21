@@ -526,7 +526,7 @@ const CancelTransaction = async (res, reqid, params) => {
 				id: reqid,
 				result: {
 					transaction: transaction._id,
-					cancel_time: Date.parse(transaction.perform_time),
+					cancel_time: Date.parse(transaction.cancel_time),
 					state: transaction.state,
 				},
 			});
@@ -567,7 +567,7 @@ const CancelTransaction = async (res, reqid, params) => {
 				id: reqid,
 				result: {
 					transaction: transaction._id,
-					cancel_time: Date.parse(transaction.perform_time),
+					cancel_time: Date.parse(transaction.cancel_time),
 					state: transaction.state,
 				},
 			});
@@ -610,7 +610,7 @@ const CancelTransaction = async (res, reqid, params) => {
 					id: reqid,
 					result: {
 						transaction: transaction._id,
-						cancel_time: Date.parse(transaction.perform_time),
+						cancel_time: Date.parse(transaction.cancel_time),
 						state: transaction.state,
 					},
 				});
