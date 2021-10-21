@@ -32,7 +32,7 @@ const TransactionSchema = new mongoose.Schema({
 		required: true,
 	},
 	state: { type: Number, required: true },
-	reason: { type: Number, required: true },
+	reason: { type: Number, default: null },
 	receivers: { type: String, default: null },
 	order_id: { type: String, required: true },
 });
