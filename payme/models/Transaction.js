@@ -34,7 +34,7 @@ const TransactionSchema = new mongoose.Schema({
 	state: { type: Number, required: true },
 	reason: { type: Number, required: true },
 	receivers: { type: String, default: null },
-	order_id: { type: Number, required: true },
+	order_id: { type: String, required: true },
 });
 
 TransactionSchema.methods.isExpired = function () {
