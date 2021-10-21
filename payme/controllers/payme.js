@@ -10,6 +10,7 @@ const ERROR_INVALID_AMOUNT = -31001;
 const ERROR_INVALID_ACCOUNT = -31050;
 const ERROR_COULD_NOT_PERFORM = -31008;
 const ERROR_METHOD_NOT_FOUND = -32601;
+const ERROR_INTERNAL_SERVER = -32400;
 
 const ERROR_INSUFFICIENT_PRIVILEGE_MSG =
 	'Insufficient privilege to perform this method.';
@@ -24,6 +25,8 @@ const errorInvalidAccountMsgLocale = {
 	uz: 'Harid kodida xatolik.',
 	en: 'Incorrect order code.',
 };
+
+const TRANSACTION_TIMOUT = 43200000;
 
 exports.paymeAnother = async (req, res, next) => {
 	try {
@@ -160,7 +163,7 @@ const CheckPerformTransaction = async (res, reqid, params) => {
 	});
 };
 
-const CreateTransaction = (res, reqId, params) => {
+const CreateTransaction = async (res, reqid, params) => {
 	const valid = validate(params);
 	if (!valid.valid) {
 		if (valid.msg === ERROR_INVALID_AMOUNT_MSG) {
@@ -185,14 +188,154 @@ const CreateTransaction = (res, reqId, params) => {
 			});
 		}
 	}
-	return res.json({
-		jsonrpc: JSON_RPC_VERSION,
-		id: reqId,
-		error: {
-			code: ERROR_METHOD_NOT_FOUND,
-			message: ERROR_METHOD_NOT_FOUND_MSG,
-		},
+	const order_id = params.account.order_id || params.account.DiCafe;
+	const order = await Order.findById(order_id);
+	if (!order) {
+		return res.json({
+			jsonrpc: JSON_RPC_VERSION,
+			id: reqid,
+			error: {
+				code: ERROR_INVALID_ACCOUNT,
+				message: errorInvalidAccountMsgLocale,
+				data: 'order_id',
+			},
+		});
+	}
+	if (100 * order.amount != params.amount) {
+		return res.json({
+			jsonrpc: JSON_RPC_VERSION,
+			id: reqid,
+			error: {
+				code: ERROR_INVALID_AMOUNT,
+				message: ERROR_INVALID_AMOUNT_MSG,
+			},
+		});
+	}
+	if (order.state !== 1) {
+		return res.json({
+			jsonrpc: JSON_RPC_VERSION,
+			id: reqid,
+			error: {
+				code: ERROR_INVALID_ACCOUNT,
+				message: errorInvalidAccountMsgLocale,
+				data: 'order_id',
+			},
+		});
+	}
+	const transaction = await Transaction.findOne({
+		order_id: order_id,
 	});
+	if (transaction) {
+		if (
+			(transaction.state === 1 || transaction.state === 2) &&
+			transaction.paycom_transaction_id !== reqid
+		) {
+			return res.json({
+				jsonrpc: JSON_RPC_VERSION,
+				id: reqid,
+				error: {
+					code: ERROR_INVALID_ACCOUNT,
+					message: ERROR_COULD_NOT_PERFORM_MSG,
+				},
+			});
+		}
+	}
+	const transaction = await Transaction.findOne({
+		paycom_transaction_id: reqid,
+	});
+	if (transaction) {
+		if (transaction.state !== 1) {
+			return res.json({
+				jsonrpc: JSON_RPC_VERSION,
+				id: reqid,
+				error: {
+					code: ERROR_COULD_NOT_PERFORM_MSG,
+					message: 'Transactino found, but is not active',
+				},
+			});
+		} else if (transaction.isExpired()) {
+			transaction.cancel(4);
+			await transaction.save((err) => {
+				if (err) {
+					return res.json({
+						jsonrpc: JSON_RPC_VERSION,
+						id: reqid,
+						error: {
+							code: ERROR_INTERNAL_SERVER,
+							message: 'Could not cancel transaction due to expiration',
+						},
+					});
+				}
+			});
+			return res.json({
+				jsonrpc: JSON_RPC_VERSION,
+				id: reqid,
+				error: {
+					code: ERROR_COULD_NOT_PERFORM,
+					message: 'Transaction is expired.',
+				},
+			});
+		} else {
+			return res.json({
+				jsonrpc: JSON_RPC_VERSION,
+				id: reqid,
+				result: {
+					creat_time: transaction.creat_time,
+					transaction: transaction._id,
+					state: transaction.state,
+					receivers: transaction.receivers,
+				},
+			});
+		}
+	} else {
+		if (Date.now() - params.time >= TRANSACTION_TIMOUT) {
+			return res.json({
+				jsonrpc: JSON_RPC_VERSION,
+				id: reqid,
+				error: {
+					code: ERROR_INVALID_ACCOUNT,
+					message: {
+						ru: `С даты создания транзакции прошло ${TRANSACTION_TIMOUT} мс.`,
+						uz: `Tranzaksiya yaratilgan sanadan ${TRANSACTION_TIMOUT} ms o'tgan.`,
+						en: `${TRANSACTION_TIMOUT} ms passed since the create time of the transaction.`,
+					},
+					data: 'time',
+				},
+			});
+		}
+		const creat_time = Date.now();
+		const newTransaction = await new Transaction({
+			paycom_transaction_id: reqid,
+			paycom_time: params.time,
+			paycom_time_datetime: params.time,
+			creat_time: creat_time,
+			state: 1,
+			amount: params.amount,
+			order_id: order_id,
+		});
+		await newTransaction.save((err) => {
+			if (err) {
+				return res.json({
+					jsonrpc: JSON_RPC_VERSION,
+					id: reqid,
+					error: {
+						code: ERROR_INTERNAL_SERVER,
+						message: 'Could not cancel transaction due to expiration',
+					},
+				});
+			}
+		});
+		return res.json({
+			jsonrpc: JSON_RPC_VERSION,
+			id: reqid,
+			result: {
+				creat_time: creat_time,
+				transaction: newTransaction._id,
+				state: newTransaction.state,
+				receivers: null,
+			},
+		});
+	}
 };
 
 const response = (reqId, data) => {

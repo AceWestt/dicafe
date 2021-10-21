@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const TIMEOUT = 43200000;
+
 const TransactionSchema = new mongoose.Schema({
 	paycom_transaction_id: {
 		type: String,
@@ -30,10 +32,27 @@ const TransactionSchema = new mongoose.Schema({
 		required: true,
 	},
 	state: { type: Number, required: true },
-	reasons: { type: Number, required: true },
+	reason: { type: Number, required: true },
 	receivers: { type: String, default: null },
 	order_id: { type: Number, required: true },
 });
+
+TransactionSchema.methods.isExpired = function () {
+	const diff = this.creat_time - Date.now();
+	if (diff > TIMEOUT) {
+		return true;
+	}
+	return false;
+};
+
+Transaction.methods.cancel = async function (reason) {
+	this.cancel_time = Date.now();
+	if (this.state === 2) {
+		this.state = -2;
+	} else {
+		this.state = -1;
+	}
+};
 
 const Transaction = mongoose.model('Transaction', TransactionSchema);
 
