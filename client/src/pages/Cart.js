@@ -76,6 +76,11 @@ const Cart = () => {
 		try {
 			const res = await axios.post('/api/order', order);
 			if (res.data.success) {
+				const config = {
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded',
+					},
+				};
 				const createdOrder = res.data.data;
 				const formData = new FormData();
 				const merchant = '61681fff6e71f7f8df534653';
@@ -91,7 +96,11 @@ const Cart = () => {
 				// ).toString('base64');
 				// window.location.replace(`https://checkout.paycom.uz/${encodedString}`);
 				try {
-					const paymeRes = await axios.post('https://checkout.paycom.uz', formData);
+					const paymeRes = await axios.post(
+						'https://checkout.paycom.uz',
+						formData,
+						config
+					);
 					console.log(paymeRes);
 				} catch (error) {
 					console.error(error);
