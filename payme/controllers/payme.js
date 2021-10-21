@@ -284,7 +284,7 @@ const CreateTransaction = async (res, reqid, params) => {
 				jsonrpc: JSON_RPC_VERSION,
 				id: reqid,
 				result: {
-					creat_time: Date.parse(transaction.creat_time),
+					create_time: Date.parse(transaction.creat_time),
 					transaction: transaction._id,
 					state: transaction.state,
 					receivers: transaction.receivers,
