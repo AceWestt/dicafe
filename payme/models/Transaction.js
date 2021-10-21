@@ -38,7 +38,7 @@ const TransactionSchema = new mongoose.Schema({
 });
 
 TransactionSchema.methods.isExpired = function () {
-	const diff = this.creat_time - Date.now();
+	const diff = Date.parse(this.creat_time) - Date.now();
 	if (diff > TIMEOUT) {
 		return true;
 	}
@@ -52,6 +52,7 @@ TransactionSchema.methods.cancel = async function (reason) {
 	} else {
 		this.state = -1;
 	}
+	this.reason = reason;
 };
 
 const Transaction = mongoose.model('Transaction', TransactionSchema);

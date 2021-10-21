@@ -9,6 +9,7 @@ const ERROR_INSUFFICIENT_PRIVILEGE = -32504;
 const ERROR_INVALID_AMOUNT = -31001;
 const ERROR_INVALID_ACCOUNT = -31050;
 const ERROR_COULD_NOT_PERFORM = -31008;
+const ERROR_TRANSACTION_NOT_FOUND = -31003;
 const ERROR_METHOD_NOT_FOUND = -32601;
 const ERROR_INTERNAL_SERVER = -32400;
 
@@ -56,6 +57,8 @@ exports.paymeAnother = async (req, res, next) => {
 			case 'CreateTransaction':
 				CreateTransaction(res, reqId, params);
 				break;
+			case 'CheckTransaction':
+				CheckTransaction(res, reqId, params);
 			default:
 				return res.json({
 					jsonrpc: JSON_RPC_VERSION,
@@ -168,7 +171,7 @@ const CreateTransaction = async (res, reqid, params) => {
 		if (valid.msg === ERROR_INVALID_AMOUNT_MSG) {
 			return res.json({
 				jsonrpc: JSON_RPC_VERSION,
-				id: reqId,
+				id: reqid,
 				error: {
 					code: ERROR_INVALID_AMOUNT,
 					message: ERROR_INVALID_AMOUNT_MSG,
@@ -178,7 +181,7 @@ const CreateTransaction = async (res, reqid, params) => {
 		if (valid.msg === ERROR_INVALID_ACCOUNT_MSG) {
 			return res.json({
 				jsonrpc: JSON_RPC_VERSION,
-				id: reqId,
+				id: reqid,
 				error: {
 					code: ERROR_INVALID_ACCOUNT,
 					message: errorInvalidAccountMsgLocale,
@@ -348,6 +351,37 @@ const CreateTransaction = async (res, reqid, params) => {
 			});
 		}
 	}
+};
+
+const CheckTransaction = async (res, reqid, params) => {
+	const transaction = await Transaction.findOne({
+		paycom_transaction_id: reqid,
+	});
+	if (!transaction) {
+		return res.json({
+			jsonrpc: JSON_RPC_VERSION,
+			id: reqid,
+			error: {
+				code: ERROR_TRANSACTION_NOT_FOUND,
+				message: 'Transaction not found.',
+			},
+		});
+	}
+	const creat_time = Date.parse(transaction.creat_time);
+	const perform_time = Date.parse(transaction.perform_time);
+	const cancel_time = Date.parse(transaction.cancel_time);
+	return res.json({
+		jsonrpc: JSON_RPC_VERSION,
+		id: reqid,
+		result: {
+			creat_time: creat_time,
+			perform_time: perform_time,
+			cancel_time: cancel_time,
+			transaction: transaction._id,
+			state: transaction.state,
+			reason: transaction.reason,
+		},
+	});
 };
 
 const response = (reqId, data) => {
