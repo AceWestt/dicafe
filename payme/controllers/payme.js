@@ -59,6 +59,7 @@ exports.paymeAnother = async (req, res, next) => {
 				break;
 			case 'CheckTransaction':
 				CheckTransaction(res, reqId, params);
+				break;
 			default:
 				return res.json({
 					jsonrpc: JSON_RPC_VERSION,
