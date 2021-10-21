@@ -371,16 +371,13 @@ const CheckTransaction = async (res, reqid, params) => {
 			},
 		});
 	}
-	const creat_time = Date.parse(transaction.creat_time);
-	const perform_time = Date.parse(transaction.perform_time);
-	const cancel_time = Date.parse(transaction.cancel_time);
 	return res.json({
 		jsonrpc: JSON_RPC_VERSION,
 		id: reqid,
 		result: {
-			create_time: creat_time,
-			perform_time: perform_time,
-			cancel_time: cancel_time,
+			create_time: Date.parse(transaction.creat_time),
+			perform_time: Date.parse(transaction.perform_time),
+			cancel_time: Date.parse(transaction.cancel_time),
 			transaction: transaction._id,
 			state: transaction.state,
 			reason: transaction.reason,
