@@ -315,6 +315,7 @@ const CreateTransaction = async (res, reqid, params) => {
 		try {
 			await newTransaction.save((err) => {
 				if (err) {
+					console.log(err);
 					return res.json({
 						jsonrpc: JSON_RPC_VERSION,
 						id: reqid,
