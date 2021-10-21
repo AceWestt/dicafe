@@ -91,7 +91,7 @@ const Cart = () => {
 					amount: createdOrder.amount * 100,
 					detail: encodedDetailBase64,
 				});
-				paymeFormRef.current.submit();
+				// paymeFormRef.current.submit();
 			}
 		} catch (error) {
 			console.error(error);
@@ -171,7 +171,7 @@ const Cart = () => {
 						</div>
 					</div>
 				</div>
-				<PaymeForm ref={paymeFormRef} data={paymeData} />
+				<PaymeForm myref={paymeFormRef} data={paymeData} />
 			</div>
 		);
 	}
@@ -180,13 +180,13 @@ const Cart = () => {
 
 export default Cart;
 
-const PaymeForm = (ref, data) => {
+const PaymeForm = ({ myref, data }) => {
 	return (
 		<form
+			ref={myref}
 			action="https://checkout.paycom.uz"
 			method="POST"
 			id="payme_form"
-			ref={ref}
 		>
 			<input type="hidden" name="account[DiCafe]" value={data.order_id} />
 			<input type="hidden" name="amount" value={data.amount} />
@@ -194,12 +194,6 @@ const PaymeForm = (ref, data) => {
 			<input type="hidden" name="lang" value="ru" />
 			<input type="hidden" name="callback" value="https://dicafe.uz/" />
 			<input type="hidden" name="detail" value={data.detail} />
-			{/* <input
-				type="submit"
-				class="button alt"
-				id="submit_payme_form"
-				value="Оплатить"
-			/> */}
 		</form>
 	);
 };
