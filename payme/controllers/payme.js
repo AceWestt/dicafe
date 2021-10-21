@@ -143,7 +143,7 @@ const CheckPerformTransaction = async (res, reqid, params) => {
 	}
 
 	const transaction = await Transaction.findOne({
-		paycom_transaction_id: params.id,
+		order_id: order_id,
 	});
 
 	if (transaction && (transaction.state === 1 || transaction.state === 2)) {
@@ -284,7 +284,7 @@ const CreateTransaction = async (res, reqid, params) => {
 				jsonrpc: JSON_RPC_VERSION,
 				id: reqid,
 				result: {
-					creat_time: transaction.creat_time,
+					creat_time: Day.parse(transaction.creat_time),
 					transaction: transaction._id,
 					state: transaction.state,
 					receivers: transaction.receivers,
