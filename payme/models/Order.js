@@ -22,6 +22,8 @@ const OrderSchema = new mongoose.Schema({
 	},
 });
 
+OrderSchema.methods.allowCancel = () => false;
+
 const Order = mongoose.model('Order', OrderSchema);
 
 module.exports = Order;

@@ -10,6 +10,7 @@ const ERROR_INVALID_AMOUNT = -31001;
 const ERROR_INVALID_ACCOUNT = -31050;
 const ERROR_COULD_NOT_PERFORM = -31008;
 const ERROR_TRANSACTION_NOT_FOUND = -31003;
+const ERROR_COULD_NOT_CANCEL = -31007;
 const ERROR_METHOD_NOT_FOUND = -32601;
 const ERROR_INTERNAL_SERVER = -32400;
 
@@ -62,6 +63,9 @@ exports.paymeAnother = async (req, res, next) => {
 				break;
 			case 'PerformTransaction':
 				PerformTransaction(res, reqId, params);
+				break;
+			case 'CancelTransaction':
+				CancelTransaction(res, reqId, params);
 				break;
 			default:
 				return res.json({
@@ -497,6 +501,131 @@ const PerformTransaction = async (res, reqid, params) => {
 					message: 'Could not perform this operation.',
 				},
 			});
+	}
+};
+
+const CancelTransaction = async (res, reqid, params) => {
+	const transaction = await Transaction.findOne({
+		paycom_transaction_id: params.id,
+	});
+	if (!transaction) {
+		return res.json({
+			jsonrpc: JSON_RPC_VERSION,
+			id: reqid,
+			error: {
+				code: ERROR_TRANSACTION_NOT_FOUND,
+				message: 'Transaction not found.',
+			},
+		});
+	}
+	switch (transaction.state) {
+		case -1:
+		case -2:
+			return res.json({
+				jsonrpc: JSON_RPC_VERSION,
+				id: reqid,
+				result: {
+					transaction: transaction._id,
+					cancel_time: Date.parse(transaction.perform_time),
+					state: transaction.state,
+				},
+			});
+			break;
+		case 1: {
+			transaction.cancel(params.reason);
+			await transaction.save((err) => {
+				if (err) {
+					console.error(err);
+					return res.json({
+						jsonrpc: JSON_RPC_VERSION,
+						id: reqid,
+						error: {
+							code: ERROR_INTERNAL_SERVER,
+							message: 'Could not cancel transaction due to expiration',
+						},
+					});
+				}
+			});
+			const order_id = transaction.order_id;
+			const order = await Order.findById(order_id);
+			order.state = 3;
+			await order.save((err) => {
+				if (err) {
+					console.error(err);
+					return res.json({
+						jsonrpc: JSON_RPC_VERSION,
+						id: reqid,
+						error: {
+							code: ERROR_INTERNAL_SERVER,
+							message: 'Could not cancel transaction due to expiration',
+						},
+					});
+				}
+			});
+			return res.json({
+				jsonrpc: JSON_RPC_VERSION,
+				id: reqid,
+				result: {
+					transaction: transaction._id,
+					cancel_time: Date.parse(transaction.perform_time),
+					state: transaction.state,
+				},
+			});
+			break;
+		}
+		case 2:
+			const order_id = transaction.order_id;
+			const order = await Order.findById(order_id);
+			if (order.allowCancel()) {
+				transaction.cancel(params.reason);
+				await transaction.save((err) => {
+					if (err) {
+						console.error(err);
+						return res.json({
+							jsonrpc: JSON_RPC_VERSION,
+							id: reqid,
+							error: {
+								code: ERROR_INTERNAL_SERVER,
+								message: 'Could not cancel transaction due to expiration',
+							},
+						});
+					}
+				});
+				order.state = 3;
+				await order.save((err) => {
+					if (err) {
+						console.error(err);
+						return res.json({
+							jsonrpc: JSON_RPC_VERSION,
+							id: reqid,
+							error: {
+								code: ERROR_INTERNAL_SERVER,
+								message: 'Could not cancel transaction due to expiration',
+							},
+						});
+					}
+				});
+				return res.json({
+					jsonrpc: JSON_RPC_VERSION,
+					id: reqid,
+					result: {
+						transaction: transaction._id,
+						cancel_time: Date.parse(transaction.perform_time),
+						state: transaction.state,
+					},
+				});
+			} else {
+				return res.json({
+					jsonrpc: JSON_RPC_VERSION,
+					id: reqid,
+					error: {
+						code: ERROR_COULD_NOT_CANCEL,
+						message:
+							'Could not cancel transaction. Order is delivered/Service is completed.',
+					},
+				});
+			}
+			break;
 	}
 };
 
