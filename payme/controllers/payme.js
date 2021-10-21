@@ -312,7 +312,7 @@ const CreateTransaction = async (res, reqid, params) => {
 			paycom_transaction_id: params.id,
 			paycom_time: params.time,
 			paycom_time_datetime: params.time,
-			creat_time: creat_time,
+			creat_time: Date.parse(newTransaction.creat_time),
 			state: 1,
 			amount: params.amount,
 			order_id: order_id,
