@@ -223,7 +223,7 @@ const CreateTransaction = async (res, reqid, params) => {
 	}
 	let transaction = await Transaction.findOne({
 		order_id: order_id,
-		state: 1 || 2,
+		state: 1,
 	});
 	if (transaction) {
 		if (
