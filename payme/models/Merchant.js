@@ -7,7 +7,7 @@ class Merchant {
 			const matches = headers['authorization'].match(/^\s*Basic\s+(\S+)\s*$/i);
 			if (matches) {
 				const decoded = Buffer.from(matches[1], 'base64').toString('utf-8');
-				if (decoded === `${this.config['login']}:${this.config['test-key']}`) {
+				if (decoded === `${this.config['login']}:${this.config['test_key']}`) {
 					return true;
 				}
 				return false;
