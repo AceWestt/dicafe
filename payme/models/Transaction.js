@@ -38,7 +38,7 @@ const TransactionSchema = new mongoose.Schema({
 });
 
 TransactionSchema.methods.isExpired = function () {
-	const diff = Date.parse(this.creat_time) - Date.now();
+	const diff = Date.now() - Date.parse(this.creat_time);
 	if (diff > TIMEOUT) {
 		return true;
 	}
