@@ -52,7 +52,6 @@ exports.paymeAnother = async (req, res, next) => {
 		switch (method) {
 			case 'CheckPerformTransaction':
 				CheckPerformTransaction(res, reqId, params);
-				console.log('ss');
 				break;
 			case 'CreateTransaction':
 				CreateTransaction(res, reqId, params);
@@ -329,7 +328,7 @@ const CreateTransaction = async (res, reqid, params) => {
 			jsonrpc: JSON_RPC_VERSION,
 			id: reqid,
 			result: {
-				creat_time: creat_time * 1000,
+				creat_time: creat_time,
 				transaction: newTransaction._id,
 				state: newTransaction.state,
 				receivers: null,
