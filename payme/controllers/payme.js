@@ -285,8 +285,12 @@ const CreateTransaction = async (res, reqid, params) => {
 				id: reqid,
 				result: {
 					create_time: Date.parse(transaction.creat_time),
-					perform_time: Date.parse(transaction.perform_time),
-					cancel_time: Date.parse(transaction.cancel_time),
+					perform_time: !Date.parse(transaction.perform_time)
+						? 0
+						: Date.parse(transaction.perform_time),
+					cancel_time: Date.parse(transaction.cancel_time)
+						? 0
+						: Date.parse(transaction.perform_time),
 					transaction: transaction._id,
 					state: transaction.state,
 					reason: transaction.reason,
@@ -376,8 +380,12 @@ const CheckTransaction = async (res, reqid, params) => {
 		id: reqid,
 		result: {
 			create_time: Date.parse(transaction.creat_time),
-			perform_time: Date.parse(transaction.perform_time),
-			cancel_time: Date.parse(transaction.cancel_time),
+			perform_time: !Date.parse(transaction.perform_time)
+				? 0
+				: Date.parse(transaction.perform_time),
+			cancel_time: Date.parse(transaction.cancel_time)
+				? 0
+				: Date.parse(transaction.perform_time),
 			transaction: transaction._id,
 			state: transaction.state,
 			reason: transaction.reason,
