@@ -151,7 +151,7 @@ const CheckPerformTransaction = async (res, reqid, params) => {
 			jsonrpc: JSON_RPC_VERSION,
 			id: reqid,
 			error: {
-				code: ERROR_COULD_NOT_PERFORM,
+				code: ERROR_INVALID_ACCOUNT,
 				message: ERROR_COULD_NOT_PERFORM_MSG,
 			},
 		});
