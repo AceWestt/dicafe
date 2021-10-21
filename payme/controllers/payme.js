@@ -222,7 +222,7 @@ const CreateTransaction = async (res, reqid, params) => {
 			},
 		});
 	}
-	const transaction = await Transaction.findOne({
+	let transaction = await Transaction.findOne({
 		order_id: order_id,
 	});
 	if (transaction) {
@@ -240,7 +240,7 @@ const CreateTransaction = async (res, reqid, params) => {
 			});
 		}
 	}
-	const transaction = await Transaction.findOne({
+	transaction = await Transaction.findOne({
 		paycom_transaction_id: reqid,
 	});
 	if (transaction) {
