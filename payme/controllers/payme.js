@@ -525,9 +525,17 @@ const CancelTransaction = async (res, reqid, params) => {
 				jsonrpc: JSON_RPC_VERSION,
 				id: reqid,
 				result: {
+					create_time: Date.parse(transaction.creat_time),
+					perform_time: !Date.parse(transaction.perform_time)
+						? 0
+						: Date.parse(transaction.perform_time),
+					cancel_time: !Date.parse(transaction.cancel_time)
+						? 0
+						: Date.parse(transaction.perform_time),
 					transaction: transaction._id,
-					cancel_time: Date.parse(transaction.cancel_time),
 					state: transaction.state,
+					reason: transaction.reason,
+					receivers: transaction.receivers,
 				},
 			});
 			break;
@@ -566,9 +574,17 @@ const CancelTransaction = async (res, reqid, params) => {
 				jsonrpc: JSON_RPC_VERSION,
 				id: reqid,
 				result: {
+					create_time: Date.parse(transaction.creat_time),
+					perform_time: !Date.parse(transaction.perform_time)
+						? 0
+						: Date.parse(transaction.perform_time),
+					cancel_time: !Date.parse(transaction.cancel_time)
+						? 0
+						: Date.parse(transaction.perform_time),
 					transaction: transaction._id,
-					cancel_time: Date.parse(transaction.cancel_time),
 					state: transaction.state,
+					reason: transaction.reason,
+					receivers: transaction.receivers,
 				},
 			});
 			break;
@@ -609,9 +625,17 @@ const CancelTransaction = async (res, reqid, params) => {
 					jsonrpc: JSON_RPC_VERSION,
 					id: reqid,
 					result: {
+						create_time: Date.parse(transaction.creat_time),
+						perform_time: !Date.parse(transaction.perform_time)
+							? 0
+							: Date.parse(transaction.perform_time),
+						cancel_time: !Date.parse(transaction.cancel_time)
+							? 0
+							: Date.parse(transaction.perform_time),
 						transaction: transaction._id,
-						cancel_time: Date.parse(transaction.cancel_time),
 						state: transaction.state,
+						reason: transaction.reason,
+						receivers: transaction.receivers,
 					},
 				});
 			} else {
