@@ -303,7 +303,7 @@ const CreateTransaction = async (res, reqid, params) => {
 				},
 			});
 		}
-		const creat_time = Date.now();
+		const creat_time = new Date().getTime();
 		const newTransaction = await new Transaction({
 			paycom_transaction_id: reqid,
 			paycom_time: params.time,
@@ -329,7 +329,7 @@ const CreateTransaction = async (res, reqid, params) => {
 			jsonrpc: JSON_RPC_VERSION,
 			id: reqid,
 			result: {
-				creat_time: creat_time.toString(),
+				creat_time: creat_time,
 				transaction: newTransaction._id,
 				state: newTransaction.state,
 				receivers: null,
