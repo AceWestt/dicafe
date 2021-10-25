@@ -3,8 +3,14 @@ import { useAppContext } from '../context';
 import closuButtonImg from './imgs/cart/closeCart.svg';
 import line from './imgs/cart/line.svg';
 import orderBtnBg from './imgs/cart/orderButtonBg.svg';
+import orderBtnBgDisabled from './imgs/cart/orderButtonBgDisabled.svg';
 import incrementBtn from './imgs/cart/incrementButton.svg';
 import decrementBtn from './imgs/cart/decrementButton.svg';
+import customerFormBg from './imgs/cart/customerFormBg.svg';
+import closeFormButton from './imgs/cart/closeFormButton.svg';
+import sendCustomerFormButton from './imgs/cart/sendButton.svg';
+import sendCustomerFormButtonInvalid from './imgs/cart/sendButtonInvalid.svg';
+import { useForm } from 'react-hook-form';
 import axios from 'axios';
 
 const Cart = () => {
@@ -13,6 +19,11 @@ const Cart = () => {
 	const [totalPrice, setTotalPrice] = useState(0);
 
 	const [paymeData, setPaymeData] = useState({});
+	const [customerName, setCustomerName] = useState('');
+	const [customerPhone, setCustomerPhone] = useState('');
+	const [customerAddress, setCustomerAddress] = useState('');
+	const [isUserFormOpen, setIsUserFormOpen] = useState(false);
+
 	const paymeFormRef = useRef(null);
 
 	useEffect(() => {
@@ -48,6 +59,12 @@ const Cart = () => {
 		setCartList(newCartList);
 	};
 
+	const handleOrderButtonClick = () => {
+		if (cartList.length > 0) {
+			setIsUserFormOpen(true);
+		}
+	};
+
 	const handleSubmit = async () => {
 		const product_ids = cartList.map((i) => i.id);
 		const amount = totalPrice;
@@ -80,12 +97,6 @@ const Cart = () => {
 			const res = await axios.post('/api/order', order);
 			if (res.data.success) {
 				const createdOrder = res.data.data;
-				// const encodedString = Buffer.from(
-				// 	`m=${merchant};ac.order_id=${createdOrder._id};ac.phone=${
-				// 		createdOrder.phone
-				// 	};a=${500 * 100};c=https://dicafe.uz/`
-				// ).toString('base64');
-				// window.location.replace(`https://checkout.paycom.uz/${encodedString}`);
 				setPaymeData({
 					order_id: createdOrder._id,
 					amount: createdOrder.amount * 100,
@@ -101,78 +112,90 @@ const Cart = () => {
 
 	if (isCartOpen) {
 		return (
-			<div className="cart-modal" id="cart-modal">
-				<div className="cart-modal__container">
-					<div className="header">
-						<div className="top">
-							<span>{lang === 'ru' ? 'Корзина' : 'Savat'}</span>
-							<img
-								src={closuButtonImg}
-								alt="close cart"
-								onClick={() => setIsCartOpen(false)}
-							/>
-						</div>
-						<div className="bottom">
-							<img src={line} alt="line" />
-						</div>
-					</div>
-					<div className="body">
-						{cartList.length > 0 ? (
-							cartList.map((c, index) => {
-								return (
-									<div className="item" key={`cart-item_${index}`}>
-										<div className="img">
-											<img src={c.img} alt="item" />
-										</div>
-										<div className="text">
-											<div className="title">
-												<span>{c.title[lang]}</span>
-												<span>x{c.amount}</span>
-											</div>
-											<div className="subtitle">{c.subtitle[lang]}</div>
-											<div className="amount-control">
-												<img
-													src={decrementBtn}
-													alt="decrement"
-													onClick={() => handleDecrement(c, index)}
-												/>
-												<img
-													src={incrementBtn}
-													alt="increment"
-													onClick={() => handleIncrement(index)}
-												/>
-											</div>
-											<div className="price">
-												{c.price * c.amount} {lang === 'ru' ? 'сум' : "so'm"}
-											</div>
-										</div>
-									</div>
-								);
-							})
-						) : (
-							<p className="empty-msg">
-								{lang === 'ru' ? ' Ваша корзина пуста ' : "Savatingiz bo'sh"}
-							</p>
-						)}
-					</div>
-					<div className="footer">
-						<div className="total">
-							{lang === 'ru' ? 'Итогавая цена:' : 'Umumiy narxi:'} {totalPrice}{' '}
-							{lang === 'ru' ? 'сум' : "so'm"}
-						</div>
-						<div className="line">
-							<img src={line} alt="line" />
-						</div>
-						<div className="btn-holder">
-							<div className="order-button" onClick={handleSubmit}>
-								<img src={orderBtnBg} alt="orderBtn" />
-								<span>{lang === 'ru' ? 'Заказать' : 'Buyurtma berish'}</span>
+			<>
+				<div className="cart-modal" id="cart-modal">
+					<div className="cart-modal__container">
+						<div className="header">
+							<div className="top">
+								<span>{lang === 'ru' ? 'Корзина' : 'Savat'}</span>
+								<img
+									src={closuButtonImg}
+									alt="close cart"
+									onClick={() => setIsCartOpen(false)}
+								/>
+							</div>
+							<div className="bottom">
+								<img src={line} alt="line" />
 							</div>
 						</div>
+						<div className="body">
+							{cartList.length > 0 ? (
+								cartList.map((c, index) => {
+									return (
+										<div className="item" key={`cart-item_${index}`}>
+											<div className="img">
+												<img src={c.img} alt="item" />
+											</div>
+											<div className="text">
+												<div className="title">
+													<span>{c.title[lang]}</span>
+													<span>x{c.amount}</span>
+												</div>
+												<div className="subtitle">{c.subtitle[lang]}</div>
+												<div className="amount-control">
+													<img
+														src={decrementBtn}
+														alt="decrement"
+														onClick={() => handleDecrement(c, index)}
+													/>
+													<img
+														src={incrementBtn}
+														alt="increment"
+														onClick={() => handleIncrement(index)}
+													/>
+												</div>
+												<div className="price">
+													{c.price * c.amount} {lang === 'ru' ? 'сум' : "so'm"}
+												</div>
+											</div>
+										</div>
+									);
+								})
+							) : (
+								<p className="empty-msg">
+									{lang === 'ru' ? ' Ваша корзина пуста ' : "Savatingiz bo'sh"}
+								</p>
+							)}
+						</div>
+						<div className="footer">
+							<div className="total">
+								{lang === 'ru' ? 'Итогавая цена:' : 'Umumiy narxi:'} {totalPrice}{' '}
+								{lang === 'ru' ? 'сум' : "so'm"}
+							</div>
+							<div className="line">
+								<img src={line} alt="line" />
+							</div>
+							<div className="btn-holder">
+								<div
+									className={`order-button ${cartList.length > 0 ? '' : 'inactive'}`}
+									onClick={handleOrderButtonClick}
+								>
+									<img
+										src={cartList.length > 0 ? orderBtnBg : orderBtnBgDisabled}
+										alt="orderBtn"
+									/>
+									<span>{lang === 'ru' ? 'Заказать' : 'Buyurtma berish'}</span>
+								</div>
+							</div>
+							<p className="empty-message">
+								{cartList.length === 0 && 'Добавьте товар в корзину'}
+							</p>
+						</div>
+						<PaymeForm myref={paymeFormRef} data={paymeData} />
 					</div>
 				</div>
-				<PaymeForm myref={paymeFormRef} data={paymeData} />
-			</div>
+				{isUserFormOpen && <UserForm setIsUserFormOpen={setIsUserFormOpen} />}
+			</>
 		);
 	}
 	return '';
@@ -195,5 +218,126 @@ const PaymeForm = ({ myref, data }) => {
 			<input type="hidden" name="callback" value="https://dicafe.uz/" />
 			<input type="hidden" name="detail" value={data.detail} />
 		</form>
+	);
+};
+
+const UserForm = ({ setIsUserFormOpen }) => {
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm();
+
+	const onSubmit = (data) => {
+		console.log(data);
+	};
+
+	const handleNameChange = (e) => {
+		let value = e.target.value;
+		value = value.replace(/[^a-zA-Zа-яА-ЯёЁ ]+/g, '');
+		value = value.replace(/[ ]{2,}/g, ' ');
+		value = value.replace(/(^|\s)[a-zA-Zа-яА-ЯёЁ]/g, (s) => s.toUpperCase());
+		e.target.value = value;
+	};
+	const handlePhoneChange = (e) => {
+		let value = e.target.value;
+		const match = value
+			.replace(/^\+998/, '')
+			.replace(/\D/g, '')
+			.match(/(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/);
+		value = !match[2]
+			? '+998 ' + (match[1] ? '(' + match[1] : '')
+			: '+998 (' +
+			  match[1] +
+			  ') ' +
+			  match[2] +
+			  (match[3] ? '-' + match[3] + (match[4] ? '-' + match[4] : '') : '');
+		e.target.value = value;
+	};
+	return (
+		<div className="user-form" id="user-form-modal">
+			<div className="form-container">
+				<img className="bg" src={customerFormBg} alt="bg" />
+				<div className="form-wrapper">
+					<div className="title">Подтверждение покупки</div>
+					<form onSubmit={handleSubmit(onSubmit)}>
+						<div className="form-group">
+							<input
+								type="text"
+								placeholder="Ваше имя*"
+								{...register('customer.name', {
+									required: 'Введите имя!',
+									pattern: {
+										value: /^[a-zA-Zа-яА-ЯёЁ ]+$/,
+										message: 'Введите имя правильно!',
+									},
+									onChange: (e) => handleNameChange(e),
+								})}
+							/>
+							<p className={errors.customer?.name ? 'has-error' : 'warning'}>
+								{errors.customer?.name?.message}
+							</p>
+						</div>
+						<div className="form-group">
+							<input
+								type="phone"
+								placeholder="Ваш номер телефона*"
+								{...register('customer.phone', {
+									value: '+998 ',
+									required: 'Введите номер телефона!',
+									pattern: {
+										value: /^\+998 \([0-9]{2}\) [0-9]{3}-[0-9]{2}-[0-9]{2}/,
+										message: 'Введите номер телефона правильно!',
+									},
+									onChange: (e) => handlePhoneChange(e),
+								})}
+							/>
+							<p className={errors.customer?.phone ? 'has-error' : 'warning'}>
+								{errors.customer?.phone
+									? errors.customer?.phone?.message
+									: 'Обязательно проверяйте ваш номер телефона перед отправкой'}
+							</p>
+						</div>
+						<div className="form-group">
+							<input
+								type="phone"
+								placeholder="Адрес*"
+								{...register('customer.address', {
+									required: 'Введите адрес!',
+								})}
+							/>
+							<p className={errors.customer?.address ? 'has-error' : 'warning'}>
+								{errors.customer?.address
+									? errors.customer?.address?.message
+									: 'Доставка осуществляется только в пределах г. Ташкента'}
+							</p>
+						</div>
+						<div className="form-group">
+							<button className="submit" type="submit">
+								<img
+									src={
+										Object.keys(errors).length > 0
+											? sendCustomerFormButtonInvalid
+											: sendCustomerFormButton
+									}
+									alt="send"
+									className="button-bg"
+								/>
+								<span>Отправить</span>
+							</button>
+							<p>
+								Оплата производится через Payme, после оплаты с Вами свяжется курьер
+							</p>
+						</div>
+					</form>
+					<img
+						src={closeFormButton}
+						alt="close form"
+						id="close-user-form-button"
+						onClick={() => setIsUserFormOpen(false)}
+					/>
+				</div>
+			</div>
+		</div>
 	);
 };
