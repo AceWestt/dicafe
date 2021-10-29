@@ -7,6 +7,7 @@ import orderBtnBgDisabled from './imgs/cart/orderButtonBgDisabled.svg';
 import incrementBtn from './imgs/cart/incrementButton.svg';
 import decrementBtn from './imgs/cart/decrementButton.svg';
 import customerFormBg from './imgs/cart/customerFormBg.svg';
+import customerFormBgMobile from './imgs/cart/customerFormBgMobile.svg';
 import closeFormButton from './imgs/cart/closeFormButton.svg';
 import sendCustomerFormButton from './imgs/cart/sendButton.svg';
 import sendCustomerFormButtonInvalid from './imgs/cart/sendButtonInvalid.svg';
@@ -14,17 +15,10 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 
 const Cart = () => {
-	const { isCartOpen, setIsCartOpen, lang, cartList, setCartList } =
+	const { isCartOpen, setIsCartOpen, lang, cartList, setCartList, smallScreen } =
 		useAppContext();
 	const [totalPrice, setTotalPrice] = useState(0);
-
-	const [paymeData, setPaymeData] = useState({});
-	const [customerName, setCustomerName] = useState('');
-	const [customerPhone, setCustomerPhone] = useState('');
-	const [customerAddress, setCustomerAddress] = useState('');
 	const [isUserFormOpen, setIsUserFormOpen] = useState(false);
-
-	const paymeFormRef = useRef(null);
 
 	useEffect(() => {
 		let total = 0;
@@ -62,51 +56,6 @@ const Cart = () => {
 	const handleOrderButtonClick = () => {
 		if (cartList.length > 0) {
 			setIsUserFormOpen(true);
-		}
-	};
-
-	const handleSubmit = async () => {
-		const product_ids = cartList.map((i) => i.id);
-		const amount = totalPrice;
-		const state = 1;
-		const phone = '+998945677776';
-
-		const items = cartList.map((i) => {
-			const item = {
-				title: i.title.ru,
-				price: i.price,
-				count: i.amount,
-			};
-			return item;
-		});
-
-		const detail = {
-			items: items,
-		};
-
-		const detailJson = JSON.stringify(detail);
-		const encodedDetailBase64 = Buffer.from(detailJson).toString('base64');
-		const order = {
-			product_ids,
-			amount,
-			state,
-			phone,
-		};
-
-		try {
-			const res = await axios.post('/api/order', order);
-			if (res.data.success) {
-				const createdOrder = res.data.data;
-				setPaymeData({
-					order_id: createdOrder._id,
-					amount: createdOrder.amount * 100,
-					detail: encodedDetailBase64,
-				});
-				paymeFormRef.current.submit();
-			}
-		} catch (error) {
-			console.error(error);
-			console.log(error.response);
 		}
 	};
 
@@ -191,10 +140,16 @@ const Cart = () => {
 								{cartList.length === 0 && 'Добавьте товар в корзину'}
 							</p>
 						</div>
-						<PaymeForm myref={paymeFormRef} data={paymeData} />
 					</div>
 				</div>
-				{isUserFormOpen && <UserForm setIsUserFormOpen={setIsUserFormOpen} />}
+				{isUserFormOpen && (
+					<UserForm
+						setIsUserFormOpen={setIsUserFormOpen}
+						smallScreen={smallScreen}
+						cartList={cartList}
+						totalPrice={totalPrice}
+					/>
+				)}
 			</>
 		);
 	}
@@ -203,33 +158,67 @@ const Cart = () => {
 
 export default Cart;
 
-const PaymeForm = ({ myref, data }) => {
-	return (
-		<form
-			ref={myref}
-			action="https://checkout.paycom.uz"
-			method="POST"
-			id="payme_form"
-		>
-			<input type="hidden" name="account[DiCafe]" value={data.order_id} />
-			<input type="hidden" name="amount" value={data.amount} />
-			<input type="hidden" name="merchant" value="61681fff6e71f7f8df534653" />
-			<input type="hidden" name="lang" value="ru" />
-			<input type="hidden" name="callback" value="https://dicafe.uz/" />
-			<input type="hidden" name="detail" value={data.detail} />
-		</form>
-	);
-};
-
-const UserForm = ({ setIsUserFormOpen }) => {
+const UserForm = ({ setIsUserFormOpen, smallScreen, cartList, totalPrice }) => {
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
 
-	const onSubmit = (data) => {
-		console.log(data);
+	const paymeFormRef = useRef(null);
+	const [paymeData, setPaymeData] = useState({});
+
+	const onSubmit = async (data) => {
+		const product_ids = cartList.map((i) => i.id);
+		const product_list = cartList.map((i) => {
+			const item = {
+				title: i.title.ru,
+				price: i.price * i.amount,
+				count: i.amount,
+			};
+			return item;
+		});
+		const customer = data.customer;
+		const amount = totalPrice;
+
+		const order = {
+			product_ids: product_ids,
+			product_list: product_list,
+			customer: customer,
+			amount: amount,
+			state: 1,
+		};
+
+		try {
+			const res = await axios.post('/api/order', order);
+			if (res.data.success) {
+				const createdOrder = res.data.data;
+				const order_id = createdOrder._id;
+				const amount = createdOrder.amount * 100;
+				const items = createdOrder.product_list.map((i) => {
+					const item = {
+						title: i.title,
+						price: i.price * 100,
+						count: i.count,
+					};
+					return item;
+				});
+				const detail = {
+					items: items,
+				};
+				const detailJson = JSON.stringify(detail);
+				const encodedDetailBase64 = Buffer.from(detailJson).toString('base64');
+				setPaymeData({
+					order_id: order_id,
+					amount: amount,
+					detail: encodedDetailBase64,
+				});
+				paymeFormRef.current.submit();
+			}
+		} catch (error) {
+			console.error(error);
+			console.log(error.response);
+		}
 	};
 
 	const handleNameChange = (e) => {
@@ -239,6 +228,7 @@ const UserForm = ({ setIsUserFormOpen }) => {
 		value = value.replace(/(^|\s)[a-zA-Zа-яА-ЯёЁ]/g, (s) => s.toUpperCase());
 		e.target.value = value;
 	};
+
 	const handlePhoneChange = (e) => {
 		let value = e.target.value;
 		const match = value
@@ -257,7 +247,11 @@ const UserForm = ({ setIsUserFormOpen }) => {
 	return (
 		<div className="user-form" id="user-form-modal">
 			<div className="form-container">
-				<img className="bg" src={customerFormBg} alt="bg" />
+				<img
+					className="bg"
+					src={smallScreen ? customerFormBgMobile : customerFormBg}
+					alt="bg"
+				/>
 				<div className="form-wrapper">
 					<div className="title">Подтверждение покупки</div>
 					<form onSubmit={handleSubmit(onSubmit)}>
@@ -283,7 +277,6 @@ const UserForm = ({ setIsUserFormOpen }) => {
 								type="phone"
 								placeholder="Ваш номер телефона*"
 								{...register('customer.phone', {
-									value: '+998 ',
 									required: 'Введите номер телефона!',
 									pattern: {
 										value: /^\+998 \([0-9]{2}\) [0-9]{3}-[0-9]{2}-[0-9]{2}/,
@@ -336,8 +329,27 @@ const UserForm = ({ setIsUserFormOpen }) => {
 						id="close-user-form-button"
 						onClick={() => setIsUserFormOpen(false)}
 					/>
+					<PaymeForm myref={paymeFormRef} data={paymeData} />
 				</div>
 			</div>
 		</div>
+	);
+};
+
+const PaymeForm = ({ myref, data }) => {
+	return (
+		<form
+			ref={myref}
+			action="https://checkout.paycom.uz"
+			method="POST"
+			id="payme_form"
+		>
+			<input type="hidden" name="account[DiCafe]" value={data.order_id} />
+			<input type="hidden" name="amount" value={data.amount} />
+			<input type="hidden" name="merchant" value="61681fff6e71f7f8df534653" />
+			<input type="hidden" name="lang" value="ru" />
+			<input type="hidden" name="callback" value="https://dicafe.uz/" />
+			<input type="hidden" name="detail" value={data.detail} />
+		</form>
 	);
 };

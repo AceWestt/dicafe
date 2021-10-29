@@ -399,18 +399,22 @@ const Product = ({
 	const button = useRef(null);
 
 	const handleClick = () => {
+		let currentAmount;
 		if (amount > 0) {
-			const cartItem = {
-				id: _id,
-				title: title,
-				subtitle: subtitle,
-				img: img,
-				price: price,
-				amount: amount,
-			};
-			setCartList([...cartList, cartItem]);
-			setAmount(0);
+			currentAmount = amount;
+		} else {
+			currentAmount = 1;
 		}
+		const cartItem = {
+			id: _id,
+			title: title,
+			subtitle: subtitle,
+			img: img,
+			price: price,
+			amount: currentAmount,
+		};
+		setCartList([...cartList, cartItem]);
+		setAmount(0);
 	};
 
 	const handleMouseOver = () => {

@@ -355,90 +355,48 @@
 		}
 	}
 	#user-form-modal {
-		width: 100%;
-		height: 100%;
-		position: absolute;
-		top: 0;
-		left: 0;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		background: rgba($color: #000000, $alpha: 0.2);
 		.form-container {
 			img.bg {
-				width: 740px;
+				width: 92vw;
 			}
 			.form-wrapper {
-				width: 100%;
-				height: 100%;
-				position: absolute;
-				top: 0;
-				left: 0;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
 				.title {
-					font-size: 24px;
-					margin-bottom: 40px;
-				}
-				form {
-					display: flex;
-					flex-direction: column;
+					font-size: 6.4vw;
+					margin-bottom: 10.667vw;
 				}
 				.form-group {
-					margin-bottom: 15px;
-					display: flex;
-					flex-direction: column;
-					align-items: center;
+					margin-bottom: 4vw;
 					input {
 						border: 1px solid transparent;
 						border-bottom: 2px solid #000000;
-						padding-bottom: 10px;
-						font-size: 22px;
-						text-align: center;
-						background: transparent;
-						width: 388px;
+						padding-bottom: 2.667vw;
+						font-size: 5.867vw;
+						width: 65.067vw;
 						&::placeholder {
-							font-size: 22px;
-							color: #a4a4a4;
+							font-size: 5.867vw;
 						}
 					}
 					button {
-						width: 220px;
-						height: 52px;
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						cursor: $cupCursor, pointer;
-						margin: 10px 0 0 0;
-						img.button-bg {
-							position: absolute;
-							top: 0;
-							left: 0;
-							max-width: 100%;
-							max-height: 100%;
-						}
+						width: 58.667vw;
+						height: 13.867vw;
+						margin: 2.133vw 0 0 0;
 						span {
-							color: #fff;
-							font-size: 26px;
+							font-size: 6.933vw;
 						}
 					}
 					p {
-						font-size: 12px;
-						margin: 5px 0 0 0;
-					}
-					p.has-error {
-						color: #e82f2f;
+						font-size: 3.2vw;
+						line-height: 3.467vw;
+						margin: 1.333vw 0 0 0;
+						max-width: 58.667vw;
+						text-align: center;
 					}
 				}
 			}
 			img#close-user-form-button {
-				position: absolute;
-				top: 60px;
-				right: 90px;
-				cursor: $cupCursor, pointer;
-				width: 20px;
+				top: 13.333vw;
+				right: 13.333vw;
+				width: 5.333vw;
 			}
 		}
 	}

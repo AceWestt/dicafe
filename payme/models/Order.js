@@ -3,6 +3,12 @@ const mongoose = require('mongoose');
 const OrderSchema = new mongoose.Schema({
 	products_ids: {
 		type: [],
+	},
+	product_list: {
+		type: [],
+	},
+	customer: {
+		type: Object,
 		required: true,
 	},
 	amount: {
@@ -15,10 +21,6 @@ const OrderSchema = new mongoose.Schema({
 	},
 	user_id: {
 		type: Number,
-	},
-	phone: {
-		type: String,
-		required: true,
 	},
 });
 

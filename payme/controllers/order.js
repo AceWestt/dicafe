@@ -5,10 +5,11 @@ exports.add = async (req, res, next) => {
 	const body = req.body;
 	try {
 		const order = await new Order({
-			product_ids: body.products_ids,
+			products_ids: body.product_ids,
+			product_list: body.product_list,
+			customer: body.customer,
 			amount: body.amount,
 			state: body.state,
-			phone: body.phone,
 		});
 		await order.save((err) => {
 			if (err) {
