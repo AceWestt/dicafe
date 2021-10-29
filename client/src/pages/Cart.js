@@ -215,6 +215,7 @@ const UserForm = ({ setIsUserFormOpen, smallScreen, cartList, totalPrice }) => {
 					detail: encodedDetailBase64,
 					customer: orderCustomer,
 				});
+				console.log(paymeData);
 				paymeFormRef.current.submit();
 			}
 		} catch (error) {
@@ -347,12 +348,16 @@ const PaymeForm = ({ myref, data }) => {
 			id="payme_form"
 		>
 			<input type="hidden" name="account[DiCafe]" value={data.order_id} />
-			<input type="hidden" name="account[userPhone]" value={data.customer.phone} />
-			<input type="hidden" name="account[userName]" value={data.customer.name} />
+			<input
+				type="hidden"
+				name="account[userPhone]"
+				value={data.customer?.phone}
+			/>
+			<input type="hidden" name="account[userName]" value={data.customer?.name} />
 			<input
 				type="hidden"
 				name="account[userAddress]"
-				value={data.customer.address}
+				value={data.customer?.address}
 			/>
 			<input type="hidden" name="amount" value={data.amount} />
 			<input type="hidden" name="merchant" value="61681fff6e71f7f8df534653" />
