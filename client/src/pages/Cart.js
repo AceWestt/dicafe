@@ -208,12 +208,12 @@ const UserForm = ({ setIsUserFormOpen, smallScreen, cartList, totalPrice }) => {
 				};
 				const detailJson = JSON.stringify(detail);
 				const encodedDetailBase64 = Buffer.from(detailJson).toString('base64');
-				const customer = createdOrder.customer;
+				const orderCustomer = createdOrder.customer;
 				setPaymeData({
 					order_id: order_id,
 					amount: amount,
 					detail: encodedDetailBase64,
-					customer: customer,
+					customer: orderCustomer,
 				});
 				paymeFormRef.current.submit();
 			}
@@ -348,7 +348,7 @@ const PaymeForm = ({ myref, data }) => {
 		>
 			<input type="hidden" name="account[DiCafe]" value={data.order_id} />
 			<input type="hidden" name="account[userPhone]" value={data.customer.phone} />
-			<input type="hidden" name="account[userName]" value={data.cutomer.name} />
+			<input type="hidden" name="account[userName]" value={data.customer.name} />
 			<input
 				type="hidden"
 				name="account[userAddress]"
