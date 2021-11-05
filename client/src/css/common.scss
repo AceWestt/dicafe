@@ -1,491 +1,583 @@
 h2 {
-  font-size: 2.08vw;
-  margin: 0;
-  line-height: 1.664vw;
-  font-weight: 400;
+	font-size: 2.08vw;
+	margin: 0;
+	line-height: 1.664vw;
+	font-weight: 400;
 }
 
 button {
-  background: transparent;
-  margin: 0;
-  padding: 0;
-  border: transparent;
+	background: transparent;
+	margin: 0;
+	padding: 0;
+	border: transparent;
 }
 
 .section {
-  width: 100%;
-  min-height: 100vh;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  float: left;
-  padding-top: 3.646vw;
-  padding-bottom: 4.01vw;
-  position: absolute;
-  top: 0;
-  left: 0;
-  @media screen and (max-width: $mobileBreakPoint) {
-    padding-top: 26.667vw;
-    padding-bottom: 8vw;
-  }
-  &.root {
-    height: auto;
-    padding-top: 0;
-    padding-bottom: 0;
-    position: relative;
-  }
-  .bg-img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .nav {
-    width: 100%;
-    display: flex;
-    position: fixed;
-    &.top {
-      padding: 2.86vw 5.2vw 0 5.2vw;
-      top: 0;
-    }
-    &.bottom {
-      padding: 0 5.2vw 3.12vw 5.2vw;
-      align-items: center;
-      bottom: 0;
-      @media screen and (max-width: $mobileBreakPoint) {
-        padding-bottom: 10.667vw;
-      }
-    }
-    &.only-mobile {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 5.333vw;
-      top: 8vw;
-      > div {
-        display: flex;
-        align-items: center;
-        .nav-button {
-          .icn {
-            margin: 0;
-          }
-          &.music {
-            margin-left: 4vw;
-            .icn {
-              max-width: 12.533vw;
-              max-height: 10.933vw;
-            }
-          }
-          &.cart {
-            .icn {
-              max-width: 15.2vw;
-              max-height: 13.333vw;
-            }
-            .alert {
-              width: 3.2vw;
-              height: 3.2vw;
-              background: #ddc4a8;
-              border-radius: 50%;
-              position: absolute;
-              top: 3.2vw;
-              left: 9.333vw;
-            }
-          }
-        }
-        &.left {
-          .lang-switch {
-            span {
-              font-size: 5.333vw;
-              &.active {
-                display: none;
-              }
-            }
-          }
-        }
-      }
-    }
-    .nav-button {
-      cursor: $cupCursor, pointer;
-      display: flex;
-      align-items: center;
-      .icn {
-        max-width: 1.56vw;
-        max-height: 1.716vw;
-        margin-right: 0.52vw;
-      }
-      span {
-        font-size: 1.352vw;
-        line-height: 1.508vw;
-        color: $black;
-      }
-      &.checkout {
-        margin-right: 0;
-        margin-left: auto;
-        .alert {
-          width: 0.6vw;
-          height: 0.6vw;
-          background: #ddc4a8;
-          border-radius: 50%;
-          position: absolute;
-          top: 0;
-          left: 1.302vw;
-        }
-      }
-      &.sound {
-        margin-left: 0;
-        margin-right: auto;
-      }
-      &.phone {
-        margin-left: auto;
-        margin-right: 2.34vw;
-      }
-      &.lang-switch {
-        margin-left: 0;
-        margin-right: 0;
-        span {
-          &:first-child {
-            margin-right: 0.26vw;
-          }
-          &.active {
-            text-decoration: underline;
-          }
-        }
-      }
-      &.copy {
-        margin-left: auto;
-        margin-right: auto;
-        font-size: 0.833vw;
-        cursor: default;
-        @media screen and (max-width: $mobileBreakPoint) {
-          font-size: 3.733vw;
-        }
-        span {
-          font-size: 0.833vw;
-          text-decoration: underline;
-          margin-left: 0.26vw;
-          @media screen and (max-width: $mobileBreakPoint) {
-            font-size: 3.733vw;
-            margin-left: 1.333vw;
-          }
-        }
-      }
-    }
-  }
+	width: 100%;
+	min-height: 100vh;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	float: left;
+	padding-top: 3.646vw;
+	padding-bottom: 4.01vw;
+	position: absolute;
+	top: 0;
+	left: 0;
+	@media screen and (max-width: $mobileBreakPoint) {
+		padding-top: 26.667vw;
+		padding-bottom: 8vw;
+	}
+	&.root {
+		height: auto;
+		padding-top: 0;
+		padding-bottom: 0;
+		position: relative;
+	}
+	.bg-img {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	.nav {
+		width: 100%;
+		display: flex;
+		position: fixed;
+		&.top {
+			padding: 2.86vw 5.2vw 0 5.2vw;
+			top: 0;
+		}
+		&.bottom {
+			padding: 0 5.2vw 3.12vw 5.2vw;
+			align-items: center;
+			bottom: 0;
+			@media screen and (max-width: $mobileBreakPoint) {
+				padding-bottom: 10.667vw;
+			}
+		}
+		&.only-mobile {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 0 5.333vw;
+			top: 8vw;
+			> div {
+				display: flex;
+				align-items: center;
+				.nav-button {
+					.icn {
+						margin: 0;
+					}
+					&.music {
+						margin-left: 4vw;
+						.icn {
+							max-width: 12.533vw;
+							max-height: 10.933vw;
+						}
+					}
+					&.cart {
+						.icn {
+							max-width: 15.2vw;
+							max-height: 13.333vw;
+						}
+						.alert {
+							width: 3.2vw;
+							height: 3.2vw;
+							background: #ddc4a8;
+							border-radius: 50%;
+							position: absolute;
+							top: 3.2vw;
+							left: 9.333vw;
+						}
+					}
+				}
+				&.left {
+					.lang-switch {
+						span {
+							font-size: 5.333vw;
+							&.active {
+								display: none;
+							}
+						}
+					}
+				}
+			}
+		}
+		.nav-button {
+			cursor: $cupCursor, pointer;
+			display: flex;
+			align-items: center;
+			.icn {
+				max-width: 1.56vw;
+				max-height: 1.716vw;
+				margin-right: 0.52vw;
+			}
+			span {
+				font-size: 1.352vw;
+				line-height: 1.508vw;
+				color: $black;
+			}
+			&.checkout {
+				margin-right: 0;
+				margin-left: auto;
+				.alert {
+					width: 0.6vw;
+					height: 0.6vw;
+					background: #ddc4a8;
+					border-radius: 50%;
+					position: absolute;
+					top: 0;
+					left: 1.302vw;
+				}
+			}
+			&.sound {
+				margin-left: 0;
+				margin-right: auto;
+			}
+			&.phone {
+				margin-left: auto;
+				margin-right: 2.34vw;
+			}
+			&.lang-switch {
+				margin-left: 0;
+				margin-right: 0;
+				span {
+					&:first-child {
+						margin-right: 0.26vw;
+					}
+					&.active {
+						text-decoration: underline;
+					}
+				}
+			}
+			&.copy {
+				margin-left: auto;
+				margin-right: auto;
+				font-size: 0.833vw;
+				cursor: default;
+				@media screen and (max-width: $mobileBreakPoint) {
+					font-size: 3.733vw;
+				}
+				span {
+					font-size: 0.833vw;
+					text-decoration: underline;
+					margin-left: 0.26vw;
+					@media screen and (max-width: $mobileBreakPoint) {
+						font-size: 3.733vw;
+						margin-left: 1.333vw;
+					}
+				}
+			}
+		}
+	}
 }
 
 #trail-bg {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 
 .bg-with-elements {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  left: 0;
-  #satellite-bg {
-    width: 7.813vw;
-    position: absolute;
-    top: 4.063vw;
-    left: 3.542vw;
-  }
-  #lamp-bg {
-    width: 6.458vw;
-    position: absolute;
-    top: -3.281vw;
-    left: 16.458vw;
-    @media screen and (max-width: $mobileBreakPoint) {
-      width: 16.267vw;
-      left: 27.467vw;
-      top: 0;
-    }
-  }
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+	#satellite-bg {
+		width: 7.813vw;
+		position: absolute;
+		top: 4.063vw;
+		left: 3.542vw;
+	}
+	#lamp-bg {
+		width: 6.458vw;
+		position: absolute;
+		top: -3.281vw;
+		left: 16.458vw;
+		@media screen and (max-width: $mobileBreakPoint) {
+			width: 16.267vw;
+			left: 27.467vw;
+			top: 0;
+		}
+	}
 
-  #flower-bg {
-    position: absolute;
-    left: 4.271vw;
-    height: 9.167vw;
-    top: 50%;
-    margin-top: -4.583vw;
-  }
-  #cloud_big-bg {
-    position: absolute;
-    width: 4.792vw;
-    left: 37.917vw;
-    top: 2.448vw;
-    @media screen and (max-width: $mobileBreakPoint) {
-      width: 13.067vw;
-      left: 39.467vw;
-      top: 7.467vw;
-    }
-  }
-  #cloud_small-bg {
-    position: absolute;
-    width: 3.646vw;
-    top: 3.177vw;
-    right: 29.74vw;
-    @media screen and (max-width: $mobileBreakPoint) {
-      width: 10.667vw;
-      right: 31.2vw;
-      top: 13.067vw;
-    }
-  }
-  #catcher-bg {
-    position: absolute;
-    width: 3.906vw;
-    top: 11.042vw;
-    right: 6.146vw;
-  }
-  #seamonster-bg {
-    position: absolute;
-    width: 31.3vw;
-    bottom: 5.208vw;
-    right: -4.167vw;
-    @media screen and (max-width: $mobileBreakPoint) {
-      width: 58.667vw;
-      right: -18.667vw;
-      bottom: -4.8vw;
-    }
-  }
-  #snicker-bg {
-    position: absolute;
-    width: 4.219vw;
-    bottom: 3.125vw;
-    right: 27.396vw;
-  }
-  #houses-bg {
-    position: absolute;
-    width: 26.614vw;
-    bottom: -1.458vw;
-    left: 9.427vw;
-    @media screen and (max-width: $mobileBreakPoint) {
-      width: 80vw;
-      left: -10.667vw;
-      bottom: -5.333vw;
-    }
-  }
-  #owl_adult-bg {
-    position: absolute;
-    width: 4.167vw;
-    top: 4.531vw;
-    right: 16.563vw;
-    @media screen and (max-width: $mobileBreakPoint) {
-      width: 15.467vw;
-      top: 47.467vw;
-      left: 32.533vw;
-    }
-  }
-  #owl_child-bg {
-    position: absolute;
-    width: 3.646vw;
-    top: 5.417vw;
-    right: 11.354vw;
-    @media screen and (max-width: $mobileBreakPoint) {
-      width: 13.6vw;
-      top: 54.133vw;
-      right: 32.267vw;
-    }
-  }
-  #about-trail-bg {
-    position: absolute;
-    width: 70.133vw;
-    bottom: 0;
-    left: 0;
-  }
-  #about-plane-bg {
-    position: absolute;
-    width: 31.2vw;
-    bottom: 0;
-    left: 8.8vw;
-  }
-  #corona-bg {
-    position: absolute;
-    width: 5.573vw;
-    top: 3.854vw;
-    right: 16.927vw;
-    @media screen and (max-width: $mobileBreakPoint) {
-      width: 14.4vw;
-      top: 8.8vw;
-      left: 47.2vw;
-    }
-  }
-  #ghost_skater-bg {
-    position: absolute;
-    width: 12.177vw;
-    left: 22.323vw;
-    bottom: 2.146vw;
-    @media screen and (max-width: $mobileBreakPoint) {
-      width: 50.333vw;
-      bottom: 2vw;
-      left: auto;
-      right: 22.667vw;
-    }
-  }
-  #cat-mobile-bg {
-    position: absolute;
-    width: 32vw;
-    left: 37.667vw;
-    top: 153vw;
-  }
+	#flower-bg {
+		position: absolute;
+		left: 4.271vw;
+		height: 9.167vw;
+		top: 50%;
+		margin-top: -4.583vw;
+	}
+	#cloud_big-bg {
+		position: absolute;
+		width: 4.792vw;
+		left: 37.917vw;
+		top: 2.448vw;
+		@media screen and (max-width: $mobileBreakPoint) {
+			width: 13.067vw;
+			left: 39.467vw;
+			top: 7.467vw;
+		}
+	}
+	#cloud_small-bg {
+		position: absolute;
+		width: 3.646vw;
+		top: 3.177vw;
+		right: 29.74vw;
+		@media screen and (max-width: $mobileBreakPoint) {
+			width: 10.667vw;
+			right: 31.2vw;
+			top: 13.067vw;
+		}
+	}
+	#catcher-bg {
+		position: absolute;
+		width: 3.906vw;
+		top: 11.042vw;
+		right: 6.146vw;
+	}
+	#seamonster-bg {
+		position: absolute;
+		width: 31.3vw;
+		bottom: 5.208vw;
+		right: -4.167vw;
+		@media screen and (max-width: $mobileBreakPoint) {
+			width: 58.667vw;
+			right: -18.667vw;
+			bottom: -4.8vw;
+		}
+	}
+	#snicker-bg {
+		position: absolute;
+		width: 4.219vw;
+		bottom: 3.125vw;
+		right: 27.396vw;
+	}
+	#houses-bg {
+		position: absolute;
+		width: 26.614vw;
+		bottom: -1.458vw;
+		left: 9.427vw;
+		@media screen and (max-width: $mobileBreakPoint) {
+			width: 80vw;
+			left: -10.667vw;
+			bottom: -5.333vw;
+		}
+	}
+	#owl_adult-bg {
+		position: absolute;
+		width: 4.167vw;
+		top: 4.531vw;
+		right: 16.563vw;
+		@media screen and (max-width: $mobileBreakPoint) {
+			width: 15.467vw;
+			top: 47.467vw;
+			left: 32.533vw;
+		}
+	}
+	#owl_child-bg {
+		position: absolute;
+		width: 3.646vw;
+		top: 5.417vw;
+		right: 11.354vw;
+		@media screen and (max-width: $mobileBreakPoint) {
+			width: 13.6vw;
+			top: 54.133vw;
+			right: 32.267vw;
+		}
+	}
+	#about-trail-bg {
+		position: absolute;
+		width: 70.133vw;
+		bottom: 0;
+		left: 0;
+	}
+	#about-plane-bg {
+		position: absolute;
+		width: 31.2vw;
+		bottom: 0;
+		left: 8.8vw;
+	}
+	#corona-bg {
+		position: absolute;
+		width: 5.573vw;
+		top: 3.854vw;
+		right: 16.927vw;
+		@media screen and (max-width: $mobileBreakPoint) {
+			width: 14.4vw;
+			top: 8.8vw;
+			left: 47.2vw;
+		}
+	}
+	#ghost_skater-bg {
+		position: absolute;
+		width: 12.177vw;
+		left: 22.323vw;
+		bottom: 2.146vw;
+		@media screen and (max-width: $mobileBreakPoint) {
+			width: 50.333vw;
+			bottom: 2vw;
+			left: auto;
+			right: 22.667vw;
+		}
+	}
+	#cat-mobile-bg {
+		position: absolute;
+		width: 32vw;
+		left: 37.667vw;
+		top: 153vw;
+	}
 }
 
 .cup-wrp {
-  width: 18.542vw;
-  height: 31.25vw;
-  .cup-model-wrp {
-    width: 18.542vw;
-    height: 31.25vw;
-    position: fixed;
-    transition: all 0.5s linear;
-    cursor: $cupCursor, move;
-    @media screen and (max-width: $mobileBreakPoint) {
-      width: 67.467vw;
-      height: 113.333vw;
-    }
-  }
+	width: 18.542vw;
+	height: 31.25vw;
+	.cup-model-wrp {
+		width: 18.542vw;
+		height: 31.25vw;
+		position: fixed;
+		transition: all 0.5s linear;
+		cursor: $cupCursor, move;
+		@media screen and (max-width: $mobileBreakPoint) {
+			width: 67.467vw;
+			height: 113.333vw;
+		}
+	}
 
-  .rotate-hint {
-    width: 100%;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    display: flex;
-    justify-content: center;
-    img {
-      width: 2.083vw;
-    }
-    @media screen and (max-width: $mobileBreakPoint) {
-      display: none;
-    }
-  }
+	.rotate-hint {
+		width: 100%;
+		position: absolute;
+		top: 100%;
+		left: 0;
+		display: flex;
+		justify-content: center;
+		img {
+			width: 2.083vw;
+		}
+		@media screen and (max-width: $mobileBreakPoint) {
+			display: none;
+		}
+	}
 
-  @media screen and (max-width: $mobileBreakPoint) {
-    width: 67.467vw;
-    height: 110.333vw;
-    margin-top: -10vw;
-  }
-  .cup-img {
-    width: 100%;
-    object-fit: contain;
-    display: none;
-  }
+	@media screen and (max-width: $mobileBreakPoint) {
+		width: 67.467vw;
+		height: 110.333vw;
+		margin-top: -10vw;
+	}
+	.cup-img {
+		width: 100%;
+		object-fit: contain;
+		display: none;
+	}
 }
 
 .page-wrapper {
-  height: 100%;
-  width: 100%;
-  padding: 1.56vw 5.2vw;
-  display: flex;
-  flex-direction: column;
-  float: left;
-  overflow: hidden;
-  @media screen and (max-width: $mobileBreakPoint) {
-    padding: 0 0 0 5.333vw;
-  }
+	height: 100%;
+	width: 100%;
+	padding: 1.56vw 5.2vw;
+	display: flex;
+	flex-direction: column;
+	float: left;
+	overflow: hidden;
+	@media screen and (max-width: $mobileBreakPoint) {
+		padding: 0 0 0 5.333vw;
+	}
 
-  .header {
-    width: 100%;
-    height: auto;
-    display: flex;
-    align-items: flex-end;
-    .back-btn {
-      font-size: 1.352vw;
-      cursor: $cupCursor, pointer;
-      @media screen and (max-width: $mobileBreakPoint) {
-        font-size: 6.933vw;
-      }
-    }
-    h2 {
-      margin-left: 7.813vw;
-      @media screen and (max-width: $mobileBreakPoint) {
-        margin-left: 0;
-      }
-    }
-  }
-  .content {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    height: 100%;
-    padding: 1.458vw 0 0 0;
-    @media screen and (max-width: $mobileBreakPoint) {
-      padding: 0;
-      flex-direction: column-reverse;
-      justify-content: flex-end;
-      align-items: flex-end;
-    }
-    .for-content {
-      width: 100%;
-      padding-right: 5.2vw;
-      @media screen and(max-width:$mobileBreakPoint) {
-        padding-right: 0;
-      }
-      //demo purpose
-      img {
-        width: 100%;
-      }
-    }
-    .for-cup {
-      width: 18.542vw;
-      height: 31.25vw;
-      flex-shrink: 0;
-      @media screen and (max-width: $mobileBreakPoint) {
-        width: 27.2vw;
-        height: 45.867vw;
-        margin-bottom: 5.6vw;
-        margin-right: 5.333vw;
-        display: none;
-      }
-      .cup-wrp {
-        width: 100%;
-        height: 100%;
-      }
-    }
-  }
-  &.righted {
-    padding-right: 0;
-    .header {
-      h2 {
-        margin-left: 19.219vw;
-      }
-    }
-    .content {
-      flex-direction: row-reverse;
-      @media screen and (max-width: $mobileBreakPoint) {
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        padding-top: 5.333vw;
-      }
-      .for-content {
-        padding-left: 7.813vw;
-        padding-right: 0;
-        @media screen and (max-width: $mobileBreakPoint) {
-          padding-left: 0;
-        }
-      }
-    }
-  }
+	.header {
+		width: 100%;
+		height: auto;
+		display: flex;
+		align-items: flex-end;
+		.back-btn {
+			font-size: 1.352vw;
+			cursor: $cupCursor, pointer;
+			@media screen and (max-width: $mobileBreakPoint) {
+				font-size: 6.933vw;
+			}
+		}
+		h2 {
+			margin-left: 7.813vw;
+			@media screen and (max-width: $mobileBreakPoint) {
+				margin-left: 0;
+			}
+		}
+	}
+	.content {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		height: 100%;
+		padding: 1.458vw 0 0 0;
+		@media screen and (max-width: $mobileBreakPoint) {
+			padding: 0;
+			flex-direction: column-reverse;
+			justify-content: flex-end;
+			align-items: flex-end;
+		}
+		.for-content {
+			width: 100%;
+			padding-right: 5.2vw;
+			@media screen and(max-width:$mobileBreakPoint) {
+				padding-right: 0;
+			}
+			//demo purpose
+			img {
+				width: 100%;
+			}
+		}
+		.for-cup {
+			width: 18.542vw;
+			height: 31.25vw;
+			flex-shrink: 0;
+			@media screen and (max-width: $mobileBreakPoint) {
+				width: 27.2vw;
+				height: 45.867vw;
+				margin-bottom: 5.6vw;
+				margin-right: 5.333vw;
+				display: none;
+			}
+			.cup-wrp {
+				width: 100%;
+				height: 100%;
+			}
+		}
+	}
+	&.righted {
+		padding-right: 0;
+		.header {
+			h2 {
+				margin-left: 19.219vw;
+			}
+		}
+		.content {
+			flex-direction: row-reverse;
+			@media screen and (max-width: $mobileBreakPoint) {
+				flex-direction: column;
+				justify-content: flex-start;
+				align-items: flex-start;
+				padding-top: 5.333vw;
+			}
+			.for-content {
+				padding-left: 7.813vw;
+				padding-right: 0;
+				@media screen and (max-width: $mobileBreakPoint) {
+					padding-left: 0;
+				}
+			}
+		}
+	}
 }
 
 .only {
-  &-mobile {
-    @media screen and (min-width: $mobileBreakPoint + 1) {
-      display: none;
-    }
-  }
-  &-desktop {
-    @media screen and (max-width: $mobileBreakPoint) {
-      display: none;
-    }
-  }
+	&-mobile {
+		@media screen and (min-width: ($mobileBreakPoint + 1px)) {
+			display: none;
+		}
+	}
+	&-desktop {
+		@media screen and (max-width: $mobileBreakPoint) {
+			display: none;
+		}
+	}
+}
+
+.modal {
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: rgba($color: #161616, $alpha: 0.5);
+	.modal-container {
+		img.bg {
+			width: 63.281vw;
+			@media screen and (max-width: $mobileBreakPoint) {
+				width: 92vw;
+			}
+		}
+		.content {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: space-between;
+			padding: 3.49vw 7.031vw;
+			@media screen and (max-width: $mobileBreakPoint) {
+				padding: 28.533vw 9.867vw 24vw;
+			}
+			.header {
+				width: 100%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				span {
+					font-size: 1.146vw;
+					@media screen and (max-width: $mobileBreakPoint) {
+						font-size: 6.4vw;
+					}
+				}
+				img.close-btn {
+					width: 1.042vw;
+					position: absolute;
+					right: 0;
+					cursor: $cupCursor, pointer;
+					@media screen and (max-width: $mobileBreakPoint) {
+						width: 4.533vw;
+						top: -13.333vw;
+					}
+				}
+			}
+			p {
+				width: 100%;
+				text-align: center;
+				font-size: 1.146vw;
+				line-height: 1.25vw;
+				margin: 0;
+				@media screen and (max-width: $mobileBreakPoint) {
+					font-size: 4.8vw;
+					line-height: 5.067vw;
+				}
+			}
+			.confirm-btn {
+				cursor: $cupCursor, pointer;
+				img {
+					width: 11.51vw;
+					@media screen and (max-width: $mobileBreakPoint) {
+						width: 58.933vw;
+					}
+				}
+				span {
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					top: 0;
+					left: 0;
+					color: #fff;
+					font-size: 1.354vw;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					@media screen and (max-width: $mobileBreakPoint) {
+						font-size: 6.933vw;
+					}
+				}
+			}
+		}
+	}
 }

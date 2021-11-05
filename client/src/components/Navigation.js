@@ -95,24 +95,24 @@ const NavButton = ({ icn, text, className, onClick, navButtonRef }) => {
 	);
 };
 
-const LangSwitch = ({ data }) => {
-	const { lang, setLang } = useAppContext();
-	return (
-		<div className="nav-button lang-switch">
-			<span
-				className={lang === 'ru' ? 'active' : undefined}
-				onClick={() => setLang('ru')}
-			>
-				{data?.lang_switch?.ru}
-			</span>
-			<span
-				className={lang === 'uz' ? 'active' : undefined}
-				onClick={() => setLang('uz')}
-			>
-				{data?.lang_switch?.uz}
-			</span>
-		</div>
-	);
-};
+// const LangSwitch = ({ data }) => {
+// 	const { lang, setLang } = useAppContext();
+// 	return (
+// 		<div className="nav-button lang-switch">
+// 			<span
+// 				className={lang === 'ru' ? 'active' : undefined}
+// 				onClick={() => setLang('ru')}
+// 			>
+// 				{data?.lang_switch?.ru}
+// 			</span>
+// 			<span
+// 				className={lang === 'uz' ? 'active' : undefined}
+// 				onClick={() => setLang('uz')}
+// 			>
+// 				{data?.lang_switch?.uz}
+// 			</span>
+// 		</div>
+// 	);
+// };
 
 export { NavTop, NavBottom };

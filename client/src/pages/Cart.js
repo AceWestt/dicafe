@@ -13,12 +13,24 @@ import sendCustomerFormButton from './imgs/cart/sendButton.svg';
 import sendCustomerFormButtonInvalid from './imgs/cart/sendButtonInvalid.svg';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import DayOffModal from '../components/DayOffModal';
+
+const weekDay = new Date().getDay();
 
 const Cart = () => {
 	const { isCartOpen, setIsCartOpen, lang, cartList, setCartList, smallScreen } =
 		useAppContext();
 	const [totalPrice, setTotalPrice] = useState(0);
 	const [isUserFormOpen, setIsUserFormOpen] = useState(false);
+	const [isDayOffModal, setIsDayOffModal] = useState(
+		weekDay === 6 || weekDay === 7
+	);
+
+	useEffect(() => {
+		if (weekDay === 6 || weekDay === 7) {
+			setIsDayOffModal(true);
+		}
+	}, [isCartOpen]);
 
 	useEffect(() => {
 		let total = 0;
@@ -148,6 +160,20 @@ const Cart = () => {
 						smallScreen={smallScreen}
 						cartList={cartList}
 						totalPrice={totalPrice}
+					/>
+				)}
+				{isDayOffModal && (
+					<DayOffModal
+						text={() => {
+							return (
+								<>
+									Ой, мы не работаем в субботу-воскресенье
+									<br /> Если что, закажи кофе, в понедельник доставим 👌
+								</>
+							);
+						}}
+						onClose={() => setIsDayOffModal(false)}
+						onConfirm={() => setIsDayOffModal(false)}
 					/>
 				)}
 			</>
