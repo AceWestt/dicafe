@@ -14,13 +14,13 @@ import trail from './pages/imgs/main/trail.svg';
 import zagluwka from './pages/imgs/main/zagluwka.jpg';
 
 function App() {
-	// return (
-	// 	<img
-	// 		src={zagluwka}
-	// 		alt="temp"
-	// 		style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
-	// 	/>
-	// );
+	return (
+		<img
+			src={zagluwka}
+			alt="temp"
+			style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
+		/>
+	);
 	return (
 		<div className="App">
 			<AppProvider>
